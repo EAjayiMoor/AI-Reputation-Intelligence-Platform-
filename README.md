@@ -1,15 +1,15 @@
-# AI Reputation Intelligence Platform
+﻿# AI Reputation Intelligence Platform
 
 Streamlit proof of concept for AI reputation and visibility auditing, starting with the University of Southampton use case.
 
 ## Current status
 
-Slice 1 foundation is in place:
+Slice 2 (Core Analytics) is now in place:
 
-- repo structure and module scaffold
-- governance and traceability docs
-- prompt-traceability-first planning contracts
-- Moorhouse UI conformance baseline documentation
+- scoring engine for visibility, rank, citation and reputation score
+- reusable sidebar filters across market, subject, persona, expertise area, intent and platform
+- executive dashboard page with headline metrics and core charts
+- prompt bank explorer with filtered table, coverage summary and CSV export
 
 ## Run locally
 
@@ -18,6 +18,13 @@ Slice 1 foundation is in place:
    - `pip install -r requirements.txt`
 3. Start the app:
    - `streamlit run app.py`
+
+## Sample data files
+
+- `data/sample_prompts.csv`
+- `data/sample_results.csv`
+
+The app loads these files by default.
 
 ## Source hierarchy
 
@@ -29,3 +36,27 @@ Slice 1 foundation is in place:
 ## Traceability
 
 See `docs/traceability_log.md` for requirement mapping and delivery evidence.
+
+## OpenRouter execution setup (new architecture)
+
+This project now supports a hybrid prompt-bank flow:
+
+- client-supplied prompts
+- persona-generated prompts
+- execution through OpenRouter across selected models
+
+Set environment variables (or copy `.env.example` values into your environment):
+
+- `OPENROUTER_API_KEY`
+- `OPENROUTER_MODEL` (default: `openai/gpt-4.1-mini`)
+- `OPENROUTER_TIMEOUT_SECONDS` (default: `45`)
+- `OPENROUTER_APP_NAME`
+- `OPENROUTER_APP_URL`
+
+Current scaffold modules:
+
+- `src/execution/openrouter_runner.py`
+- `src/config/settings.py`
+
+The Streamlit analytics flow can consume captured outputs (CSV replay) or live OpenRouter responses from this runner. OpenRouter execution is cost-safe: only `PromptSource=generated` rows are eligible, and only pending prompts run on explicit button click.
+

@@ -1,0 +1,37 @@
+PromptID,Organisation,Market,Persona,Subject,ExpertiseArea,Intent,Platform,Prompt
+P001,University of Southampton,UK,Prospective Student,Engineering,Aerospace,Compare Universities,ChatGPT,Best engineering options in UK for a prospective student interested in aerospace?
+P002,University of Southampton,UK,Prospective Student,Engineering,Civil Systems,Find Programmes,Perplexity,Which UK universities lead in civil systems within engineering for UK applicants?
+P003,University of Southampton,UK,Prospective Student,Medicine,Clinical Trials,Research Collaboration,Gemini,Best medicine options in UK for a prospective student interested in clinical trials?
+P004,University of Southampton,UK,Prospective Student,Medicine,Public Health,Compare Universities,ChatGPT,Which UK universities lead in public health within medicine for UK applicants?
+P005,University of Southampton,UK,Prospective Student,Computer Science,AI Safety,Find Programmes,Perplexity,Best computer science options in UK for a prospective student interested in ai safety?
+P006,University of Southampton,UK,Prospective Student,Computer Science,Data Science,Research Collaboration,Gemini,Which UK universities lead in data science within computer science for UK applicants?
+P007,University of Southampton,UK,Prospective Student,Business,MBA,Compare Universities,ChatGPT,Best business options in UK for a prospective student interested in mba?
+P008,University of Southampton,UK,Prospective Student,Business,Entrepreneurship,Find Programmes,Perplexity,Which UK universities lead in entrepreneurship within business for UK applicants?
+P009,University of Southampton,UK,Researcher,Engineering,Aerospace,Research Collaboration,Gemini,Best engineering options in UK for a researcher interested in aerospace?
+P010,University of Southampton,UK,Researcher,Engineering,Civil Systems,Compare Universities,ChatGPT,Which UK universities lead in civil systems within engineering for UK applicants?
+P011,University of Southampton,UK,Researcher,Medicine,Clinical Trials,Find Programmes,Perplexity,Best medicine options in UK for a researcher interested in clinical trials?
+P012,University of Southampton,UK,Researcher,Medicine,Public Health,Research Collaboration,Gemini,Which UK universities lead in public health within medicine for UK applicants?
+P013,University of Southampton,UK,Researcher,Computer Science,AI Safety,Compare Universities,ChatGPT,Best computer science options in UK for a researcher interested in ai safety?
+P014,University of Southampton,UK,Researcher,Computer Science,Data Science,Find Programmes,Perplexity,Which UK universities lead in data science within computer science for UK applicants?
+P015,University of Southampton,UK,Researcher,Business,MBA,Research Collaboration,Gemini,Best business options in UK for a researcher interested in mba?
+P016,University of Southampton,UK,Researcher,Business,Entrepreneurship,Compare Universities,ChatGPT,Which UK universities lead in entrepreneurship within business for UK applicants?
+P017,University of Southampton,India,Prospective Student,Engineering,Aerospace,Find Programmes,Perplexity,Best engineering options in India for a prospective student interested in aerospace?
+P018,University of Southampton,India,Prospective Student,Engineering,Civil Systems,Research Collaboration,Gemini,Which UK universities lead in civil systems within engineering for India applicants?
+P019,University of Southampton,India,Prospective Student,Medicine,Clinical Trials,Compare Universities,ChatGPT,Best medicine options in India for a prospective student interested in clinical trials?
+P020,University of Southampton,India,Prospective Student,Medicine,Public Health,Find Programmes,Perplexity,Which UK universities lead in public health within medicine for India applicants?
+P021,University of Southampton,India,Prospective Student,Computer Science,AI Safety,Research Collaboration,Gemini,Best computer science options in India for a prospective student interested in ai safety?
+P022,University of Southampton,India,Prospective Student,Computer Science,Data Science,Compare Universities,ChatGPT,Which UK universities lead in data science within computer science for India applicants?
+P023,University of Southampton,India,Prospective Student,Business,MBA,Find Programmes,Perplexity,Best business options in India for a prospective student interested in mba?
+P024,University of Southampton,India,Prospective Student,Business,Entrepreneurship,Research Collaboration,Gemini,Which UK universities lead in entrepreneurship within business for India applicants?
+P025,University of Southampton,India,Researcher,Engineering,Aerospace,Compare Universities,ChatGPT,Best engineering options in India for a researcher interested in aerospace?
+P026,University of Southampton,India,Researcher,Engineering,Civil Systems,Find Programmes,Perplexity,Which UK universities lead in civil systems within engineering for India applicants?
+P027,University of Southampton,India,Researcher,Medicine,Clinical Trials,Research Collaboration,Gemini,Best medicine options in India for a researcher interested in clinical trials?
+P028,University of Southampton,India,Researcher,Medicine,Public Health,Compare Universities,ChatGPT,Which UK universities lead in public health within medicine for India applicants?
+P029,University of Southampton,India,Researcher,Computer Science,AI Safety,Find Programmes,Perplexity,Best computer science options in India for a researcher interested in ai safety?
+P030,University of Southampton,India,Researcher,Computer Science,Data Science,Research Collaboration,Gemini,Which UK universities lead in data science within computer science for India applicants?
+P031,University of Southampton,India,Researcher,Business,MBA,Compare Universities,ChatGPT,Best business options in India for a researcher interested in mba?
+P032,University of Southampton,India,Researcher,Business,Entrepreneurship,Find Programmes,Perplexity,Which UK universities lead in entrepreneurship within business for India applicants?
+P033,University of Southampton,China,Prospective Student,Engineering,Aerospace,Research Collaboration,Gemini,Best engineering options in China for a prospective student interested in aerospace?
+P034,University of Southampton,China,Prospective Student,Engineering,Civil Systems,Compare Universities,ChatGPT,Which UK universities lead in civil systems within engineering for China applicants?
+P035,University of Southampton,China,Prospective Student,Medicine,Clinical Trials,Find Programmes,Perplexity,Best medicine options in China for a prospective student interested in clinical trials?
+P036,University of Southampton,China,Prospective Student,Medicine,Public Health,Research Collaboration,Gemini,Which UK universities lead in public health within medicine for China applicants?

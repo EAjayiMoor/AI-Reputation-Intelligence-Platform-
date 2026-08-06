@@ -6,11 +6,11 @@
 **PoC client/use case:** University of Southampton Digital Reputation Audit  
 **Primary user:** Consultant / audit analyst  
 **Build type:** Streamlit proof of concept  
-**Data approach for PoC:** Excel/CSV-driven, no production database required  
+**Data approach for PoC:** Hybrid prompt bank + OpenRouter execution + CSV/Excel outputs, no production database required  
 
 This PoC will demonstrate a reusable product concept for assessing how an organisation appears across AI-powered discovery experiences. The first use case is the University of Southampton, where the client wants to understand how visible and reputable the university is across LLM/search-style journeys, particularly across strategic markets, subjects and expertise areas.
 
-The tool should help consultants create and manage prompt banks, import LLM visibility results, analyse whether Southampton appears, benchmark competitors, identify gaps, and generate practical recommendations.
+The tool should help consultants combine prompt banks (client-supplied plus persona-generated prompts), run those prompts through OpenRouter across selected models, capture visibility results, analyse whether Southampton appears, benchmark competitors, identify gaps, and generate practical recommendations.
 
 ---
 
@@ -61,6 +61,8 @@ The expected output is not just a dashboard. The tool should accelerate the prod
 
 - Streamlit front end
 - Excel/CSV upload
+- Hybrid prompt-bank management (client prompts + persona-generated prompts)
+- OpenRouter model execution for selected prompt sets
 - Prompt-bank explorer
 - Audience journey simulator
 - Visibility analysis
@@ -77,7 +79,6 @@ The expected output is not just a dashboard. The tool should accelerate the prod
 
 - User authentication
 - Role-based access
-- Live LLM API orchestration
 - Web crawling
 - SEO scanning
 - Production database
@@ -89,8 +90,8 @@ The expected output is not just a dashboard. The tool should accelerate the prod
 
 ### 5.3 Future Product Capabilities
 
-- Live LLM API integrations
-- Scheduled prompt runs
+- Production-grade multi-provider orchestration beyond OpenRouter
+- Scheduled prompt runs with workflow controls
 - Trend analysis across time
 - SQL/PostgreSQL/Azure SQL database
 - Multi-organisation support
@@ -139,9 +140,10 @@ Needs to:
 
 ### Prompt Bank
 
-1. As a consultant, I want to upload a prompt bank so that I can define the questions being tested.
-2. As a consultant, I want to filter prompts by market, subject, persona, expertise area and intent so that I can inspect relevant prompt sets.
-3. As a consultant, I want to see how many prompts exist for each segment so that I can identify coverage gaps.
+1. As a consultant, I want to upload a client prompt bank so that known strategic prompts are included in the audit.
+2. As a consultant, I want to generate additional persona-led prompts so that coverage is rich across market, subject, persona and intent combinations.
+3. As a consultant, I want to filter prompts by market, subject, persona, expertise area and intent so that I can inspect relevant prompt sets.
+4. As a consultant, I want to see how many prompts exist for each segment and prompt source so that I can identify coverage gaps.
 
 ### Visibility Results
 
@@ -342,6 +344,15 @@ Required columns:
 | Platform | AI platform tested | ChatGPT |
 | Prompt | Actual prompt text | Best UK engineering universities for Chinese students |
 
+
+Additional required columns for hybrid prompt-bank mode:
+
+| Column | Description | Example |
+|---|---|---|
+| PromptSource | Prompt origin (`client` or `generated`) | generated |
+| PersonaTemplateID | Persona template used for generation | PT_RESEARCHER_UK_01 |
+| GenerationMethod | How prompt was created | llm_persona_generator |
+
 ### 9.2 Visibility Results Input
 
 File name: `results.xlsx` or `results.csv`
@@ -359,6 +370,17 @@ Required columns:
 | CompetitorsMentioned | Comma-separated competitors | Imperial, Manchester, Warwick |
 | CitationSources | Sources cited or referenced | QS, UCAS, Southampton website |
 | RunDate | Date result captured | 2026-08-03 |
+
+
+Additional required columns for OpenRouter execution mode:
+
+| Column | Description | Example |
+|---|---|---|
+| Provider | Provider used for execution | OpenRouter |
+| ModelName | Exact model identifier | openai/gpt-4.1-mini |
+| RequestID | Provider request identifier | req_abc123 |
+| ResponseID | Internal response identifier | resp_abc123 |
+| RunBatchID | Batch run identifier for one execution cycle | batch_2026_08_04_a |
 
 ### 9.3 Recommendation Rules Input
 
@@ -525,9 +547,9 @@ ai-reputation-intelligence-poc/
 
 - Local-first PoC
 - Simple deployment using Streamlit
-- No secrets required for PoC
-- No live API calls required
-- Works with sample CSVs
+- OpenRouter API key managed via environment variable
+- Supports live API calls via OpenRouter and offline CSV replay mode
+- Works with sample CSVs and captured execution outputs
 - Handles at least 1,000 prompts and 10,000 result rows
 - Uses clear UK English labels
 - Charts should be readable in a client demo
@@ -539,8 +561,9 @@ ai-reputation-intelligence-poc/
 
 | Risk | Mitigation |
 |---|---|
-| Scope expands into production product | Keep PoC Excel/CSV-driven |
+| Scope expands into production product | Keep OpenRouter integration minimal and focused on audit execution only |
 | Data quality issues | Build validation and missing-column warnings |
+| OpenRouter rate limits or model instability | Use batch execution controls, retry logic and replay from stored outputs |
 | Recommendations feel generic | Create rules based on market, subject, visibility and citation patterns |
 | Dashboard becomes too busy | Prioritise executive summary and drill-down pages |
 | Product story drifts from Southampton ask | Keep default examples and seed data focused on Southampton |
@@ -556,6 +579,7 @@ The PoC is done when:
 - Each page works without code edits.
 - The user can filter by market, subject and persona.
 - The app calculates visibility and reputation scores.
+- The app executes selected prompts through OpenRouter and stores model outputs for analysis.
 - The app shows competitor benchmarks.
 - The app generates prioritised recommendations.
 - The app exports filtered results.

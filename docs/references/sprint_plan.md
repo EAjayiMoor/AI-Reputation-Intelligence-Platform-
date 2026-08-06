@@ -4,7 +4,7 @@
 
 Build a Streamlit proof of concept that demonstrates how the University of Southampton’s AI visibility and reputation can be assessed across markets, personas, subjects and expertise areas using prompt-bank and visibility-result data.
 
-The sprint should produce a demo-ready application, sample data, scoring logic, recommendation logic and exportable outputs.
+The sprint should produce a demo-ready application, a rich hybrid prompt bank (client + persona-generated), OpenRouter execution outputs, scoring logic, recommendation logic and exportable outputs.
 
 ---
 
@@ -13,7 +13,9 @@ The sprint should produce a demo-ready application, sample data, scoring logic, 
 - Build the smallest useful product-shaped PoC.
 - Keep the Southampton use case front and centre.
 - Avoid production complexity.
-- Use Excel/CSV inputs only.
+- Use a hybrid prompt-bank approach: client prompts plus persona-generated prompts.
+- Execute prompt batches through OpenRouter for model outputs.
+- Preserve CSV/Excel import/export compatibility for replay and QA.
 - Make scoring and recommendations explainable.
 - Prioritise client-demo clarity over technical sophistication.
 
@@ -50,7 +52,7 @@ Acceptance criteria:
 
 #### Story 2.1: Create sample prompt-bank data
 
-**Task:** Build `sample_prompts.csv` using Southampton-focused examples.
+**Task:** Build `sample_prompts.csv` using Southampton-focused examples plus persona-generated prompts to enrich coverage.
 
 Required columns:
 
@@ -63,17 +65,21 @@ Required columns:
 - Intent
 - Platform
 - Prompt
+- PromptSource
+- PersonaTemplateID
+- GenerationMethod
 
 Acceptance criteria:
 
 - At least 30 sample prompts.
+- Includes both client-supplied prompts and persona-generated prompts.
 - Covers UK, India and China.
 - Covers at least Engineering, Medicine, Computer Science and Business.
 - Covers at least prospective student and researcher personas.
 
 #### Story 2.2: Create sample visibility-results data
 
-**Task:** Build `sample_results.csv` linked to prompt IDs.
+**Task:** Build `sample_results.csv` linked to prompt IDs and aligned to OpenRouter execution metadata.
 
 Required columns:
 
@@ -86,10 +92,16 @@ Required columns:
 - CompetitorsMentioned
 - CitationSources
 - RunDate
+- Provider
+- ModelName
+- RequestID
+- ResponseID
+- RunBatchID
 
 Acceptance criteria:
 
 - Each sample prompt has at least one result.
+- Includes outputs from at least two models routed via OpenRouter.
 - Some prompts have Southampton visible.
 - Some prompts have Southampton absent.
 - Competitors are included.
@@ -131,6 +143,26 @@ Acceptance criteria:
 - Checks required results columns.
 - Shows missing columns clearly in Streamlit.
 - Prevents app failure if invalid data is uploaded.
+
+#### Story 3.3: Build persona prompt-bank enrichment flow
+
+**Task:** Create generation logic that expands client prompt bank coverage using persona templates.
+
+Acceptance criteria:
+
+- Generated prompts are tagged with prompt source and persona template identifiers.
+- Generation supports market, subject, persona and intent combinations.
+- Prompt-bank coverage gaps are reduced versus client-only prompt set.
+
+#### Story 3.4: Build OpenRouter execution runner
+
+**Task:** Execute selected prompt-bank batches through OpenRouter and persist outputs.
+
+Acceptance criteria:
+
+- Supports selecting provider/model combinations.
+- Stores request, response and run batch identifiers.
+- Handles API failures gracefully and logs failed runs for replay.
 
 ---
 
@@ -378,19 +410,21 @@ Acceptance criteria:
 
 - Repo structure
 - Requirements
-- Sample data
+- Base sample data
 - Data loader
 - Validators
 
-### Build Slice 2: Core Analytics
+### Build Slice 2: Prompt Intelligence + Execution
+
+- Hybrid prompt-bank strategy (client + generated)
+- Persona prompt generation flow
+- OpenRouter execution runner and result capture
+
+### Build Slice 3: Core Analytics + Client Value
 
 - Scoring engine
 - Executive dashboard
-- Filters
 - Prompt explorer
-
-### Build Slice 3: Client Value
-
 - Audience journey simulator
 - Competitor analysis
 - Recommendation engine
@@ -402,6 +436,7 @@ Acceptance criteria:
 - README
 - Demo script
 - UX tidy-up
+- Execution reliability checks
 
 ---
 
