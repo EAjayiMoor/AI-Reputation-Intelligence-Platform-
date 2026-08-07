@@ -1,0 +1,121 @@
+segment_id,persona,market,intent,prompt_id,subject,southampton_mentioned,competitor,prompt_text,geo_objective
+SEG001,Prospective Student (Undergraduate),UK,General Awareness,SEG001-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG001,Prospective Student (Undergraduate),UK,General Awareness,SEG001-P002,General,No,,Which UK universities are well known among prospective learners from UK?,Visibility; Awareness
+SEG001,Prospective Student (Undergraduate),UK,Subject-Specific Reputation,SEG001-P003,AI,No,,Which UK universities have a strong reputation for AI?,Subject Reputation
+SEG001,Prospective Student (Undergraduate),UK,Subject-Specific Reputation,SEG001-P004,Engineering,No,,Which UK universities have a strong reputation for Engineering?,Subject Reputation
+SEG001,Prospective Student (Undergraduate),UK,Direct Comparison,SEG001-P005,Business,Yes,Bath,How does Southampton compare with Bath for Business?,Competitive Positioning
+SEG001,Prospective Student (Undergraduate),UK,Direct Comparison,SEG001-P006,Medicine,Yes,Bristol,How does Southampton compare with Bristol for Medicine?,Competitive Positioning
+SEG001,Prospective Student (Undergraduate),UK,Recruitment Decision,SEG001-P007,General,No,,I am a UK-based prospective student (undergraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG001,Prospective Student (Undergraduate),UK,Recruitment Decision,SEG001-P008,General,No,,Which UK universities would be a good fit for a UK-based prospective student (undergraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG002,Prospective Student (Undergraduate),India,General Awareness,SEG002-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG002,Prospective Student (Undergraduate),India,General Awareness,SEG002-P002,General,No,,Which UK universities are well known among prospective learners from India?,Visibility; Awareness
+SEG002,Prospective Student (Undergraduate),India,Subject-Specific Reputation,SEG002-P003,Engineering,No,,Which UK universities have a strong reputation for Engineering?,Subject Reputation
+SEG002,Prospective Student (Undergraduate),India,Subject-Specific Reputation,SEG002-P004,Business,No,,Which UK universities have a strong reputation for Business?,Subject Reputation
+SEG002,Prospective Student (Undergraduate),India,Direct Comparison,SEG002-P005,Medicine,Yes,Bristol,How does Southampton compare with Bristol for Medicine?,Competitive Positioning
+SEG002,Prospective Student (Undergraduate),India,Direct Comparison,SEG002-P006,Computer Science,Yes,Manchester,How does Southampton compare with Manchester for Computer Science?,Competitive Positioning
+SEG002,Prospective Student (Undergraduate),India,Recruitment Decision,SEG002-P007,General,No,,I am a India-based prospective student (undergraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG002,Prospective Student (Undergraduate),India,Recruitment Decision,SEG002-P008,General,No,,Which UK universities would be a good fit for a India-based prospective student (undergraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG003,Prospective Student (Undergraduate),China,General Awareness,SEG003-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG003,Prospective Student (Undergraduate),China,General Awareness,SEG003-P002,General,No,,Which UK universities are well known among prospective learners from China?,Visibility; Awareness
+SEG003,Prospective Student (Undergraduate),China,Subject-Specific Reputation,SEG003-P003,Business,No,,Which UK universities have a strong reputation for Business?,Subject Reputation
+SEG003,Prospective Student (Undergraduate),China,Subject-Specific Reputation,SEG003-P004,Medicine,No,,Which UK universities have a strong reputation for Medicine?,Subject Reputation
+SEG003,Prospective Student (Undergraduate),China,Direct Comparison,SEG003-P005,Computer Science,Yes,Manchester,How does Southampton compare with Manchester for Computer Science?,Competitive Positioning
+SEG003,Prospective Student (Undergraduate),China,Direct Comparison,SEG003-P006,AI,Yes,Durham,How does Southampton compare with Durham for AI?,Competitive Positioning
+SEG003,Prospective Student (Undergraduate),China,Recruitment Decision,SEG003-P007,General,No,,I am a China-based prospective student (undergraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG003,Prospective Student (Undergraduate),China,Recruitment Decision,SEG003-P008,General,No,,Which UK universities would be a good fit for a China-based prospective student (undergraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG004,Prospective Student (Undergraduate),UAE,General Awareness,SEG004-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG004,Prospective Student (Undergraduate),UAE,General Awareness,SEG004-P002,General,No,,Which UK universities are well known among prospective learners from UAE?,Visibility; Awareness
+SEG004,Prospective Student (Undergraduate),UAE,Subject-Specific Reputation,SEG004-P003,Medicine,No,,Which UK universities have a strong reputation for Medicine?,Subject Reputation
+SEG004,Prospective Student (Undergraduate),UAE,Subject-Specific Reputation,SEG004-P004,Computer Science,No,,Which UK universities have a strong reputation for Computer Science?,Subject Reputation
+SEG004,Prospective Student (Undergraduate),UAE,Direct Comparison,SEG004-P005,AI,Yes,Durham,How does Southampton compare with Durham for AI?,Competitive Positioning
+SEG004,Prospective Student (Undergraduate),UAE,Direct Comparison,SEG004-P006,Engineering,Yes,Warwick,How does Southampton compare with Warwick for Engineering?,Competitive Positioning
+SEG004,Prospective Student (Undergraduate),UAE,Recruitment Decision,SEG004-P007,General,No,,I am a UAE-based prospective student (undergraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG004,Prospective Student (Undergraduate),UAE,Recruitment Decision,SEG004-P008,General,No,,Which UK universities would be a good fit for a UAE-based prospective student (undergraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG005,Prospective Student (Undergraduate),Hong Kong,General Awareness,SEG005-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG005,Prospective Student (Undergraduate),Hong Kong,General Awareness,SEG005-P002,General,No,,Which UK universities are well known among prospective learners from Hong Kong?,Visibility; Awareness
+SEG005,Prospective Student (Undergraduate),Hong Kong,Subject-Specific Reputation,SEG005-P003,Computer Science,No,,Which UK universities have a strong reputation for Computer Science?,Subject Reputation
+SEG005,Prospective Student (Undergraduate),Hong Kong,Subject-Specific Reputation,SEG005-P004,AI,No,,Which UK universities have a strong reputation for AI?,Subject Reputation
+SEG005,Prospective Student (Undergraduate),Hong Kong,Direct Comparison,SEG005-P005,Engineering,Yes,Warwick,How does Southampton compare with Warwick for Engineering?,Competitive Positioning
+SEG005,Prospective Student (Undergraduate),Hong Kong,Direct Comparison,SEG005-P006,Business,Yes,Bath,How does Southampton compare with Bath for Business?,Competitive Positioning
+SEG005,Prospective Student (Undergraduate),Hong Kong,Recruitment Decision,SEG005-P007,General,No,,I am a Hong Kong-based prospective student (undergraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG005,Prospective Student (Undergraduate),Hong Kong,Recruitment Decision,SEG005-P008,General,No,,Which UK universities would be a good fit for a Hong Kong-based prospective student (undergraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG006,Prospective Student (Postgraduate),UK,General Awareness,SEG006-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG006,Prospective Student (Postgraduate),UK,General Awareness,SEG006-P002,General,No,,Which UK universities are well known among prospective learners from UK?,Visibility; Awareness
+SEG006,Prospective Student (Postgraduate),UK,Subject-Specific Reputation,SEG006-P003,AI,No,,Which UK universities have a strong reputation for AI?,Subject Reputation
+SEG006,Prospective Student (Postgraduate),UK,Subject-Specific Reputation,SEG006-P004,Engineering,No,,Which UK universities have a strong reputation for Engineering?,Subject Reputation
+SEG006,Prospective Student (Postgraduate),UK,Direct Comparison,SEG006-P005,Business,Yes,Bath,How does Southampton compare with Bath for Business?,Competitive Positioning
+SEG006,Prospective Student (Postgraduate),UK,Direct Comparison,SEG006-P006,Medicine,Yes,Bristol,How does Southampton compare with Bristol for Medicine?,Competitive Positioning
+SEG006,Prospective Student (Postgraduate),UK,Recruitment Decision,SEG006-P007,General,No,,I am a UK-based prospective student (postgraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG006,Prospective Student (Postgraduate),UK,Recruitment Decision,SEG006-P008,General,No,,Which UK universities would be a good fit for a UK-based prospective student (postgraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG007,Prospective Student (Postgraduate),India,General Awareness,SEG007-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG007,Prospective Student (Postgraduate),India,General Awareness,SEG007-P002,General,No,,Which UK universities are well known among prospective learners from India?,Visibility; Awareness
+SEG007,Prospective Student (Postgraduate),India,Subject-Specific Reputation,SEG007-P003,Engineering,No,,Which UK universities have a strong reputation for Engineering?,Subject Reputation
+SEG007,Prospective Student (Postgraduate),India,Subject-Specific Reputation,SEG007-P004,Business,No,,Which UK universities have a strong reputation for Business?,Subject Reputation
+SEG007,Prospective Student (Postgraduate),India,Direct Comparison,SEG007-P005,Medicine,Yes,Bristol,How does Southampton compare with Bristol for Medicine?,Competitive Positioning
+SEG007,Prospective Student (Postgraduate),India,Direct Comparison,SEG007-P006,Computer Science,Yes,Manchester,How does Southampton compare with Manchester for Computer Science?,Competitive Positioning
+SEG007,Prospective Student (Postgraduate),India,Recruitment Decision,SEG007-P007,General,No,,I am a India-based prospective student (postgraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG007,Prospective Student (Postgraduate),India,Recruitment Decision,SEG007-P008,General,No,,Which UK universities would be a good fit for a India-based prospective student (postgraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG008,Prospective Student (Postgraduate),China,General Awareness,SEG008-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG008,Prospective Student (Postgraduate),China,General Awareness,SEG008-P002,General,No,,Which UK universities are well known among prospective learners from China?,Visibility; Awareness
+SEG008,Prospective Student (Postgraduate),China,Subject-Specific Reputation,SEG008-P003,Business,No,,Which UK universities have a strong reputation for Business?,Subject Reputation
+SEG008,Prospective Student (Postgraduate),China,Subject-Specific Reputation,SEG008-P004,Medicine,No,,Which UK universities have a strong reputation for Medicine?,Subject Reputation
+SEG008,Prospective Student (Postgraduate),China,Direct Comparison,SEG008-P005,Computer Science,Yes,Manchester,How does Southampton compare with Manchester for Computer Science?,Competitive Positioning
+SEG008,Prospective Student (Postgraduate),China,Direct Comparison,SEG008-P006,AI,Yes,Durham,How does Southampton compare with Durham for AI?,Competitive Positioning
+SEG008,Prospective Student (Postgraduate),China,Recruitment Decision,SEG008-P007,General,No,,I am a China-based prospective student (postgraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG008,Prospective Student (Postgraduate),China,Recruitment Decision,SEG008-P008,General,No,,Which UK universities would be a good fit for a China-based prospective student (postgraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG009,Prospective Student (Postgraduate),UAE,General Awareness,SEG009-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG009,Prospective Student (Postgraduate),UAE,General Awareness,SEG009-P002,General,No,,Which UK universities are well known among prospective learners from UAE?,Visibility; Awareness
+SEG009,Prospective Student (Postgraduate),UAE,Subject-Specific Reputation,SEG009-P003,Medicine,No,,Which UK universities have a strong reputation for Medicine?,Subject Reputation
+SEG009,Prospective Student (Postgraduate),UAE,Subject-Specific Reputation,SEG009-P004,Computer Science,No,,Which UK universities have a strong reputation for Computer Science?,Subject Reputation
+SEG009,Prospective Student (Postgraduate),UAE,Direct Comparison,SEG009-P005,AI,Yes,Durham,How does Southampton compare with Durham for AI?,Competitive Positioning
+SEG009,Prospective Student (Postgraduate),UAE,Direct Comparison,SEG009-P006,Engineering,Yes,Warwick,How does Southampton compare with Warwick for Engineering?,Competitive Positioning
+SEG009,Prospective Student (Postgraduate),UAE,Recruitment Decision,SEG009-P007,General,No,,I am a UAE-based prospective student (postgraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG009,Prospective Student (Postgraduate),UAE,Recruitment Decision,SEG009-P008,General,No,,Which UK universities would be a good fit for a UAE-based prospective student (postgraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG010,Prospective Student (Postgraduate),Hong Kong,General Awareness,SEG010-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG010,Prospective Student (Postgraduate),Hong Kong,General Awareness,SEG010-P002,General,No,,Which UK universities are well known among prospective learners from Hong Kong?,Visibility; Awareness
+SEG010,Prospective Student (Postgraduate),Hong Kong,Subject-Specific Reputation,SEG010-P003,Computer Science,No,,Which UK universities have a strong reputation for Computer Science?,Subject Reputation
+SEG010,Prospective Student (Postgraduate),Hong Kong,Subject-Specific Reputation,SEG010-P004,AI,No,,Which UK universities have a strong reputation for AI?,Subject Reputation
+SEG010,Prospective Student (Postgraduate),Hong Kong,Direct Comparison,SEG010-P005,Engineering,Yes,Warwick,How does Southampton compare with Warwick for Engineering?,Competitive Positioning
+SEG010,Prospective Student (Postgraduate),Hong Kong,Direct Comparison,SEG010-P006,Business,Yes,Bath,How does Southampton compare with Bath for Business?,Competitive Positioning
+SEG010,Prospective Student (Postgraduate),Hong Kong,Recruitment Decision,SEG010-P007,General,No,,I am a Hong Kong-based prospective student (postgraduate) looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG010,Prospective Student (Postgraduate),Hong Kong,Recruitment Decision,SEG010-P008,General,No,,Which UK universities would be a good fit for a Hong Kong-based prospective student (postgraduate) seeking strong outcomes and opportunities?,Recommendation Rate
+SEG011,Research Professional,UK,General Awareness,SEG011-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG011,Research Professional,UK,General Awareness,SEG011-P002,General,No,,Which UK universities are well known among prospective learners from UK?,Visibility; Awareness
+SEG011,Research Professional,UK,Subject-Specific Reputation,SEG011-P003,AI,No,,Which UK universities have a strong reputation for AI?,Subject Reputation
+SEG011,Research Professional,UK,Subject-Specific Reputation,SEG011-P004,Engineering,No,,Which UK universities have a strong reputation for Engineering?,Subject Reputation
+SEG011,Research Professional,UK,Direct Comparison,SEG011-P005,Business,Yes,Bath,How does Southampton compare with Bath for Business?,Competitive Positioning
+SEG011,Research Professional,UK,Direct Comparison,SEG011-P006,Medicine,Yes,Bristol,How does Southampton compare with Bristol for Medicine?,Competitive Positioning
+SEG011,Research Professional,UK,Recruitment Decision,SEG011-P007,General,No,,I am a UK-based research professional looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG011,Research Professional,UK,Recruitment Decision,SEG011-P008,General,No,,Which UK universities would be a good fit for a UK-based research professional seeking strong outcomes and opportunities?,Recommendation Rate
+SEG012,Research Professional,India,General Awareness,SEG012-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG012,Research Professional,India,General Awareness,SEG012-P002,General,No,,Which UK universities are well known among prospective learners from India?,Visibility; Awareness
+SEG012,Research Professional,India,Subject-Specific Reputation,SEG012-P003,Engineering,No,,Which UK universities have a strong reputation for Engineering?,Subject Reputation
+SEG012,Research Professional,India,Subject-Specific Reputation,SEG012-P004,Business,No,,Which UK universities have a strong reputation for Business?,Subject Reputation
+SEG012,Research Professional,India,Direct Comparison,SEG012-P005,Medicine,Yes,Bristol,How does Southampton compare with Bristol for Medicine?,Competitive Positioning
+SEG012,Research Professional,India,Direct Comparison,SEG012-P006,Computer Science,Yes,Manchester,How does Southampton compare with Manchester for Computer Science?,Competitive Positioning
+SEG012,Research Professional,India,Recruitment Decision,SEG012-P007,General,No,,I am a India-based research professional looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG012,Research Professional,India,Recruitment Decision,SEG012-P008,General,No,,Which UK universities would be a good fit for a India-based research professional seeking strong outcomes and opportunities?,Recommendation Rate
+SEG013,Research Professional,China,General Awareness,SEG013-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG013,Research Professional,China,General Awareness,SEG013-P002,General,No,,Which UK universities are well known among prospective learners from China?,Visibility; Awareness
+SEG013,Research Professional,China,Subject-Specific Reputation,SEG013-P003,Business,No,,Which UK universities have a strong reputation for Business?,Subject Reputation
+SEG013,Research Professional,China,Subject-Specific Reputation,SEG013-P004,Medicine,No,,Which UK universities have a strong reputation for Medicine?,Subject Reputation
+SEG013,Research Professional,China,Direct Comparison,SEG013-P005,Computer Science,Yes,Manchester,How does Southampton compare with Manchester for Computer Science?,Competitive Positioning
+SEG013,Research Professional,China,Direct Comparison,SEG013-P006,AI,Yes,Durham,How does Southampton compare with Durham for AI?,Competitive Positioning
+SEG013,Research Professional,China,Recruitment Decision,SEG013-P007,General,No,,I am a China-based research professional looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG013,Research Professional,China,Recruitment Decision,SEG013-P008,General,No,,Which UK universities would be a good fit for a China-based research professional seeking strong outcomes and opportunities?,Recommendation Rate
+SEG014,Research Professional,UAE,General Awareness,SEG014-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG014,Research Professional,UAE,General Awareness,SEG014-P002,General,No,,Which UK universities are well known among prospective learners from UAE?,Visibility; Awareness
+SEG014,Research Professional,UAE,Subject-Specific Reputation,SEG014-P003,Medicine,No,,Which UK universities have a strong reputation for Medicine?,Subject Reputation
+SEG014,Research Professional,UAE,Subject-Specific Reputation,SEG014-P004,Computer Science,No,,Which UK universities have a strong reputation for Computer Science?,Subject Reputation
+SEG014,Research Professional,UAE,Direct Comparison,SEG014-P005,AI,Yes,Durham,How does Southampton compare with Durham for AI?,Competitive Positioning
+SEG014,Research Professional,UAE,Direct Comparison,SEG014-P006,Engineering,Yes,Warwick,How does Southampton compare with Warwick for Engineering?,Competitive Positioning
+SEG014,Research Professional,UAE,Recruitment Decision,SEG014-P007,General,No,,I am a UAE-based research professional looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG014,Research Professional,UAE,Recruitment Decision,SEG014-P008,General,No,,Which UK universities would be a good fit for a UAE-based research professional seeking strong outcomes and opportunities?,Recommendation Rate
+SEG015,Research Professional,Hong Kong,General Awareness,SEG015-P001,General,No,,What are some well-regarded universities in the UK for students today?,Visibility; Awareness
+SEG015,Research Professional,Hong Kong,General Awareness,SEG015-P002,General,No,,Which UK universities are well known among prospective learners from Hong Kong?,Visibility; Awareness
+SEG015,Research Professional,Hong Kong,Subject-Specific Reputation,SEG015-P003,Computer Science,No,,Which UK universities have a strong reputation for Computer Science?,Subject Reputation
+SEG015,Research Professional,Hong Kong,Subject-Specific Reputation,SEG015-P004,AI,No,,Which UK universities have a strong reputation for AI?,Subject Reputation
+SEG015,Research Professional,Hong Kong,Direct Comparison,SEG015-P005,Engineering,Yes,Warwick,How does Southampton compare with Warwick for Engineering?,Competitive Positioning
+SEG015,Research Professional,Hong Kong,Direct Comparison,SEG015-P006,Business,Yes,Bath,How does Southampton compare with Bath for Business?,Competitive Positioning
+SEG015,Research Professional,Hong Kong,Recruitment Decision,SEG015-P007,General,No,,I am a Hong Kong-based research professional looking for a respected UK institution. Which universities should I consider?,Recommendation Rate
+SEG015,Research Professional,Hong Kong,Recruitment Decision,SEG015-P008,General,No,,Which UK universities would be a good fit for a Hong Kong-based research professional seeking strong outcomes and opportunities?,Recommendation Rate

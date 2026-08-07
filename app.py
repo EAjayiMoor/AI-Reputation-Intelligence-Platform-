@@ -6,7 +6,7 @@ from src.ui import apply_moorhouse_theme, render_page_header
 
 st.set_page_config(
     page_title='AI Reputation Intelligence Platform',
-    page_icon='🎯',
+    page_icon=':material/track_changes:',
     layout='wide',
 )
 
@@ -15,7 +15,6 @@ render_page_header(
     'AI reputation intelligence platform',
     'University of Southampton visibility and reputation analytics',
     eyebrow='Overview',
-    icon='🏢',
 )
 
 st.markdown(

@@ -7,4 +7,26 @@ primaryColor = "#3c1053"
 backgroundColor = "#fbfafb"
 secondaryBackgroundColor = "#f5f3f6"
 textColor = "#181018"
-font = "sans serif"
+linkColor = "#3c1053"
+borderColor = "#e3dfe5"
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "6px"
+buttonRadius = "6px"
+font = "Poppins:https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+headingFont = "Poppins:https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+baseFontSize = 14
+baseFontWeight = 400
+headingFontSizes = ["28px", "20px", "18px", "16px", "14px", "12px"]
+headingFontWeights = [600, 600, 600, 500, 500, 500]
+chartCategoricalColors = ["#3c1053", "#00ab8e", "#e48949", "#186e7e", "#5c068c", "#bdb6b9"]
+chartSequentialColors = ["#f5f3f6", "#ebe4ef", "#ded1e5", "#cfb9d9", "#bd9aca", "#a879ba", "#8e55a8", "#733397", "#5c068c", "#3c1053"]
+dataframeBorderColor = "#e3dfe5"
+dataframeHeaderBackgroundColor = "#f5f3f6"
+
+[theme.sidebar]
+backgroundColor = "#f5f3f6"
+secondaryBackgroundColor = "#ebe7ed"
+textColor = "#181018"
+primaryColor = "#3c1053"
+borderColor = "#e3dfe5"

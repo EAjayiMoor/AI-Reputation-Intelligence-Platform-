@@ -6,6 +6,7 @@ import re
 import pandas as pd
 import streamlit as st
 
+from src.analysis import prompt_names_institution
 from src.execution import load_openrouter_results
 from src.ingestion.validators import (
     PROMPT_REQUIRED_COLUMNS,
@@ -14,11 +15,19 @@ from src.ingestion.validators import (
 )
 from src.scoring import score_results
 
-DEFAULT_PROMPTS_PATH = Path('data/Southampton_GEO_6Personas_120Prompts.csv')
-DEFAULT_RESULTS_PATH = Path('data/sample_results.csv')
-DEFAULT_OPENROUTER_RESULTS_PATH = Path('data/openrouter_results.csv')
+DEFAULT_PROMPTS_PATH = Path('data/Southampton_GEO_PromptBank_v2_15Segments_120Prompts 1.csv')
+DEFAULT_RESULTS_PATH = Path('data/openrouter_results.csv')
 
-FILTER_COLUMNS = ['Market', 'Subject', 'Persona', 'ExpertiseArea', 'Intent', 'Platform']
+FILTER_COLUMNS = [
+    'PromptMentionType',
+    'Market',
+    'Subject',
+    'Persona',
+    'ExpertiseArea',
+    'Intent',
+    'ModelName',
+    'Platform',
+]
 OUTPUT_COLUMNS = [
     'ResponseText',
     'CitationSources',
@@ -44,11 +53,17 @@ def normalise_prompt_bank_frame(frame: pd.DataFrame) -> pd.DataFrame:
         working['Organisation'] = 'University of Southampton'
 
     if 'Market' not in working.columns:
-        source_market = working['country'] if 'country' in working.columns else working['Market']
-        working['Market'] = source_market.fillna('Unknown')
+        if 'market' in working.columns:
+            working['Market'] = working['market']
+        elif 'country' in working.columns:
+            working['Market'] = working['country']
+        else:
+            working['Market'] = 'Unknown'
 
     if 'Persona' not in working.columns:
-        if 'persona_name' in working.columns:
+        if 'persona' in working.columns:
+            working['Persona'] = working['persona']
+        elif 'persona_name' in working.columns:
             working['Persona'] = working['persona_name']
         elif 'persona_type' in working.columns:
             working['Persona'] = working['persona_type']
@@ -60,19 +75,40 @@ def normalise_prompt_bank_frame(frame: pd.DataFrame) -> pd.DataFrame:
 
     if 'ExpertiseArea' not in working.columns:
         working['ExpertiseArea'] = (
-            working['expected_analysis_dimension'] if 'expected_analysis_dimension' in working.columns else ''
+            working['geo_objective']
+            if 'geo_objective' in working.columns
+            else working['expected_analysis_dimension']
+            if 'expected_analysis_dimension' in working.columns
+            else ''
         )
 
     if 'Intent' not in working.columns:
-        working['Intent'] = (
-            working['prompt_type'] if 'prompt_type' in working.columns else working['prompt_category']
-        )
+        if 'intent' in working.columns:
+            working['Intent'] = working['intent']
+        elif 'prompt_type' in working.columns:
+            working['Intent'] = working['prompt_type']
+        elif 'prompt_category' in working.columns:
+            working['Intent'] = working['prompt_category']
+        else:
+            working['Intent'] = ''
 
     if 'Platform' not in working.columns:
         working['Platform'] = 'OpenRouter'
 
     if 'Prompt' not in working.columns:
         working['Prompt'] = working['prompt_text'] if 'prompt_text' in working.columns else ''
+
+    working['PromptMentionType'] = (
+        working['Prompt']
+        .fillna('')
+        .astype(str)
+        .str.contains(r'\bsouthampton\b', case=False, regex=True)
+        .map({True: 'Prompted/direct', False: 'Organic'})
+    )
+    working['CompetitorPromptEligible'] = ~working.apply(
+        lambda row: prompt_names_institution(row.get('Prompt', ''), row.get('Intent', '')),
+        axis=1,
+    )
 
     if 'PromptSource' not in working.columns:
         working['PromptSource'] = 'generated'
@@ -83,20 +119,20 @@ def normalise_prompt_bank_frame(frame: pd.DataFrame) -> pd.DataFrame:
     if 'GenerationMethod' not in working.columns:
         working['GenerationMethod'] = 'persona_bank'
 
-    for column in ['PromptID', 'Organisation', 'Market', 'Persona', 'Subject', 'ExpertiseArea', 'Intent', 'Platform', 'Prompt', 'PromptSource', 'PersonaTemplateID', 'GenerationMethod']:
+    for column in ['PromptID', 'Organisation', 'Market', 'Persona', 'Subject', 'ExpertiseArea', 'Intent', 'Platform', 'Prompt', 'PromptMentionType', 'CompetitorPromptEligible', 'PromptSource', 'PersonaTemplateID', 'GenerationMethod']:
         if column not in working.columns:
             working[column] = ''
 
     return working.reset_index(drop=True)
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, ttl=5)
 def load_core_data(
     prompts_path: str | Path = DEFAULT_PROMPTS_PATH,
     results_path: str | Path = DEFAULT_RESULTS_PATH,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     prompts_df = normalise_prompt_bank_frame(pd.read_csv(prompts_path))
-    results_df = pd.read_csv(results_path)
+    results_df = load_openrouter_results(results_path)
 
     prompt_validation = validate_required_columns(prompts_df, PROMPT_REQUIRED_COLUMNS)
     result_validation = validate_required_columns(results_df, RESULT_REQUIRED_COLUMNS)
@@ -119,57 +155,31 @@ def load_core_data(
     return prompts_df, results_df, scored
 
 
-@st.cache_data(show_spinner=False)
-def load_core_data_with_source(
-    source: str,
-    prompts_path: str | Path = DEFAULT_PROMPTS_PATH,
-    sample_results_path: str | Path = DEFAULT_RESULTS_PATH,
-    openrouter_results_path: str | Path = DEFAULT_OPENROUTER_RESULTS_PATH,
-) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    prompts_df = normalise_prompt_bank_frame(pd.read_csv(prompts_path))
-    prompt_validation = validate_required_columns(prompts_df, PROMPT_REQUIRED_COLUMNS)
-    if not prompt_validation.valid:
-        missing = ', '.join(prompt_validation.missing_columns)
-        raise ValueError(f'Prompt data is missing required columns: {missing}')
-
-    if source == 'OpenRouter Captured Results':
-        results_df = load_openrouter_results(openrouter_results_path)
-        result_validation = validate_required_columns(results_df, RESULT_REQUIRED_COLUMNS)
-        if not result_validation.valid:
-            missing = ', '.join(result_validation.missing_columns)
-            raise ValueError(f'OpenRouter results are missing required columns: {missing}')
-        merged = results_df.merge(prompts_df, on=['PromptID'], how='left', suffixes=('_result', ''))
-    else:
-        results_df = pd.read_csv(sample_results_path)
-        result_validation = validate_required_columns(results_df, RESULT_REQUIRED_COLUMNS)
-        if not result_validation.valid:
-            missing = ', '.join(result_validation.missing_columns)
-            raise ValueError(f'Results data is missing required columns: {missing}')
-        merged = results_df.merge(
-            prompts_df,
-            on=['PromptID', 'Platform'],
-            how='left',
-            suffixes=('_result', ''),
-        )
-
-    scored = score_results(merged)
-    return prompts_df, results_df, scored
-
-
-def render_data_source_selector(key: str = 'data_source') -> str:
-    return st.sidebar.selectbox(
-        'Results Source',
-        options=['Sample Results', 'OpenRouter Captured Results'],
-        index=0,
-        key=key,
-    )
-
-
 def render_sidebar_filters(df: pd.DataFrame, key_prefix: str = 'global') -> dict[str, str]:
     st.sidebar.header('Filters')
     selections: dict[str, str] = {}
+    filter_keys = [f'{key_prefix}_{column}' for column in FILTER_COLUMNS if column in df.columns]
+
+    def clear_filters() -> None:
+        for filter_key in filter_keys:
+            st.session_state.pop(filter_key, None)
+
+    st.sidebar.button(
+        'Clear filters',
+        key=f'{key_prefix}_clear_filters',
+        icon=':material/filter_alt_off:',
+        on_click=clear_filters,
+    )
 
     for column in FILTER_COLUMNS:
+        if column not in df.columns:
+            continue
+        if column == 'PromptMentionType':
+            selections[column] = render_prompt_mention_mode_selector(
+                key=f'{key_prefix}_{column}',
+                default='Organic',
+            )
+            continue
         values = sorted(value for value in df[column].dropna().astype(str).unique())
         options = ['All', *values]
         selections[column] = st.sidebar.selectbox(
@@ -212,3 +222,29 @@ def apply_prompt_scope_filter(df: pd.DataFrame, scope: str) -> pd.DataFrame:
         working = working[source == 'generated']
 
     return working.reset_index(drop=True)
+
+
+def render_prompt_mention_mode_selector(
+    key: str = 'prompt_mention_mode',
+    default: str = 'Organic',
+) -> str:
+    mode = st.sidebar.segmented_control(
+        'Prompt mention mode',
+        options=['Organic', 'Prompted/direct', 'All'],
+        default=default,
+        key=key,
+        help=(
+            'Organic prompts do not name Southampton. Prompted/direct prompts explicitly include '
+            'Southampton in the prompt text.'
+        ),
+    )
+    st.sidebar.caption(
+        'Organic = Southampton is not named in the prompt. Prompted/direct = Southampton is explicitly named.'
+    )
+    return mode or default
+
+
+def apply_prompt_mention_mode_filter(df: pd.DataFrame, mode: str) -> pd.DataFrame:
+    if mode == 'All' or 'PromptMentionType' not in df.columns:
+        return df.reset_index(drop=True)
+    return df[df['PromptMentionType'].astype(str) == mode].reset_index(drop=True)

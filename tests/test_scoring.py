@@ -70,3 +70,19 @@ def test_rank_nan_for_visible_record_defaults_to_unknown_rank_score() -> None:
 
     scored = score_results(raw)
     assert scored.iloc[0]['rank_score_row'] == 40
+
+
+def test_average_rank_is_none_when_live_outputs_have_no_rank_values() -> None:
+    raw = pd.DataFrame(
+        [
+            {
+                'PromptID': 'P001',
+                'SouthamptonVisible': 1,
+                'SouthamptonRank': '',
+                'CitationSources': '',
+            }
+        ]
+    )
+
+    overall = aggregate_scores(score_results(raw)).iloc[0]
+    assert overall['average_rank'] is None

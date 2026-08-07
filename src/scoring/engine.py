@@ -102,10 +102,15 @@ def aggregate_scores(scored_df: pd.DataFrame, group_columns: list[str] | None = 
             row.update(dict(zip(group_columns, keys)))
 
         visible_only = frame[frame['visible_bool']]
+        average_rank = visible_only['rank_float'].mean() if not visible_only.empty else None
 
         row['prompt_count'] = int(frame['PromptID'].nunique())
         row['southampton_mentions'] = int(frame['visible_bool'].sum())
-        row['average_rank'] = round(float(visible_only['rank_float'].mean()), 2) if not visible_only.empty else None
+        row['average_rank'] = (
+            round(float(average_rank), 2)
+            if average_rank is not None and not pd.isna(average_rank)
+            else None
+        )
         row['visibility_score'] = round(float(frame['visibility_score_row'].mean()), 2)
         row['rank_score'] = round(float(frame['rank_score_row'].mean()), 2)
         row['citation_score'] = round(float(frame['citation_score_row'].mean()), 2)
@@ -116,6 +121,7 @@ def aggregate_scores(scored_df: pd.DataFrame, group_columns: list[str] | None = 
 
 
 def competitor_mentions(scored_df: pd.DataFrame, group_column: str | None = None) -> pd.DataFrame:
+    scored_df = _competitor_eligible_frame(scored_df)
     if scored_df.empty:
         return pd.DataFrame(columns=['Competitor', 'Mentions'])
 
@@ -144,3 +150,90 @@ def competitor_mentions(scored_df: pd.DataFrame, group_column: str | None = None
 
     aggregated = frame.groupby('Competitor', as_index=False)['Mentions'].sum()
     return aggregated.sort_values('Mentions', ascending=False)
+
+
+def institution_mention_index(scored_df: pd.DataFrame, competitor_limit: int = 10) -> pd.DataFrame:
+    """Compare Southampton with leading competitors on a top-institution-equals-100 index."""
+    columns = ['Institution', 'Mentions', 'RelativeMentionIndex', 'InstitutionType']
+    scored_df = _competitor_eligible_frame(scored_df)
+    if scored_df.empty:
+        return pd.DataFrame(columns=columns)
+
+    competitors = competitor_mentions(scored_df)
+    competitors = competitors[
+        ~competitors['Competitor'].astype(str).str.contains('southampton', case=False, na=False)
+    ].head(competitor_limit)
+    comparison = competitors.rename(columns={'Competitor': 'Institution'}).copy()
+    comparison['InstitutionType'] = 'Competitor'
+
+    southampton = pd.DataFrame(
+        [{
+            'Institution': 'University of Southampton',
+            'Mentions': int(scored_df['visible_bool'].sum()),
+            'InstitutionType': 'Southampton',
+        }]
+    )
+    comparison = pd.concat([comparison, southampton], ignore_index=True)
+    maximum_mentions = int(comparison['Mentions'].max())
+    comparison['RelativeMentionIndex'] = (
+        comparison['Mentions'].div(maximum_mentions).mul(100).round(1)
+        if maximum_mentions > 0
+        else 0.0
+    )
+    return comparison[columns].sort_values('RelativeMentionIndex', ascending=False).reset_index(drop=True)
+
+
+def institution_mentions_by_model(
+    scored_df: pd.DataFrame,
+    competitor_limit: int = 10,
+) -> pd.DataFrame:
+    """Return neutral-prompt institution mention counts for each captured model."""
+    columns = [
+        'Institution',
+        'InstitutionType',
+        'ModelName',
+        'Mentions',
+        'EligibleResponses',
+        'MentionRate',
+    ]
+    eligible = _competitor_eligible_frame(scored_df)
+    if eligible.empty or 'ModelName' not in eligible.columns:
+        return pd.DataFrame(columns=columns)
+
+    institutions = institution_mention_index(eligible, competitor_limit=competitor_limit)[
+        ['Institution', 'InstitutionType']
+    ]
+    rows: list[dict[str, object]] = []
+    for model_name, model_frame in eligible.groupby('ModelName', dropna=False):
+        competitor_counts = competitor_mentions(model_frame).set_index('Competitor')['Mentions']
+        eligible_responses = int(len(model_frame))
+        for _, institution_row in institutions.iterrows():
+            institution = str(institution_row['Institution'])
+            institution_type = str(institution_row['InstitutionType'])
+            mentions = (
+                int(model_frame['visible_bool'].sum())
+                if institution_type == 'Southampton'
+                else int(competitor_counts.get(institution, 0))
+            )
+            rows.append(
+                {
+                    'Institution': institution,
+                    'InstitutionType': institution_type,
+                    'ModelName': str(model_name),
+                    'Mentions': mentions,
+                    'EligibleResponses': eligible_responses,
+                    'MentionRate': round(mentions / eligible_responses * 100, 1),
+                }
+            )
+    return pd.DataFrame(rows, columns=columns)
+
+
+def _competitor_eligible_frame(scored_df: pd.DataFrame) -> pd.DataFrame:
+    """Exclude prompts that supplied an institution name from competitor analysis."""
+    if scored_df.empty:
+        return scored_df
+    if 'CompetitorPromptEligible' in scored_df.columns:
+        return scored_df[scored_df['CompetitorPromptEligible'].fillna(False).astype(bool)]
+    if 'PromptMentionType' in scored_df.columns:
+        return scored_df[scored_df['PromptMentionType'].astype(str) == 'Organic']
+    return scored_df

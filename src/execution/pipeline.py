@@ -4,6 +4,7 @@ import re
 
 import pandas as pd
 
+from src.analysis import extract_competitors, extract_southampton_rank
 from src.execution.openrouter_runner import OpenRouterConfig, OpenRouterRunResult, OpenRouterRunner
 from src.execution.storage import (
     append_openrouter_results,
@@ -13,6 +14,7 @@ from src.execution.storage import (
 
 
 DEFAULT_RESULTS_PATH = 'data/openrouter_results.csv'
+CHECKPOINT_SIZE = 10
 
 
 def _extract_citation_sources(response_text: str) -> str:
@@ -32,11 +34,13 @@ def _extract_citation_sources(response_text: str) -> str:
     return urls
 
 
-def _to_result_row(run: OpenRouterRunResult, index: int) -> dict[str, object]:
+def _to_result_row(run: OpenRouterRunResult, index: int, intent: str = '') -> dict[str, object]:
     response_text = run.response_text
     lower = response_text.lower()
     southampton_visible = 1 if 'southampton' in lower else 0
     citation_sources = _extract_citation_sources(response_text)
+    southampton_rank = extract_southampton_rank(response_text, intent=intent)
+    competitors = ', '.join(extract_competitors(response_text))
 
     return {
         'ResultID': f"OR_{run.run_batch_id}_{index:04d}",
@@ -44,8 +48,8 @@ def _to_result_row(run: OpenRouterRunResult, index: int) -> dict[str, object]:
         'Platform': 'OpenRouter',
         'ResponseText': response_text,
         'SouthamptonVisible': southampton_visible,
-        'SouthamptonRank': '',
-        'CompetitorsMentioned': '',
+        'SouthamptonRank': southampton_rank if southampton_rank is not None else '',
+        'CompetitorsMentioned': competitors,
         'CitationSources': citation_sources,
         'RunDate': run.run_date,
         'Provider': run.provider,
@@ -81,24 +85,47 @@ def run_pending_prompts_once(
             'failure_count': 0,
         }
 
-    run_results = runner.run_prompt_bank(pending_rows, dry_run=dry_run)
-
-    rows: list[dict[str, object]] = []
     success_count = 0
     failure_count = 0
-    for index, item in enumerate(run_results, start=1):
-        if item.success:
-            success_count += 1
-            rows.append(_to_result_row(item, index=index))
-        else:
-            failure_count += 1
+    combined = existing_results_df
+    intent_by_prompt = (
+        prompt_df.assign(_prompt_id=prompt_df['PromptID'].astype(str))
+        .drop_duplicates('_prompt_id')
+        .set_index('_prompt_id')['Intent']
+        .to_dict()
+        if 'Intent' in prompt_df.columns
+        else {}
+    )
 
-    combined = append_openrouter_results(results_path, rows)
+    # Checkpoint successful responses regularly so a long sweep can resume
+    # without repeating an entire model if the process is interrupted.
+    for chunk_start in range(0, len(pending_rows), CHECKPOINT_SIZE):
+        chunk = pending_rows[chunk_start:chunk_start + CHECKPOINT_SIZE]
+        run_results = runner.run_prompt_bank(chunk, dry_run=dry_run)
+        rows: list[dict[str, object]] = []
+
+        for chunk_index, item in enumerate(run_results, start=1):
+            result_index = chunk_start + chunk_index
+            if item.success:
+                success_count += 1
+                rows.append(
+                    _to_result_row(
+                        item,
+                        index=result_index,
+                        intent=str(intent_by_prompt.get(str(item.prompt_id), '')),
+                    )
+                )
+            else:
+                failure_count += 1
+
+        if rows:
+            combined = append_openrouter_results(results_path, rows)
+
     return combined, {
         'total_prompts': int(len(prompt_df)),
         'generated_prompts': int(len(generated_df)),
         'pending_prompts': int(len(pending_rows)),
-        'executed_prompts': int(len(run_results)),
+        'executed_prompts': int(len(pending_rows)),
         'success_count': int(success_count),
         'failure_count': int(failure_count),
     }

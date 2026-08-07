@@ -78,6 +78,7 @@ class OpenRouterRunner:
                 {'role': 'user', 'content': prompt_text},
             ],
             'temperature': 0.2,
+            'max_tokens': 1200,
         }
 
         req = request.Request(

@@ -19,12 +19,12 @@ Slice 2 (Core Analytics) is now in place:
 3. Start the app:
    - `streamlit run app.py`
 
-## Sample data files
+## Current data files
 
-- `data/sample_prompts.csv`
-- `data/sample_results.csv`
+- `data/Southampton_GEO_PromptBank_v2_15Segments_120Prompts 1.csv`
+- `data/openrouter_results.csv`
 
-The app loads these files by default.
+The app uses the V2 prompt bank and captured OpenRouter outputs throughout.
 
 ## Source hierarchy
 
