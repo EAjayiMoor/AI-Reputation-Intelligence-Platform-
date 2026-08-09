@@ -19,6 +19,11 @@ OPENROUTER_RESULTS_COLUMNS = [
     'RequestID',
     'ResponseID',
     'RunBatchID',
+    'PromptTokens',
+    'CompletionTokens',
+    'TotalTokens',
+    'CachedPromptTokens',
+    'APICost',
 ]
 
 
@@ -27,7 +32,7 @@ def load_openrouter_results(path: str | Path) -> pd.DataFrame:
     if not file_path.exists():
         return pd.DataFrame(columns=OPENROUTER_RESULTS_COLUMNS)
 
-    frame = pd.read_csv(file_path)
+    frame = pd.read_csv(file_path, encoding='utf-8')
     for column in OPENROUTER_RESULTS_COLUMNS:
         if column not in frame.columns:
             frame[column] = ''

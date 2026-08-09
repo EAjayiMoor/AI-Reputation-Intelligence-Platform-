@@ -7,6 +7,12 @@ from src.execution.storage import (
     load_openrouter_results,
     pending_prompt_rows,
 )
+from src.execution.uos_library import (
+    UOS_MODEL_MAP,
+    assigned_request_count,
+    load_uos_prompt_library,
+    run_assigned_uos_library,
+)
 
 __all__ = [
     'OpenRouterConfig',
@@ -19,4 +25,8 @@ __all__ = [
     'pending_prompt_rows',
     'run_model_sweep',
     'run_pending_prompts_once',
+    'UOS_MODEL_MAP',
+    'assigned_request_count',
+    'load_uos_prompt_library',
+    'run_assigned_uos_library',
 ]

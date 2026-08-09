@@ -10,6 +10,24 @@ from urllib import request
 OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
 
+def _optional_int(value: object) -> int | None:
+    if value is None or value == '':
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _optional_float(value: object) -> float | None:
+    if value is None or value == '':
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 @dataclass(frozen=True)
 class OpenRouterConfig:
     api_key: str
@@ -33,6 +51,11 @@ class OpenRouterRunResult:
     success: bool
     error_message: str | None
     run_date: str
+    prompt_tokens: int | None = None
+    completion_tokens: int | None = None
+    total_tokens: int | None = None
+    cached_prompt_tokens: int | None = None
+    api_cost: float | None = None
 
 
 class OpenRouterRunner:
@@ -63,6 +86,11 @@ class OpenRouterRunner:
                 success=True,
                 error_message=None,
                 run_date=run_date,
+                prompt_tokens=None,
+                completion_tokens=None,
+                total_tokens=None,
+                cached_prompt_tokens=None,
+                api_cost=None,
             )
 
         payload = {
@@ -97,6 +125,9 @@ class OpenRouterRunner:
             with request.urlopen(req, timeout=self._config.timeout_seconds) as response:
                 body = response.read().decode('utf-8')
             parsed = json.loads(body)
+            usage = parsed.get('usage') or {}
+            prompt_details = usage.get('prompt_tokens_details') or {}
+            cost_value = usage.get('cost')
             response_id = str(parsed.get('id', f'resp_{uuid.uuid4().hex[:12]}'))
             message = (
                 parsed.get('choices', [{}])[0]
@@ -115,6 +146,11 @@ class OpenRouterRunner:
                 success=True,
                 error_message=None,
                 run_date=run_date,
+                prompt_tokens=_optional_int(usage.get('prompt_tokens')),
+                completion_tokens=_optional_int(usage.get('completion_tokens')),
+                total_tokens=_optional_int(usage.get('total_tokens')),
+                cached_prompt_tokens=_optional_int(prompt_details.get('cached_tokens')),
+                api_cost=_optional_float(cost_value),
             )
         except Exception as exc:
             return OpenRouterRunResult(
@@ -130,7 +166,6 @@ class OpenRouterRunner:
                 error_message=str(exc),
                 run_date=run_date,
             )
-
     def run_prompt_bank(
         self,
         prompt_rows: list[dict[str, str]],

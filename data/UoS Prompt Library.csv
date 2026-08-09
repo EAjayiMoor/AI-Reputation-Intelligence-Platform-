@@ -1,0 +1,1017 @@
+PromptID,Market,Persona,Subject,Category,Prompt,Model 1,Model 2,Model 3
+,UK,Prospective Student (Undergraduate),General,University Overview,Which UK universities would be a good fit for someone like me?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities are known for offering the best overall student experience?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities consistently receive high student satisfaction ratings?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities are becoming increasingly popular with applicants?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities offer the best balance between academic quality and student life?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities are known for having a strong sense of community?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities have the most diverse student populations?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities are best suited to students who want a supportive environment?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities have the strongest campus culture?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,University Overview,Which universities have the best overall reputation among UK students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Academic Experience,Which universities are known for excellent teaching?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the most engaging learning experience?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Academic Experience,Which universities offer the best academic support for undergraduates?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Academic Experience,Which universities encourage students to gain practical experience during their degree?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the best access to lecturers and tutors?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Academic Experience,Which universities have the strongest undergraduate learning environment?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have the best graduate employment outcomes?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Careers & Employability,Which universities are most highly regarded by employers?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Careers & Employability,Which universities provide the strongest careers support?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the best placement and internship opportunities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have the strongest employer connections?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Careers & Employability,Which universities are best for building professional networks?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities offer the best student life?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities have the most active student societies?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities are known for welcoming first-year students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities offer the best balance between studying and social life?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities have the most vibrant student communities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities offer the widest range of extracurricular opportunities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Location,Which university cities are considered the best places to live as a student?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Location,Which universities are located in the safest student cities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Location,Which universities are best for students who enjoy city life?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Location,Which universities are best for students who prefer a campus environment?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Location,Which universities have the best transport links?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Location,Which universities are in the most affordable places to live?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Facilities,Which universities offer the best student accommodation?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Facilities,Which universities provide the best value for money?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Facilities,Which universities have the lowest living costs for students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Facilities,Which universities offer the most generous financial support?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Facilities,Which universities make it easiest to find accommodation?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities are known for excellent wellbeing support?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities provide the best academic support services?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities are best at supporting students through their first year?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities are particularly supportive of students from different backgrounds?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Student Experience,Which universities have the strongest student support services overall?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Reputation,Which universities have the happiest students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Reputation,Which universities are most highly recommended by recent graduates?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Reputation,Which universities exceed students' expectations?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Reputation,Which universities offer the best all-round undergraduate experience?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),General,Reputation,"If you could recommend five UK universities for an undergraduate, which would you choose and why?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which UK universities would be a good fit for postgraduate study?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities offer the best overall postgraduate experience?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities have the strongest reputation for postgraduate education?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities are particularly popular with postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities provide the best balance between academic quality and student experience?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities are known for supporting postgraduate students well?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities have the strongest postgraduate communities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities offer the most diverse postgraduate student population?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities are best for mature students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,University Overview,Which universities have the strongest overall reputation for postgraduate study?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Academic Experience,Which universities are known for excellent postgraduate teaching?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the best postgraduate learning environment?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Academic Experience,Which universities offer the strongest academic support for postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Academic Experience,Which universities give postgraduate students the best access to academics?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Academic Experience,Which universities encourage collaboration between students and researchers?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the best opportunities to develop advanced skills?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest research environment?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Research & Innovation,Which universities provide the best research facilities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer the best opportunities to work alongside leading academics?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest research culture?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Research & Innovation,Which universities provide the best opportunities to develop research experience?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest links with industry and research partners?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Careers & Employability,Which universities have the best postgraduate employment outcomes?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Careers & Employability,Which universities are most respected by employers for postgraduate qualifications?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Careers & Employability,Which universities provide the strongest postgraduate careers support?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Careers & Employability,Which universities have the best employer connections?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Careers & Employability,Which universities are best for career progression after postgraduate study?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Careers & Employability,Which universities provide the strongest professional networking opportunities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities offer the best postgraduate student experience?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities have the most active postgraduate communities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities make it easy to meet other postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities offer the best balance between study and personal life?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities provide the widest range of opportunities beyond the classroom?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Location,Which university cities are best for postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Location,Which universities are located in affordable cities for postgraduate study?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Location,Which universities are best for commuting students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Location,Which universities are located in cities with strong professional opportunities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Location,Which universities have the best transport links?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Facilities,Which universities offer the best accommodation for postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Facilities,Which universities provide the best value for money for postgraduate study?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Facilities,Which universities have the lowest living costs?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Facilities,Which universities offer the most generous postgraduate funding?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Facilities,Which universities provide the best financial support for postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities are known for excellent postgraduate wellbeing support?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities provide the strongest support services for postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities are particularly supportive of international and mature students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Student Experience,Which universities have the best overall support for postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Reputation,Which universities have the happiest postgraduate students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Reputation,Which universities receive the best reviews from postgraduate alumni?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Reputation,Which universities offer the best all-round postgraduate experience?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Reputation,Which universities would you most recommend for postgraduate study and why?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),General,Reputation,"If you could recommend five UK universities for postgraduate study, which would you choose and why?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which UK universities have the strongest overall research reputation?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities consistently produce world-leading research?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities are recognised as leaders in research excellence?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities have the strongest international research reputation?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities are known for delivering high-impact research?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities have the best balance of research quality and collaboration opportunities?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities have the strongest track record of research innovation?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities are regarded as the UK's leading research institutions?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities have the most influential research communities?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities would you recommend as the UK's top research universities?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities provide the best research environment for academics?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities offer the strongest research infrastructure?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,"Which universities have the best laboratories, facilities and research resources?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities provide the most supportive environment for research staff?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities encourage interdisciplinary research most effectively?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities have the strongest research culture?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities provide the best opportunities for collaborative research?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities invest the most in research capability?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities are best equipped for large-scale research projects?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities have the strongest ecosystem for innovation and discovery?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities are the best research partners for external organisations?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest track record of industry collaboration?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities are most open to collaborative research partnerships?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities have the best partnerships with businesses?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest relationships with government and public sector organisations?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities have the most extensive international research partnerships?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities are best at translating research into real-world impact?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities are known for successful knowledge exchange?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest innovation ecosystems?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities are easiest to collaborate with on research projects?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities secure the most competitive research funding?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities have the strongest record of winning UK research grants?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities attract the highest levels of external research investment?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities are most successful at commercialising research?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities have the strongest support for research funding applications?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities are best at attracting industrial research investment?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities demonstrate the greatest societal impact through research?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities have the strongest record of research influencing policy?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities are recognised for delivering impactful research outcomes?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities produce research with the greatest commercial impact?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research Impact,Which universities have the strongest record of turning research into innovation?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Academic Experience,Which universities attract the world's leading researchers?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Academic Experience,Which universities have the strongest concentration of research talent?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Academic Experience,Which universities are best for building collaborations with leading academics?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Academic Experience,Which universities have the strongest postgraduate and doctoral research communities?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Academic Experience,Which universities are best at developing early-career researchers?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities would make the strongest long-term research partner?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities offer the greatest opportunities for strategic research collaboration?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Collaboration & Partnerships,Which universities combine research excellence with strong industry engagement?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,Which universities would you recommend for establishing a major research partnership?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,General,Research & Innovation,"If you could recommend five UK universities for research collaboration, which would you choose and why?",OpenAI,Anthropic,Gemini
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities are most respected by employers in China?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the highest QS rankings?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest international reputation?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities are considered the most prestigious?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities would you recommend for international students from China?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities offer the best overall reputation and value?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities are becoming more popular with Chinese students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest global alumni networks?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,Which UK universities are best recognised by multinational employers?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Reputation,"If you could recommend five UK universities for a Chinese undergraduate student, which would you choose?",DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Academic Experience,Which UK universities are known for excellent undergraduate teaching?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the best learning experience for international students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Academic Experience,Which universities have the strongest academic support services?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Academic Experience,Which universities offer the most practical learning opportunities?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the best opportunities to improve English language skills?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Academic Experience,Which universities are best for developing international experience?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have the best graduate employment outcomes?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Careers & Employability,Which UK universities are most valued by employers in China?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Careers & Employability,Which universities provide the strongest careers support for international students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the best internship opportunities?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Careers & Employability,Which universities provide the best opportunities to stay and work in the UK after graduation?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have graduates working at leading global companies?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities have the largest Chinese student communities?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities provide the best support for Chinese students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities offer the best international student experience?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities are considered the safest for international students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities have the strongest student communities?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities provide the best campus facilities?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Location,Which UK university cities are best for Chinese students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Location,Which university cities have the lowest living costs?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Location,Which universities are located in cities with good transport connections?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Location,Which university cities provide the best quality of life?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Location,Which universities are located in cities with many employment opportunities?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Location,Which universities are easiest to travel to from China?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Cost & Value,Which universities provide the best value for tuition fees?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Cost & Value,Which universities offer the most scholarships for Chinese students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Cost & Value,Which universities have the lowest overall living costs?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Cost & Value,Which universities provide the best financial support for international students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Cost & Value,Which universities give the best return on investment?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities are most welcoming to Chinese students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities have the strongest international student communities?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities offer the best opportunities to build an international network?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,Student Experience,Which universities have graduates who are successful internationally?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,University Overview,Which UK universities would best prepare me for an international career?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,University Overview,"Which universities provide the best balance between reputation, cost and career prospects?",DeepSeek,,
+,China,Prospective Student (Undergraduate),General,University Overview,Which universities offer the best overall experience for Chinese undergraduate students?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,University Overview,Which universities are most recommended by Chinese alumni?,DeepSeek,,
+,China,Prospective Student (Undergraduate),General,University Overview,"If I want to maximise my future career opportunities, which UK universities should I consider?",DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Reputation,Which UK universities have the strongest reputation for postgraduate study?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Reputation,Which postgraduate universities are most respected by employers in China?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Reputation,Which universities have the best global rankings for postgraduate education?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Reputation,Which universities are most popular with Chinese postgraduate students?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Reputation,Which universities offer the strongest international reputation?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Reputation,Which universities provide the best overall postgraduate experience?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the strongest postgraduate teaching?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Academic Experience,Which universities offer the best postgraduate supervision?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the strongest Academic Experience for master's students?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Academic Experience,Which universities offer the best opportunities to develop professional skills?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the best access to leading academics?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Academic Experience,Which universities have the strongest postgraduate learning communities?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest research environments?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Research & Innovation,Which universities provide the best research facilities?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer the strongest links between research and industry?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Research & Innovation,Which universities provide the best opportunities to work on innovative research?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest international research collaborations?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Research & Innovation,Which universities are recognised for research excellence?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Careers & Employability,Which universities have the strongest postgraduate employment outcomes?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Careers & Employability,Which universities are best for career progression after a master's degree?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Careers & Employability,Which universities offer the strongest employer connections?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Careers & Employability,Which universities provide the best opportunities to work in the UK after graduation?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Careers & Employability,Which universities are best recognised by employers in China?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Careers & Employability,Which universities have graduates working in global organisations?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Student Experience,Which universities provide the best experience for international postgraduate students?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Student Experience,Which universities have the strongest postgraduate communities?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Student Experience,Which universities provide the best support for Chinese postgraduate students?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Student Experience,Which universities offer the safest and most welcoming environments?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Location,Which UK university cities provide the best quality of life for postgraduate students?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Location,Which universities provide the best value for money?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Location,Which universities offer the most scholarships for international students?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Location,Which universities have the lowest cost of living?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,Location,Which universities provide the best accommodation for postgraduate students?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,International Recognition,Which universities have the strongest global alumni networks?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,International Recognition,Which universities are most respected internationally?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,International Recognition,Which universities produce graduates with successful international careers?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,International Recognition,Which universities offer the strongest global networking opportunities?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,University Overview,Which universities would you recommend to maximise my international career opportunities?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,University Overview,"Which universities offer the best balance between research quality, reputation and employability?",DeepSeek,,
+,China,Prospective Student (Postgraduate),General,University Overview,Which universities provide the strongest long-term career value?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,University Overview,Which universities are most recommended by international graduates?,DeepSeek,,
+,China,Prospective Student (Postgraduate),General,University Overview,"If you could recommend five UK universities for a Chinese postgraduate student, which would you choose and why?",DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which UK universities have the strongest global research reputation?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities produce the most highly cited research?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities lead the UK in research excellence?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities have the strongest international research influence?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities are recognised as global innovation leaders?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities would you recommend for high-impact research collaboration?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities have the best research infrastructure?,DeepSeek,,
+,China,Research Professional,General,Facilities,Which universities provide the strongest laboratory facilities?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities have the best research platforms and equipment?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities invest most heavily in research capability?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities provide the strongest environment for collaborative research?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities have the strongest international research partnerships?,DeepSeek,,
+,China,Research Professional,General,Collaboration & Partnerships,Which universities collaborate most successfully with industry?,DeepSeek,,
+,China,Research Professional,General,Collaboration & Partnerships,Which universities are best at building long-term international research partnerships?,DeepSeek,,
+,China,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest knowledge exchange activities?,DeepSeek,,
+,China,Research Professional,General,Collaboration & Partnerships,Which universities are most open to international research collaboration?,DeepSeek,,
+,China,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest partnerships with Chinese institutions?,DeepSeek,,
+,China,Research Professional,General,Funding & Innovation,Which universities secure the highest levels of research funding?,DeepSeek,,
+,China,Research Professional,General,Funding & Innovation,Which universities have the strongest success in Horizon Europe and UKRI funding?,DeepSeek,,
+,China,Research Professional,General,Funding & Innovation,Which universities attract the most industrial research investment?,DeepSeek,,
+,China,Research Professional,General,Funding & Innovation,Which universities are best at commercialising research?,DeepSeek,,
+,China,Research Professional,General,Funding & Innovation,Which universities produce the most research-driven innovation?,DeepSeek,,
+,China,Research Professional,General,Research Impact,Which universities produce research with the greatest societal impact?,DeepSeek,,
+,China,Research Professional,General,Research Impact,Which universities have the strongest record of technology transfer?,DeepSeek,,
+,China,Research Professional,General,Research Impact,Which universities have the highest research citation impact?,DeepSeek,,
+,China,Research Professional,General,Research Impact,Which universities produce research that influences international policy?,DeepSeek,,
+,China,Research Professional,General,Research Impact,Which universities have the strongest record of research commercialisation?,DeepSeek,,
+,China,Research Professional,General,Academic Experience,Which universities attract the world's leading researchers?,DeepSeek,,
+,China,Research Professional,General,Academic Experience,Which universities have the strongest concentration of internationally recognised academics?,DeepSeek,,
+,China,Research Professional,General,Academic Experience,Which universities are best for recruiting talented doctoral researchers?,DeepSeek,,
+,China,Research Professional,General,Academic Experience,Which universities have the strongest interdisciplinary research teams?,DeepSeek,,
+,China,Research Professional,General,Academic Experience,Which universities provide the best opportunities to collaborate with leading experts?,DeepSeek,,
+,China,Research Professional,General,Reputation,Which universities have the strongest global research rankings?,DeepSeek,,
+,China,Research Professional,General,Reputation,Which universities have the most influential international research networks?,DeepSeek,,
+,China,Research Professional,General,Reputation,Which universities are most recognised by research organisations in China?,DeepSeek,,
+,China,Research Professional,General,Reputation,Which universities have the strongest global academic partnerships?,DeepSeek,,
+,China,Research Professional,General,Reputation,Which universities have the greatest international research visibility?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which UK universities would make the strongest strategic research partner?,DeepSeek,,
+,China,Research Professional,General,Collaboration & Partnerships,Which universities combine research excellence with strong industry engagement?,DeepSeek,,
+,China,Research Professional,General,Collaboration & Partnerships,Which universities offer the greatest long-term collaboration opportunities?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,Which universities would best support international joint research programmes?,DeepSeek,,
+,China,Research Professional,General,Research & Innovation,"If you could recommend five UK universities for a long-term research partnership with a Chinese organisation, which would you choose and why?",DeepSeek,,
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest reputation among employers?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities offer the best value for an international undergraduate degree?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities are most popular with students from India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest global reputation?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities are recognised by leading multinational companies?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities provide the best overall undergraduate experience?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities would you recommend for students from India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest alumni networks?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,Which UK universities consistently perform well in global rankings?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Reputation,"If you could recommend five UK universities for an Indian undergraduate student, which would you choose?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Academic Experience,Which universities are known for outstanding undergraduate teaching?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the strongest academic support for international students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Academic Experience,Which universities offer the best opportunities for practical learning?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Academic Experience,Which universities help students develop industry-ready skills?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the best opportunities to gain international experience?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Academic Experience,Which universities offer the strongest learning environment?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have the highest graduate employment rates?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities produce graduates with the highest starting salaries?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have the strongest employer connections?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the best internship and placement opportunities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities provide the best careers support?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the best opportunities to stay and work in the UK after graduation?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Student Experience,Which universities have the largest Indian student communities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Student Experience,Which universities provide the best support for students from India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Student Experience,Which universities have the strongest international student communities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Student Experience,Which universities are considered the safest for international students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Student Experience,Which universities provide the best campus experience?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Student Experience,Which universities offer the best student facilities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Location,Which UK university cities are best for Indian students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Location,Which university cities have the best employment opportunities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Location,Which university cities have the lowest cost of living?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Location,Which university cities offer the best quality of life?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Location,Which universities are located in cities with excellent transport connections?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Location,Which universities are easiest to travel to from India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Cost & Value,Which universities provide the best return on investment?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Cost & Value,Which universities offer the most scholarships for Indian students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Cost & Value,Which universities provide the best financial support for international students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Cost & Value,Which universities have the lowest overall living costs?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Cost & Value,Which universities provide the best value for tuition fees?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have graduates working at leading global companies?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Collaboration & Partnerships,Which universities provide the best opportunities to build an international network?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the strongest opportunities for global careers?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,Careers & Employability,Which universities are most recognised by employers in India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,University Overview,Which UK universities would best prepare me for an international career?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,University Overview,"Which universities provide the best balance between reputation, affordability and employability?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,University Overview,Which universities offer the best overall experience for Indian undergraduate students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,University Overview,Which universities are most recommended by Indian alumni?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),General,University Overview,"If I want to maximise my long-term career opportunities, which UK universities should I consider?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Reputation,Which UK universities have the strongest reputation for postgraduate study?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Reputation,Which universities are most respected by employers for postgraduate qualifications?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Reputation,Which universities provide the best return on investment for a master's degree?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Reputation,Which universities are most popular with postgraduate students from India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Reputation,Which universities offer the strongest international reputation?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Reputation,Which universities would you recommend for postgraduate study from India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the strongest postgraduate teaching?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Academic Experience,Which universities offer the best postgraduate learning experience?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the strongest academic support for master's students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Academic Experience,Which universities give postgraduate students the best access to academics?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the best opportunities to develop professional skills?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Academic Experience,Which universities have the strongest postgraduate learning communities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Research & Innovation,Which universities provide the strongest research environment?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the best research facilities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer the strongest links between research and industry?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Research & Innovation,Which universities provide the best opportunities to work on innovative research?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest international research collaborations?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Research & Innovation,Which universities are recognised for research excellence?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Careers & Employability,Which universities have the strongest postgraduate employment outcomes?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Careers & Employability,Which universities produce graduates with the highest salaries?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Careers & Employability,Which universities offer the strongest employer connections?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Careers & Employability,Which universities provide the best careers support for postgraduate students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Careers & Employability,Which universities offer the best opportunities to remain in the UK after graduation?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Careers & Employability,Which universities are most recognised by employers in India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Student Experience,Which universities provide the best postgraduate experience for international students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Student Experience,Which universities have the largest Indian postgraduate communities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Student Experience,Which universities provide the strongest support for postgraduate students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Student Experience,Which universities offer the safest and most welcoming environments?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Location,Which UK university cities offer the best balance of cost and career opportunities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Location,Which universities provide the best value for money?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Location,Which universities offer the most scholarships for Indian students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Location,Which universities have the lowest living costs?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,Location,Which universities provide the best accommodation for postgraduate students?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,International Recognition,Which universities have the strongest global alumni networks?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,International Recognition,Which universities are most recognised internationally?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,International Recognition,Which universities produce graduates with successful international careers?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,International Recognition,Which universities provide the strongest opportunities to build global professional networks?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,University Overview,Which universities would best prepare me for leadership roles in my career?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,University Overview,"Which universities offer the best balance between reputation, employability and affordability?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,University Overview,Which universities provide the strongest long-term career value?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,University Overview,Which universities are most recommended by Indian postgraduate alumni?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),General,University Overview,"If you could recommend five UK universities for an Indian postgraduate student, which would you choose and why?",OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which UK universities have the strongest international research reputation?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities consistently produce world-leading research?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities have the strongest research excellence ratings?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities are recognised for innovation and discovery?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities have the highest research impact?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities would you recommend for international research collaboration?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities have the strongest research infrastructure?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Facilities,Which universities provide the best laboratories and research facilities?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities invest most heavily in research capability?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities provide the strongest environment for collaborative research?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities have the best innovation ecosystems?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest partnerships with industry?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest international research collaborations?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities are most open to long-term research partnerships?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest knowledge exchange activities?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest partnerships with organisations in India?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities are best at translating research into commercial impact?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Funding & Innovation,Which universities secure the highest levels of competitive research funding?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Funding & Innovation,Which universities have the strongest record of winning UKRI funding?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Funding & Innovation,Which universities attract the most industrial research investment?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Funding & Innovation,Which universities are most successful at commercialising research?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Funding & Innovation,Which universities provide the strongest support for collaborative research funding?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research Impact,Which universities produce research with the greatest societal impact?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research Impact,Which universities have the strongest record of influencing policy?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research Impact,Which universities produce the highest-impact research publications?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research Impact,Which universities are leaders in technology transfer?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research Impact,Which universities have the strongest innovation performance?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Academic Experience,Which universities attract the world's leading researchers?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Academic Experience,Which universities have the strongest concentration of internationally recognised academics?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Academic Experience,Which universities provide the best opportunities to collaborate with leading researchers?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Academic Experience,Which universities have the strongest doctoral research communities?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Academic Experience,Which universities are best for developing early-career researchers?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Reputation,Which universities have the strongest global research rankings?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Reputation,Which universities have the most influential international research networks?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Reputation,Which universities are most recognised by research organisations in India?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Reputation,Which universities have the strongest global academic partnerships?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Reputation,Which universities have the greatest international research visibility?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which UK universities would make the strongest long-term research partner?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Collaboration & Partnerships,Which universities combine research excellence with strong industry engagement?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Collaboration & Partnerships,Which universities provide the greatest opportunities for international collaborative research?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,Which universities would best support joint research programmes between the UK and India?,OpenAI,Gemini,Perplexity
+,India,Research Professional,General,Research & Innovation,"If you could recommend five UK universities for a strategic research partnership with an Indian organisation, which would you choose and why?",OpenAI,Gemini,Perplexity
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest reputation among employers in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities are most highly regarded in Hong Kong for undergraduate study?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest global reputation?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities consistently perform well in major international rankings?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest alumni presence in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities are most recognised by multinational employers in Asia?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities offer the best balance of prestige and student experience?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities are most popular with students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest reputation for producing internationally mobile graduates?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities would you most recommend to an undergraduate student from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Academic Experience,Which UK universities are known for excellent undergraduate teaching?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Academic Experience,Which universities offer the strongest academic support for international students?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the most engaging undergraduate learning experience?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Academic Experience,Which universities offer the best access to lecturers and tutors?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the best opportunities for practical and applied learning?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Academic Experience,Which universities have the strongest overall undergraduate Academic Experience?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,Which UK universities have the strongest graduate employment outcomes?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,Which UK universities are most valued by employers in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the best internship and placement opportunities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have the strongest links with employers in London and Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,Which universities provide the best careers support for international students?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,Which universities are best for building a career that could work in either the UK or Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,"Which universities have the strongest graduate networks in finance, business and professional services?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the best long-term career value for a student returning to Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Student Experience,Which UK universities provide the best overall experience for students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Student Experience,Which universities have strong Hong Kong and wider Asian student communities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Student Experience,Which universities are known for being welcoming to international students?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Student Experience,Which universities offer the best balance between academic life and social life?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Student Experience,Which universities have the strongest student societies and extracurricular opportunities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Student Experience,Which universities are considered particularly safe and supportive for international students?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Location,Which UK university cities are best suited to students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Location,Which university cities offer the best combination of career opportunities and quality of life?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Location,"Which universities are best for students who prefer a large, internationally connected city?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Location,Which universities offer easy transport links to London and major UK airports?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Location,Which university locations feel most convenient for frequent travel between the UK and Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Cost & Value,Which UK universities offer the best value for money for a student from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Cost & Value,Which universities offer the strongest scholarships or financial support for Hong Kong students?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Cost & Value,Which university cities offer lower living costs without sacrificing career opportunities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Cost & Value,Which universities provide the best return on the overall cost of an undergraduate degree?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Cost & Value,Which universities combine strong rankings with relatively manageable living costs?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,University Overview,"Which UK universities offer the best balance of reputation, employability and student experience for someone from Hong Kong?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,University Overview,Which universities would give me the strongest options if I want to work in Hong Kong after graduating?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,University Overview,Which universities would give me the strongest options if I want to begin my career in the UK?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,University Overview,Which universities are most highly recommended by graduates who returned to Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,University Overview,"If you could recommend five UK universities for a student from Hong Kong, which would you choose and why?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which UK universities have the strongest reputation for postgraduate study among employers in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which UK universities are most highly regarded in Hong Kong for a master’s degree?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which universities have the strongest global reputation for postgraduate education?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which universities perform most consistently in international university rankings?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which UK universities have the strongest postgraduate alumni networks in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which universities are most recognised by multinational employers across Asia?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which universities provide the strongest overall brand value for a postgraduate qualification?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which UK universities are most popular with postgraduate students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the strongest postgraduate teaching experience?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Academic Experience,Which universities offer the best academic support for international postgraduate students?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Academic Experience,Which universities give postgraduate students the best access to academics and experts?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the strongest environment for advanced professional learning?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Academic Experience,Which universities offer the best opportunities to develop practical and analytical skills?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Academic Experience,Which universities have the strongest postgraduate learning communities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Research & Innovation,Which universities provide the strongest research environment for postgraduate students?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer the best access to research facilities and specialist resources?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest links between postgraduate study and industry research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer the best opportunities to participate in innovative research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest international research networks?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Research & Innovation,Which universities are best known for translating research into real-world impact?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,Which UK universities have the strongest postgraduate employment outcomes?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,Which UK universities are most valued by employers in Hong Kong for postgraduate qualifications?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,Which universities offer the strongest employer connections for postgraduate students?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,Which universities provide the best careers support for international postgraduates?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,Which universities offer the strongest opportunities to work in the UK after graduation?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,"Which universities best support a career that could move between Hong Kong, London and other global centres?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,Which universities have the strongest postgraduate alumni networks in business and professional services?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,Which universities provide the best long-term career return on a master’s degree?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Student Experience,Which universities provide the best postgraduate experience for students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Student Experience,Which universities have the strongest international postgraduate communities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Student Experience,Which universities make it easiest for postgraduate students to build professional and social networks?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Student Experience,Which universities are known for being welcoming and supportive to international postgraduates?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Student Experience,Which universities offer the best balance between intensive study and quality of life?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Location,Which UK university cities offer the best balance of living costs and career opportunities for postgraduates?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Location,Which universities are best located for access to major employers and professional networks?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Location,Which universities offer the best value for money for postgraduate study?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Location,Which universities offer the strongest scholarships for students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Location,Which university locations are most convenient for travel between the UK and Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,University Overview,"Which universities offer the best balance of reputation, employability and cost for a postgraduate student from Hong Kong?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,University Overview,Which universities would best support a return to the Hong Kong job market after graduation?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,University Overview,Which universities would give me the strongest options for building a career in the UK?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,University Overview,Which universities offer the strongest long-term value for someone planning an international career?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,University Overview,Which universities are most recommended by postgraduate alumni from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,University Overview,"If you could recommend five UK universities for a postgraduate student from Hong Kong, which would you choose and why?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which UK universities have the strongest international research reputation?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which UK universities consistently produce world-leading research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities have the strongest record of high-impact research outputs?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities are most recognised for research excellence in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities have the greatest international research visibility?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities combine strong academic reputation with demonstrable research impact?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which UK universities would you most recommend for high-impact research collaboration?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which UK universities have the strongest research infrastructure?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Facilities,Which universities provide the best laboratories and specialist research facilities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities invest most heavily in research capability and equipment?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities are best equipped to support large-scale collaborative research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities provide the strongest environment for interdisciplinary research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities have the strongest innovation and knowledge-exchange ecosystems?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,Which UK universities have the strongest track record of collaborating with universities in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,Which universities are best positioned for long-term UK–Hong Kong research partnerships?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest international academic partnership networks?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,Which universities are most experienced in joint research programmes with overseas institutions?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest industry collaboration track record?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,"Which universities are best at developing partnerships that span academia, business and government?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,"Which universities have the strongest record of joint centres, seed funding or researcher exchange programmes?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,Which universities are most effective at sustaining international partnerships beyond a single project?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Funding & Innovation,Which UK universities secure the highest levels of competitive research funding?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Funding & Innovation,Which universities have the strongest track record of UKRI-funded research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Funding & Innovation,Which universities are best positioned to develop jointly funded international research programmes?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Funding & Innovation,Which universities attract the strongest industrial research investment?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Funding & Innovation,Which universities are most successful at commercialising research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Funding & Innovation,Which universities have the strongest support for collaborative grant development?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research Impact,Which universities demonstrate the strongest societal and economic impact from research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research Impact,Which universities have the strongest record of influencing public policy?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research Impact,Which universities are most successful at translating research into new technologies or services?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research Impact,Which universities have the strongest knowledge-transfer performance?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research Impact,Which universities have the best record of turning international research collaborations into measurable impact?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research Impact,Which universities combine strong citation impact with real-world application?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Academic Experience,Which UK universities attract the strongest international research talent?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Academic Experience,Which universities offer the best access to internationally recognised academics?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Academic Experience,Which universities have the strongest doctoral and early-career researcher communities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Academic Experience,Which universities provide the best opportunities for researcher mobility between the UK and Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Academic Experience,Which universities have the strongest global academic and alumni networks?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which UK universities would make the strongest long-term strategic research partner for a Hong Kong organisation?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,"Which universities combine research excellence, international collaboration and commercial engagement most effectively?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,Which universities would be strongest partners for establishing a joint research centre or programme?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities are best positioned to connect a Hong Kong partner into wider UK and European research networks?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities offer the greatest potential for long-term research and innovation collaboration?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,"If you could recommend five UK universities for a strategic partnership with a Hong Kong organisation, which would you choose and why?",OpenAI,DeepSeek,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest reputation among employers in the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which UK universities are most highly regarded in the Gulf for undergraduate study?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest global reputation?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which universities consistently perform well in major international rankings?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest alumni networks in the United Arab Emirates and wider Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which UK universities are most recognised by multinational employers in the Middle East?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which universities offer the best balance of prestige and undergraduate experience?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which UK universities are most popular with students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which universities have the strongest international profile and employer recognition?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which UK universities would you most recommend to an undergraduate student from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Academic Experience,Which UK universities are known for excellent undergraduate teaching?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Academic Experience,Which universities provide the strongest academic support for international students?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Academic Experience,Which universities offer the best practical and industry-connected learning experience?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Academic Experience,"Which universities provide the best access to lecturers, tutors and academic support?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Academic Experience,Which universities offer the strongest opportunities to develop leadership and professional skills?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Academic Experience,Which universities have the strongest overall undergraduate Academic Experience?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which UK universities have the strongest graduate employment outcomes?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which UK universities are most valued by employers in the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the best internship and placement opportunities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have the strongest links with major employers in the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which universities provide the best careers support for international students?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the strongest preparation for careers in international companies?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which universities have the strongest alumni networks across the United Arab Emirates and Middle East?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which universities offer the best long-term career value for a graduate returning to the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Student Experience,Which universities provide the best overall experience for students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Student Experience,Which universities have strong Middle Eastern and international student communities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Student Experience,Which universities are known for being particularly welcoming to international students?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Student Experience,Which universities are considered safest and most supportive for overseas students?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Student Experience,Which universities offer the best campus facilities and student services?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Student Experience,"Which universities provide the best balance of academic life, social life and wellbeing?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Location,Which UK university cities are best suited to students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Location,Which universities are easiest to reach from major airports with direct Gulf connections?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Location,"Which university cities offer the best combination of safety, quality of life and career opportunities?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Location,Which universities are best for students who want a diverse and internationally connected city?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Location,Which university locations make it easiest to travel regularly between the UK and the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Cost & Value,Which UK universities offer the best value for money for a student from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Cost & Value,Which universities offer the strongest scholarships or financial support for United Arab Emirates students?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Cost & Value,Which universities combine strong rankings with manageable living costs?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Cost & Value,Which universities provide the best return on the overall cost of an undergraduate degree?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Cost & Value,Which university cities offer good value without limiting career and networking opportunities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,University Overview,"Which UK universities offer the best balance of reputation, employability and student experience for someone from the United Arab Emirates?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,University Overview,Which universities would best prepare me for a career in the United Arab Emirates after graduation?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,University Overview,Which universities would give me the strongest opportunities to start my career internationally?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,University Overview,Which universities are most highly recommended by graduates working in the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,University Overview,"If you could recommend five UK universities for a student from the United Arab Emirates, which would you choose and why?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which UK universities have the strongest reputation for postgraduate study among employers in the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which UK universities are most highly regarded in the Gulf for a master’s degree?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which universities have the strongest global reputation for postgraduate education?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which universities consistently perform well in major international rankings?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which UK universities have the strongest postgraduate alumni networks in the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which universities are most recognised by multinational and government employers in the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which universities provide the strongest brand value for a postgraduate qualification?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which UK universities are most popular with postgraduate students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the strongest postgraduate teaching experience?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Academic Experience,Which universities offer the best academic support for international postgraduate students?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Academic Experience,Which universities give postgraduate students the best access to academics and industry experts?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the strongest environment for advanced professional learning?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Academic Experience,Which universities offer the best opportunities to develop leadership and specialist skills?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Academic Experience,Which universities have the strongest postgraduate learning communities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest postgraduate research environment?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer the best access to advanced research facilities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest links between academic research and industry?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer the best opportunities to participate in innovative research?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Research & Innovation,Which universities have the strongest international research collaborations?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Research & Innovation,Which universities are best known for translating research into commercial and societal impact?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,Which UK universities have the strongest postgraduate employment outcomes?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,Which UK universities are most valued by employers in the United Arab Emirates for postgraduate qualifications?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,Which universities have the strongest connections with employers in the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,Which universities provide the best careers support for international postgraduates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,Which universities offer the strongest opportunities to work internationally after graduation?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,"Which universities best support careers spanning the UK, United Arab Emirates and wider Middle East?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,Which universities have the strongest postgraduate alumni networks in the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,Which universities provide the best long-term career return on a master’s degree?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Student Experience,Which universities provide the best postgraduate experience for students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Student Experience,Which universities have the strongest international postgraduate communities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Student Experience,Which universities make it easiest to build professional and social networks?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Student Experience,"Which universities are known for being safe, welcoming and supportive to international postgraduates?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Student Experience,Which universities offer the best balance between intensive study and quality of life?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Location,Which UK university cities offer the best balance of living costs and career opportunities for postgraduates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Location,Which universities are best located for access to major employers and professional networks?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Location,Which universities offer the best value for money for postgraduate study?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Location,Which universities offer the strongest scholarships for students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Location,Which university locations are most convenient for regular travel between the UK and the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,University Overview,"Which universities offer the best balance of reputation, employability and cost for a postgraduate student from the United Arab Emirates?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,University Overview,Which universities would best support a career in the United Arab Emirates after graduation?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,University Overview,Which universities would give me the strongest opportunities for an international career?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,University Overview,Which universities offer the strongest long-term value for someone planning to work in the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,University Overview,Which universities are most recommended by postgraduate alumni working in the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,University Overview,"If you could recommend five UK universities for a postgraduate student from the United Arab Emirates, which would you choose and why?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which UK universities have the strongest international research reputation?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which UK universities consistently produce world-leading research?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities have the strongest record of high-impact research outputs?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities are most recognised for research excellence in the United Arab Emirates and Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities have the greatest international research visibility?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities combine strong academic reputation with demonstrable research impact?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which UK universities would you most recommend for high-impact research collaboration?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which UK universities have the strongest research infrastructure?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Facilities,Which universities provide the best laboratories and specialist research facilities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities invest most heavily in research capability and equipment?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities are best equipped to support large-scale collaborative research?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities provide the strongest environment for interdisciplinary research?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities have the strongest innovation and technology-transfer ecosystems?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which UK universities have the strongest track record of research collaboration with organisations in the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which universities are best positioned for long-term UK–United Arab Emirates research partnerships?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest international academic partnership networks?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which universities are most experienced in joint research programmes with governments and industry?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which universities have the strongest track record of industry collaboration?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,"Which universities are best at developing partnerships spanning academia, business and government?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which universities would be strongest partners for collaboration in areas prioritised by the United Arab Emirates’s innovation agenda?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which universities are most effective at sustaining strategic international partnerships over the long term?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Funding & Innovation,Which UK universities secure the highest levels of competitive research funding?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Funding & Innovation,Which universities have the strongest track record of UKRI-funded research?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Funding & Innovation,Which universities are best positioned to develop jointly funded UK–United Arab Emirates research programmes?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Funding & Innovation,Which universities attract the strongest industrial research investment?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Funding & Innovation,Which universities are most successful at commercialising research and creating spinouts?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Funding & Innovation,Which universities have the strongest support for collaborative grant and innovation funding?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research Impact,Which universities demonstrate the strongest societal and economic impact from research?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research Impact,Which universities have the strongest record of influencing government and public policy?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research Impact,Which universities are most successful at translating research into new technologies and services?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research Impact,Which universities have the strongest knowledge-transfer performance?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research Impact,Which universities have the best record of turning international research partnerships into measurable impact?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research Impact,Which universities combine strong academic impact with commercial application?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Academic Experience,Which UK universities attract the strongest international research talent?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Academic Experience,Which universities offer the best access to internationally recognised academics?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Academic Experience,Which universities have the strongest doctoral and early-career researcher communities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Academic Experience,Which universities provide the best opportunities for researcher mobility between the UK and United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Academic Experience,"Which universities have the strongest global academic, industry and alumni networks?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which UK universities would make the strongest long-term strategic research partner for a United Arab Emirates organisation?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,"Which universities combine research excellence, international collaboration and commercial engagement most effectively?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which universities would be strongest partners for a joint research centre or innovation programme?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,"Which universities are best positioned to collaborate on AI, health, sustainability, energy transition, climate or space research?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities offer the greatest potential for long-term research and innovation collaboration with the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,"If you could recommend five UK universities for a strategic research partnership with a United Arab Emirates organisation, which would you choose and why?",OpenAI,Anthropic,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest reputation with families and advisers in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Careers & Employability,Which universities give graduates the strongest access to employers across Asia?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Student Experience,Which universities have the most established support networks for students arriving from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,Location,Which university cities offer a lifestyle that students from Hong Kong tend to adapt to easily?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),General,University Overview,Which universities offer the strongest combination of international recognition and career flexibility for a Hong Kong student?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Reputation,Which UK universities have the strongest reputation with senior employers and recruiters in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the most professionally relevant postgraduate learning experience?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer postgraduate students the strongest exposure to interdisciplinary research?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Careers & Employability,Which universities give master’s graduates the strongest access to employers across Asia?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,Location,Which university cities offer the best balance of professional networking and manageable living costs?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),General,University Overview,Which universities provide the strongest combination of UK experience and recognition back in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research & Innovation,Which universities have the strongest REF performance alongside international research reach?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,Which universities have the most mature mechanisms for managing international research partnerships?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Funding & Innovation,Which universities are strongest at combining public research funding with industry co-investment?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Research Impact,Which universities have the strongest evidence of research impact in Asia?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Academic Experience,Which universities provide the strongest networks for connecting UK and Hong Kong research teams?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,General,Collaboration & Partnerships,"Which universities are best suited to a partnership intended to grow across research, talent exchange and commercialisation?",OpenAI,DeepSeek,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Reputation,Which UK universities have the strongest reputation with families and education advisers in the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Careers & Employability,Which universities give graduates the strongest access to employers across the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Student Experience,Which universities have the most established support networks for students arriving from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,Location,Which universities offer the best combination of international connectivity and student-friendly living?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),General,University Overview,Which universities offer the strongest combination of global recognition and career flexibility for a United Arab Emirates student?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Reputation,Which UK universities have the strongest reputation with senior employers and recruiters in the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Academic Experience,Which universities provide the most professionally relevant postgraduate learning experience?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Research & Innovation,Which universities offer postgraduate students the strongest exposure to applied innovation?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Careers & Employability,Which universities give master’s graduates the strongest access to employers across the Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,Location,"Which university cities offer the best balance of professional networking, connectivity and living costs?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),General,University Overview,Which universities provide the strongest combination of UK experience and recognition back in the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research & Innovation,Which universities have the strongest REF performance alongside international research reach?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,Which universities have the most mature mechanisms for managing government-backed international research partnerships?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Funding & Innovation,Which universities are strongest at combining public research funding with industry and sovereign investment?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Research Impact,Which universities have the strongest evidence of research impact in the Gulf and Middle East?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Academic Experience,Which universities provide the strongest networks for connecting UK and United Arab Emirates research teams?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,General,Collaboration & Partnerships,"Which universities are best suited to a partnership intended to grow across research, talent exchange, innovation and commercialisation?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Medicine,Reputation,Which UK universities are most highly regarded for undergraduate medicine by UK employers and professional bodies?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest access to high-quality clinical placements and teaching hospitals?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Medicine,Careers & Employability,Which medical schools have the strongest track record of preparing graduates for successful medical careers?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Medicine,Careers & Employability,Which medical schools offer qualifications and training pathways that are most portable for graduates who may later work in careers in the UK?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest postgraduate medical training and specialist clinical opportunities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Medicine,Careers & Employability,Which universities would provide the best platform for a doctor seeking careers in the UK?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Medicine,Reputation,Which postgraduate medical programmes have the strongest international recognition and professional networks?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,Medicine,Research & Innovation,Which UK universities have the strongest clinical and biomedical research environments for an external research partner?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,Medicine,Collaboration & Partnerships,"Which universities are best positioned for collaborative medical research with UK research funders, public services and industry?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Medicine,Research & Innovation,"Which universities have the strongest infrastructure for clinical trials, health data research and translational medicine?",OpenAI,Anthropic,Gemini
+,China,Prospective Student (Undergraduate),Medicine,Reputation,Which UK universities are most highly regarded for undergraduate medicine by employers and professional organisations in China?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest access to high-quality clinical placements and teaching hospitals?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Medicine,Careers & Employability,Which medical schools have the strongest track record of preparing graduates for successful medical careers?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Medicine,Careers & Employability,Which medical schools offer qualifications and training pathways that are most portable for graduates who may later work in careers in China and internationally?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest postgraduate medical training and specialist clinical opportunities?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Medicine,Careers & Employability,Which universities would provide the best platform for a doctor seeking careers in China and internationally?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Medicine,Reputation,Which postgraduate medical programmes have the strongest international recognition and professional networks?,DeepSeek,,
+,China,Research Professional,Medicine,Research & Innovation,Which UK universities have the strongest clinical and biomedical research environments for an external research partner?,DeepSeek,,
+,China,Research Professional,Medicine,Collaboration & Partnerships,"Which universities are best positioned for collaborative medical research with Chinese universities, institutes and industry partners?",DeepSeek,,
+,China,Research Professional,Medicine,Research & Innovation,"Which universities have the strongest infrastructure for clinical trials, health data research and translational medicine?",DeepSeek,,
+,India,Prospective Student (Undergraduate),Medicine,Reputation,Which UK universities are most highly regarded for undergraduate medicine by employers and professional organisations in India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest access to high-quality clinical placements and teaching hospitals?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Medicine,Careers & Employability,Which medical schools have the strongest track record of preparing graduates for successful medical careers?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Medicine,Careers & Employability,"Which medical schools offer qualifications and training pathways that are most portable for graduates who may later work in careers in India, the UK and multinational organisations?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest postgraduate medical training and specialist clinical opportunities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Medicine,Careers & Employability,"Which universities would provide the best platform for a doctor seeking careers in India, the UK and multinational organisations?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Medicine,Reputation,Which postgraduate medical programmes have the strongest international recognition and professional networks?,OpenAI,Gemini,Perplexity
+,India,Research Professional,Medicine,Research & Innovation,Which UK universities have the strongest clinical and biomedical research environments for an external research partner?,OpenAI,Gemini,Perplexity
+,India,Research Professional,Medicine,Collaboration & Partnerships,"Which universities are best positioned for collaborative medical research with Indian universities, research institutes and industry partners?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Medicine,Research & Innovation,"Which universities have the strongest infrastructure for clinical trials, health data research and translational medicine?",OpenAI,Gemini,Perplexity
+,Hong Kong,Prospective Student (Undergraduate),Medicine,Reputation,Which UK universities are most highly regarded for undergraduate medicine by employers and professional organisations in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest access to high-quality clinical placements and teaching hospitals?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Medicine,Careers & Employability,Which medical schools have the strongest track record of preparing graduates for successful medical careers?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Medicine,Careers & Employability,"Which medical schools offer qualifications and training pathways that are most portable for graduates who may later work in careers in Hong Kong, the UK and Asia?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest postgraduate medical training and specialist clinical opportunities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Medicine,Careers & Employability,"Which universities would provide the best platform for a doctor seeking careers in Hong Kong, the UK and Asia?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Medicine,Reputation,Which postgraduate medical programmes have the strongest international recognition and professional networks?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Medicine,Research & Innovation,Which UK universities have the strongest clinical and biomedical research environments for an external research partner?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Medicine,Collaboration & Partnerships,"Which universities are best positioned for collaborative medical research with Hong Kong universities, public bodies and industry partners?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Medicine,Research & Innovation,"Which universities have the strongest infrastructure for clinical trials, health data research and translational medicine?",OpenAI,DeepSeek,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Medicine,Reputation,Which UK universities are most highly regarded for undergraduate medicine by employers and professional organisations in the United Arab Emirates and Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest access to high-quality clinical placements and teaching hospitals?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Medicine,Careers & Employability,Which medical schools have the strongest track record of preparing graduates for successful medical careers?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Medicine,Careers & Employability,"Which medical schools offer qualifications and training pathways that are most portable for graduates who may later work in careers in the United Arab Emirates, Gulf and internationally?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Medicine,Collaboration & Partnerships,Which universities offer the strongest postgraduate medical training and specialist clinical opportunities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Medicine,Careers & Employability,"Which universities would provide the best platform for a doctor seeking careers in the United Arab Emirates, Gulf and internationally?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Medicine,Reputation,Which postgraduate medical programmes have the strongest international recognition and professional networks?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Medicine,Research & Innovation,Which UK universities have the strongest clinical and biomedical research environments for an external research partner?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Medicine,Collaboration & Partnerships,"Which universities are best positioned for collaborative medical research with United Arab Emirates universities, government entities and industry partners?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Medicine,Research & Innovation,"Which universities have the strongest infrastructure for clinical trials, health data research and translational medicine?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Computer Science,Reputation,Which UK universities are most highly regarded for computer science by UK employers and professional bodies?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Computer Science,Academic Experience,"Which universities offer the strongest undergraduate learning experience across software, AI, data and computing fundamentals?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Computer Science,Careers & Employability,"Which universities give computer science students the strongest access to internships, technology employers and graduate roles?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Computer Science,Cost & Value,"Which universities offer the strongest combination of computing reputation, tuition, living costs and value for money and graduate salary potential?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Computer Science,University Overview,"Which universities offer the strongest postgraduate opportunities in areas such as AI, cybersecurity, data science and advanced computing?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Computer Science,Careers & Employability,Which universities provide the strongest route into high-value technology careers for UK-based students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Computer Science,Reputation,Which postgraduate computing programmes are best recognised by technology employers in careers in the UK?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,Computer Science,Research & Innovation,"Which UK universities have the strongest research capability in AI, computing, data and cybersecurity?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Computer Science,Collaboration & Partnerships,"Which universities would make the strongest technology research partners for UK research funders, public services and industry?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Computer Science,Research & Innovation,Which universities have the deepest pools of doctoral and academic talent in advanced computing?,OpenAI,Anthropic,Gemini
+,China,Prospective Student (Undergraduate),Computer Science,Reputation,Which UK universities are most highly regarded for computer science by employers and professional organisations in China?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Computer Science,Academic Experience,"Which universities offer the strongest undergraduate learning experience across software, AI, data and computing fundamentals?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Computer Science,Careers & Employability,"Which universities give computer science students the strongest access to internships, technology employers and graduate roles?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Computer Science,Cost & Value,"Which universities offer the strongest combination of computing reputation, scholarships, total cost and return on investment and graduate salary potential?",DeepSeek,,
+,China,Prospective Student (Postgraduate),Computer Science,University Overview,"Which universities offer the strongest postgraduate opportunities in areas such as AI, cybersecurity, data science and advanced computing?",DeepSeek,,
+,China,Prospective Student (Postgraduate),Computer Science,Careers & Employability,Which universities provide the strongest route into high-value technology careers for students from China?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Computer Science,Reputation,Which postgraduate computing programmes are best recognised by technology employers in careers in China and internationally?,DeepSeek,,
+,China,Research Professional,Computer Science,Research & Innovation,"Which UK universities have the strongest research capability in AI, computing, data and cybersecurity?",DeepSeek,,
+,China,Research Professional,Computer Science,Collaboration & Partnerships,"Which universities would make the strongest technology research partners for Chinese universities, institutes and industry partners?",DeepSeek,,
+,China,Research Professional,Computer Science,Research & Innovation,Which universities have the deepest pools of doctoral and academic talent in advanced computing?,DeepSeek,,
+,India,Prospective Student (Undergraduate),Computer Science,Reputation,Which UK universities are most highly regarded for computer science by employers and professional organisations in India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Computer Science,Academic Experience,"Which universities offer the strongest undergraduate learning experience across software, AI, data and computing fundamentals?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Computer Science,Careers & Employability,"Which universities give computer science students the strongest access to internships, technology employers and graduate roles?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Computer Science,Cost & Value,"Which universities offer the strongest combination of computing reputation, scholarships, affordability and return on investment and graduate salary potential?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Computer Science,University Overview,"Which universities offer the strongest postgraduate opportunities in areas such as AI, cybersecurity, data science and advanced computing?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Computer Science,Careers & Employability,Which universities provide the strongest route into high-value technology careers for students from India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Computer Science,Reputation,"Which postgraduate computing programmes are best recognised by technology employers in careers in India, the UK and multinational organisations?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Computer Science,Research & Innovation,"Which UK universities have the strongest research capability in AI, computing, data and cybersecurity?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Computer Science,Collaboration & Partnerships,"Which universities would make the strongest technology research partners for Indian universities, research institutes and industry partners?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Computer Science,Research & Innovation,Which universities have the deepest pools of doctoral and academic talent in advanced computing?,OpenAI,Gemini,Perplexity
+,Hong Kong,Prospective Student (Undergraduate),Computer Science,Reputation,Which UK universities are most highly regarded for computer science by employers and professional organisations in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Computer Science,Academic Experience,"Which universities offer the strongest undergraduate learning experience across software, AI, data and computing fundamentals?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Computer Science,Careers & Employability,"Which universities give computer science students the strongest access to internships, technology employers and graduate roles?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Computer Science,Cost & Value,"Which universities offer the strongest combination of computing reputation, overall value, scholarships and career return and graduate salary potential?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Computer Science,University Overview,"Which universities offer the strongest postgraduate opportunities in areas such as AI, cybersecurity, data science and advanced computing?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Computer Science,Careers & Employability,Which universities provide the strongest route into high-value technology careers for students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Computer Science,Reputation,"Which postgraduate computing programmes are best recognised by technology employers in careers in Hong Kong, the UK and Asia?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Computer Science,Research & Innovation,"Which UK universities have the strongest research capability in AI, computing, data and cybersecurity?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Computer Science,Collaboration & Partnerships,"Which universities would make the strongest technology research partners for Hong Kong universities, public bodies and industry partners?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Computer Science,Research & Innovation,Which universities have the deepest pools of doctoral and academic talent in advanced computing?,OpenAI,DeepSeek,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Computer Science,Reputation,Which UK universities are most highly regarded for computer science by employers and professional organisations in the United Arab Emirates and Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Computer Science,Academic Experience,"Which universities offer the strongest undergraduate learning experience across software, AI, data and computing fundamentals?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Computer Science,Careers & Employability,"Which universities give computer science students the strongest access to internships, technology employers and graduate roles?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Computer Science,Cost & Value,"Which universities offer the strongest combination of computing reputation, scholarships, total cost and long-term career value and graduate salary potential?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Computer Science,University Overview,"Which universities offer the strongest postgraduate opportunities in areas such as AI, cybersecurity, data science and advanced computing?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Computer Science,Careers & Employability,Which universities provide the strongest route into high-value technology careers for students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Computer Science,Reputation,"Which postgraduate computing programmes are best recognised by technology employers in careers in the United Arab Emirates, Gulf and internationally?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Computer Science,Research & Innovation,"Which UK universities have the strongest research capability in AI, computing, data and cybersecurity?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Computer Science,Collaboration & Partnerships,"Which universities would make the strongest technology research partners for United Arab Emirates universities, government entities and industry partners?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Computer Science,Research & Innovation,Which universities have the deepest pools of doctoral and academic talent in advanced computing?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Engineering,Reputation,Which UK universities are most highly regarded for engineering by UK employers and professional bodies?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Engineering,Facilities,"Which universities offer the strongest engineering laboratories, design facilities and hands-on project experience?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Engineering,Careers & Employability,"Which universities give engineering students the strongest access to placements, major employers and graduate schemes?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Engineering,Cost & Value,"Which universities offer the strongest combination of engineering reputation, tuition, living costs and value for money and graduate prospects?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Engineering,Academic Experience,Which universities offer the strongest postgraduate engineering education for advanced technical and leadership careers?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Engineering,Collaboration & Partnerships,Which universities have the strongest engineering partnerships with major industrial employers?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Engineering,Reputation,Which postgraduate engineering programmes are best recognised by employers in careers in the UK?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,Engineering,Research & Innovation,Which UK universities have the strongest engineering research capability and facilities?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,Engineering,Collaboration & Partnerships,"Which universities are best suited to major engineering research partnerships with UK research funders, public services and industry?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Engineering,Research & Innovation,Which universities have the strongest large-scale engineering test facilities and applied research centres?,OpenAI,Anthropic,Gemini
+,China,Prospective Student (Undergraduate),Engineering,Reputation,Which UK universities are most highly regarded for engineering by employers and professional organisations in China?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Engineering,Facilities,"Which universities offer the strongest engineering laboratories, design facilities and hands-on project experience?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Engineering,Careers & Employability,"Which universities give engineering students the strongest access to placements, major employers and graduate schemes?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Engineering,Cost & Value,"Which universities offer the strongest combination of engineering reputation, scholarships, total cost and return on investment and graduate prospects?",DeepSeek,,
+,China,Prospective Student (Postgraduate),Engineering,Academic Experience,Which universities offer the strongest postgraduate engineering education for advanced technical and leadership careers?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Engineering,Collaboration & Partnerships,Which universities have the strongest engineering partnerships with major industrial employers?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Engineering,Reputation,Which postgraduate engineering programmes are best recognised by employers in careers in China and internationally?,DeepSeek,,
+,China,Research Professional,Engineering,Research & Innovation,Which UK universities have the strongest engineering research capability and facilities?,DeepSeek,,
+,China,Research Professional,Engineering,Collaboration & Partnerships,"Which universities are best suited to major engineering research partnerships with Chinese universities, institutes and industry partners?",DeepSeek,,
+,China,Research Professional,Engineering,Research & Innovation,Which universities have the strongest large-scale engineering test facilities and applied research centres?,DeepSeek,,
+,India,Prospective Student (Undergraduate),Engineering,Reputation,Which UK universities are most highly regarded for engineering by employers and professional organisations in India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Engineering,Facilities,"Which universities offer the strongest engineering laboratories, design facilities and hands-on project experience?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Engineering,Careers & Employability,"Which universities give engineering students the strongest access to placements, major employers and graduate schemes?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Engineering,Cost & Value,"Which universities offer the strongest combination of engineering reputation, scholarships, affordability and return on investment and graduate prospects?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Engineering,Academic Experience,Which universities offer the strongest postgraduate engineering education for advanced technical and leadership careers?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Engineering,Collaboration & Partnerships,Which universities have the strongest engineering partnerships with major industrial employers?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Engineering,Reputation,"Which postgraduate engineering programmes are best recognised by employers in careers in India, the UK and multinational organisations?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Engineering,Research & Innovation,Which UK universities have the strongest engineering research capability and facilities?,OpenAI,Gemini,Perplexity
+,India,Research Professional,Engineering,Collaboration & Partnerships,"Which universities are best suited to major engineering research partnerships with Indian universities, research institutes and industry partners?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Engineering,Research & Innovation,Which universities have the strongest large-scale engineering test facilities and applied research centres?,OpenAI,Gemini,Perplexity
+,Hong Kong,Prospective Student (Undergraduate),Engineering,Reputation,Which UK universities are most highly regarded for engineering by employers and professional organisations in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Engineering,Facilities,"Which universities offer the strongest engineering laboratories, design facilities and hands-on project experience?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Engineering,Careers & Employability,"Which universities give engineering students the strongest access to placements, major employers and graduate schemes?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Engineering,Cost & Value,"Which universities offer the strongest combination of engineering reputation, overall value, scholarships and career return and graduate prospects?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Engineering,Academic Experience,Which universities offer the strongest postgraduate engineering education for advanced technical and leadership careers?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Engineering,Collaboration & Partnerships,Which universities have the strongest engineering partnerships with major industrial employers?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Engineering,Reputation,"Which postgraduate engineering programmes are best recognised by employers in careers in Hong Kong, the UK and Asia?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Engineering,Research & Innovation,Which UK universities have the strongest engineering research capability and facilities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Engineering,Collaboration & Partnerships,"Which universities are best suited to major engineering research partnerships with Hong Kong universities, public bodies and industry partners?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Engineering,Research & Innovation,Which universities have the strongest large-scale engineering test facilities and applied research centres?,OpenAI,DeepSeek,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Engineering,Reputation,Which UK universities are most highly regarded for engineering by employers and professional organisations in the United Arab Emirates and Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Engineering,Facilities,"Which universities offer the strongest engineering laboratories, design facilities and hands-on project experience?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Engineering,Careers & Employability,"Which universities give engineering students the strongest access to placements, major employers and graduate schemes?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Engineering,Cost & Value,"Which universities offer the strongest combination of engineering reputation, scholarships, total cost and long-term career value and graduate prospects?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Engineering,Academic Experience,Which universities offer the strongest postgraduate engineering education for advanced technical and leadership careers?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Engineering,Collaboration & Partnerships,Which universities have the strongest engineering partnerships with major industrial employers?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Engineering,Reputation,"Which postgraduate engineering programmes are best recognised by employers in careers in the United Arab Emirates, Gulf and internationally?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Engineering,Research & Innovation,Which UK universities have the strongest engineering research capability and facilities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Engineering,Collaboration & Partnerships,"Which universities are best suited to major engineering research partnerships with United Arab Emirates universities, government entities and industry partners?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Engineering,Research & Innovation,Which universities have the strongest large-scale engineering test facilities and applied research centres?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Business,Reputation,Which UK universities are most highly regarded for business education by UK employers and professional bodies?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Business,Careers & Employability,"Which universities give business undergraduates the strongest access to internships, graduate schemes and leading employers?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Business,Collaboration & Partnerships,Which universities provide the strongest international business networks and study-abroad opportunities?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Business,Careers & Employability,Which universities have business graduates who are especially well regarded by employers in careers in the UK?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Business,Reputation,Which UK business schools have the strongest international reputation for postgraduate study?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Business,Careers & Employability,Which universities provide the strongest postgraduate Careers & Employability and employer access for UK-based students?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Business,University Overview,"Which postgraduate business programmes offer the strongest balance of fees, Careers & Employability and international recognition?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Business,Research & Innovation,"Which UK universities have the strongest research in management, economics, finance, organisations and business innovation?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Business,Collaboration & Partnerships,"Which universities would make the strongest business research partners for UK research funders, public services and industry?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Business,Careers & Employability,"Which universities provide the strongest access to companies, executives and real-world organisational data for collaborative research?",OpenAI,Anthropic,Gemini
+,China,Prospective Student (Undergraduate),Business,Reputation,Which UK universities are most highly regarded for business education by employers and professional organisations in China?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Business,Careers & Employability,"Which universities give business undergraduates the strongest access to internships, graduate schemes and leading employers?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Business,Collaboration & Partnerships,Which universities provide the strongest international business networks and study-abroad opportunities?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Business,Careers & Employability,Which universities have business graduates who are especially well regarded by employers in careers in China and internationally?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Business,Reputation,Which UK business schools have the strongest international reputation for postgraduate study?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Business,Careers & Employability,Which universities provide the strongest postgraduate Careers & Employability and employer access for students from China?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Business,University Overview,"Which postgraduate business programmes offer the strongest balance of fees, Careers & Employability and international recognition?",DeepSeek,,
+,China,Research Professional,Business,Research & Innovation,"Which UK universities have the strongest research in management, economics, finance, organisations and business innovation?",DeepSeek,,
+,China,Research Professional,Business,Collaboration & Partnerships,"Which universities would make the strongest business research partners for Chinese universities, institutes and industry partners?",DeepSeek,,
+,China,Research Professional,Business,Careers & Employability,"Which universities provide the strongest access to companies, executives and real-world organisational data for collaborative research?",DeepSeek,,
+,India,Prospective Student (Undergraduate),Business,Reputation,Which UK universities are most highly regarded for business education by employers and professional organisations in India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Business,Careers & Employability,"Which universities give business undergraduates the strongest access to internships, graduate schemes and leading employers?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Business,Collaboration & Partnerships,Which universities provide the strongest international business networks and study-abroad opportunities?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Business,Careers & Employability,"Which universities have business graduates who are especially well regarded by employers in careers in India, the UK and multinational organisations?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Business,Reputation,Which UK business schools have the strongest international reputation for postgraduate study?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Business,Careers & Employability,Which universities provide the strongest postgraduate Careers & Employability and employer access for students from India?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Business,University Overview,"Which postgraduate business programmes offer the strongest balance of fees, Careers & Employability and international recognition?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Business,Research & Innovation,"Which UK universities have the strongest research in management, economics, finance, organisations and business innovation?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Business,Collaboration & Partnerships,"Which universities would make the strongest business research partners for Indian universities, research institutes and industry partners?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Business,Careers & Employability,"Which universities provide the strongest access to companies, executives and real-world organisational data for collaborative research?",OpenAI,Gemini,Perplexity
+,Hong Kong,Prospective Student (Undergraduate),Business,Reputation,Which UK universities are most highly regarded for business education by employers and professional organisations in Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Business,Careers & Employability,"Which universities give business undergraduates the strongest access to internships, graduate schemes and leading employers?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Business,Collaboration & Partnerships,Which universities provide the strongest international business networks and study-abroad opportunities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Business,Careers & Employability,"Which universities have business graduates who are especially well regarded by employers in careers in Hong Kong, the UK and Asia?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Business,Reputation,Which UK business schools have the strongest international reputation for postgraduate study?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Business,Careers & Employability,Which universities provide the strongest postgraduate Careers & Employability and employer access for students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Business,University Overview,"Which postgraduate business programmes offer the strongest balance of fees, Careers & Employability and international recognition?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Business,Research & Innovation,"Which UK universities have the strongest research in management, economics, finance, organisations and business innovation?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Business,Collaboration & Partnerships,"Which universities would make the strongest business research partners for Hong Kong universities, public bodies and industry partners?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Business,Careers & Employability,"Which universities provide the strongest access to companies, executives and real-world organisational data for collaborative research?",OpenAI,DeepSeek,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Business,Reputation,Which UK universities are most highly regarded for business education by employers and professional organisations in the United Arab Emirates and Gulf?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Business,Careers & Employability,"Which universities give business undergraduates the strongest access to internships, graduate schemes and leading employers?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Business,Collaboration & Partnerships,Which universities provide the strongest international business networks and study-abroad opportunities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Business,Careers & Employability,"Which universities have business graduates who are especially well regarded by employers in careers in the United Arab Emirates, Gulf and internationally?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Business,Reputation,Which UK business schools have the strongest international reputation for postgraduate study?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Business,Careers & Employability,Which universities provide the strongest postgraduate Careers & Employability and employer access for students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Business,University Overview,"Which postgraduate business programmes offer the strongest balance of fees, Careers & Employability and international recognition?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Business,Research & Innovation,"Which UK universities have the strongest research in management, economics, finance, organisations and business innovation?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Business,Collaboration & Partnerships,"Which universities would make the strongest business research partners for United Arab Emirates universities, government entities and industry partners?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Business,Careers & Employability,"Which universities provide the strongest access to companies, executives and real-world organisational data for collaborative research?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Humanities,Reputation,Which UK universities have the strongest overall reputation for humanities education?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Humanities,Academic Experience,Which universities offer the most intellectually engaging humanities teaching and access to leading academics?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Humanities,Facilities,"Which universities give humanities students the strongest access to libraries, archives, museums and cultural institutions?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Humanities,International Recognition,Which universities offer humanities degrees with the strongest reputation among employers and institutions in careers in the UK?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Humanities,Academic Experience,Which universities offer the strongest postgraduate humanities communities and academic supervision?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Humanities,Academic Experience,"Which universities provide the best access to archives, collections, cultural organisations and international academic networks?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Humanities,Cost & Value,"Which postgraduate humanities programmes offer the strongest balance of academic reputation, tuition, living costs and value for money and career value?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Humanities,Research & Innovation,Which UK universities have the strongest humanities research environments and scholarly communities?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,Humanities,Collaboration & Partnerships,"Which universities would make the strongest humanities research partners for UK research funders, public services and industry?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Humanities,Academic Experience,"Which universities provide the richest archives, collections, digital humanities infrastructure and research support?",OpenAI,Anthropic,Gemini
+,China,Prospective Student (Undergraduate),Humanities,Reputation,Which UK universities have the strongest overall reputation for humanities education?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Humanities,Academic Experience,Which universities offer the most intellectually engaging humanities teaching and access to leading academics?,DeepSeek,,
+,China,Prospective Student (Undergraduate),Humanities,Facilities,"Which universities give humanities students the strongest access to libraries, archives, museums and cultural institutions?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Humanities,International Recognition,Which universities offer humanities degrees with the strongest reputation among employers and institutions in careers in China and internationally?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Humanities,Academic Experience,Which universities offer the strongest postgraduate humanities communities and academic supervision?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Humanities,Academic Experience,"Which universities provide the best access to archives, collections, cultural organisations and international academic networks?",DeepSeek,,
+,China,Prospective Student (Postgraduate),Humanities,Cost & Value,"Which postgraduate humanities programmes offer the strongest balance of academic reputation, scholarships, total cost and return on investment and career value?",DeepSeek,,
+,China,Research Professional,Humanities,Research & Innovation,Which UK universities have the strongest humanities research environments and scholarly communities?,DeepSeek,,
+,China,Research Professional,Humanities,Collaboration & Partnerships,"Which universities would make the strongest humanities research partners for Chinese universities, institutes and industry partners?",DeepSeek,,
+,China,Research Professional,Humanities,Academic Experience,"Which universities provide the richest archives, collections, digital humanities infrastructure and research support?",DeepSeek,,
+,India,Prospective Student (Undergraduate),Humanities,Reputation,Which UK universities have the strongest overall reputation for humanities education?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Humanities,Academic Experience,Which universities offer the most intellectually engaging humanities teaching and access to leading academics?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Humanities,Facilities,"Which universities give humanities students the strongest access to libraries, archives, museums and cultural institutions?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Humanities,International Recognition,"Which universities offer humanities degrees with the strongest reputation among employers and institutions in careers in India, the UK and multinational organisations?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Humanities,Academic Experience,Which universities offer the strongest postgraduate humanities communities and academic supervision?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Humanities,Academic Experience,"Which universities provide the best access to archives, collections, cultural organisations and international academic networks?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Humanities,Cost & Value,"Which postgraduate humanities programmes offer the strongest balance of academic reputation, scholarships, affordability and return on investment and career value?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Humanities,Research & Innovation,Which UK universities have the strongest humanities research environments and scholarly communities?,OpenAI,Gemini,Perplexity
+,India,Research Professional,Humanities,Collaboration & Partnerships,"Which universities would make the strongest humanities research partners for Indian universities, research institutes and industry partners?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Humanities,Academic Experience,"Which universities provide the richest archives, collections, digital humanities infrastructure and research support?",OpenAI,Gemini,Perplexity
+,Hong Kong,Prospective Student (Undergraduate),Humanities,Reputation,Which UK universities have the strongest overall reputation for humanities education?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Humanities,Academic Experience,Which universities offer the most intellectually engaging humanities teaching and access to leading academics?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Humanities,Facilities,"Which universities give humanities students the strongest access to libraries, archives, museums and cultural institutions?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Humanities,International Recognition,"Which universities offer humanities degrees with the strongest reputation among employers and institutions in careers in Hong Kong, the UK and Asia?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Humanities,Academic Experience,Which universities offer the strongest postgraduate humanities communities and academic supervision?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Humanities,Academic Experience,"Which universities provide the best access to archives, collections, cultural organisations and international academic networks?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Humanities,Cost & Value,"Which postgraduate humanities programmes offer the strongest balance of academic reputation, overall value, scholarships and career return and career value?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Humanities,Research & Innovation,Which UK universities have the strongest humanities research environments and scholarly communities?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Humanities,Collaboration & Partnerships,"Which universities would make the strongest humanities research partners for Hong Kong universities, public bodies and industry partners?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Humanities,Academic Experience,"Which universities provide the richest archives, collections, digital humanities infrastructure and research support?",OpenAI,DeepSeek,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Humanities,Reputation,Which UK universities have the strongest overall reputation for humanities education?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Humanities,Academic Experience,Which universities offer the most intellectually engaging humanities teaching and access to leading academics?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Humanities,Facilities,"Which universities give humanities students the strongest access to libraries, archives, museums and cultural institutions?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Humanities,International Recognition,"Which universities offer humanities degrees with the strongest reputation among employers and institutions in careers in the United Arab Emirates, Gulf and internationally?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Humanities,Academic Experience,Which universities offer the strongest postgraduate humanities communities and academic supervision?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Humanities,Academic Experience,"Which universities provide the best access to archives, collections, cultural organisations and international academic networks?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Humanities,Cost & Value,"Which postgraduate humanities programmes offer the strongest balance of academic reputation, scholarships, total cost and long-term career value and career value?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Humanities,Research & Innovation,Which UK universities have the strongest humanities research environments and scholarly communities?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Humanities,Collaboration & Partnerships,"Which universities would make the strongest humanities research partners for United Arab Emirates universities, government entities and industry partners?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Humanities,Academic Experience,"Which universities provide the richest archives, collections, digital humanities infrastructure and research support?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Defence,Reputation,"Which UK universities are most highly regarded for defence-related education, security studies and relevant technical disciplines?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Defence,Facilities,"Which universities offer the strongest facilities and practical learning relevant to defence, security and resilience?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Defence,Careers & Employability,"Which universities provide the strongest pathways into defence, aerospace, security and government careers?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Undergraduate),Defence,International Recognition,Which universities offer defence-related degrees that are most respected by employers and institutions in careers in the UK?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Defence,University Overview,"Which universities offer the strongest postgraduate education in defence, security, strategy and related technologies?",OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Defence,Careers & Employability,Which universities provide the strongest platform for experienced professionals seeking senior defence or security roles?,OpenAI,Anthropic,Gemini
+,UK,Prospective Student (Postgraduate),Defence,Careers & Employability,Which postgraduate defence and security programmes provide the strongest value for professionals from UK-based students?,OpenAI,Anthropic,Gemini
+,UK,Research Professional,Defence,Research & Innovation,"Which UK universities have the strongest research capability in defence, security, resilience and dual-use technologies?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Defence,Collaboration & Partnerships,"Which universities would make the strongest research partners for defence and security organisations in UK research funders, public services and industry?",OpenAI,Anthropic,Gemini
+,UK,Research Professional,Defence,Collaboration & Partnerships,"Which universities have the strongest governance, secure facilities and partnership experience for sensitive defence-related research?",OpenAI,Anthropic,Gemini
+,China,Prospective Student (Undergraduate),Defence,Reputation,"Which UK universities are most highly regarded for defence-related education, security studies and relevant technical disciplines?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Defence,Facilities,"Which universities offer the strongest facilities and practical learning relevant to defence, security and resilience?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Defence,Careers & Employability,"Which universities provide the strongest pathways into defence, aerospace, security and government careers?",DeepSeek,,
+,China,Prospective Student (Undergraduate),Defence,International Recognition,Which universities offer defence-related degrees that are most respected by employers and institutions in careers in China and internationally?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Defence,University Overview,"Which universities offer the strongest postgraduate education in defence, security, strategy and related technologies?",DeepSeek,,
+,China,Prospective Student (Postgraduate),Defence,Careers & Employability,Which universities provide the strongest platform for experienced professionals seeking senior defence or security roles?,DeepSeek,,
+,China,Prospective Student (Postgraduate),Defence,Careers & Employability,Which postgraduate defence and security programmes provide the strongest value for professionals from students from China?,DeepSeek,,
+,China,Research Professional,Defence,Research & Innovation,"Which UK universities have the strongest research capability in defence, security, resilience and dual-use technologies?",DeepSeek,,
+,China,Research Professional,Defence,Collaboration & Partnerships,"Which universities would make the strongest research partners for defence and security organisations in Chinese universities, institutes and industry partners?",DeepSeek,,
+,China,Research Professional,Defence,Collaboration & Partnerships,"Which universities have the strongest governance, secure facilities and partnership experience for sensitive defence-related research?",DeepSeek,,
+,India,Prospective Student (Undergraduate),Defence,Reputation,"Which UK universities are most highly regarded for defence-related education, security studies and relevant technical disciplines?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Defence,Facilities,"Which universities offer the strongest facilities and practical learning relevant to defence, security and resilience?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Defence,Careers & Employability,"Which universities provide the strongest pathways into defence, aerospace, security and government careers?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Undergraduate),Defence,International Recognition,"Which universities offer defence-related degrees that are most respected by employers and institutions in careers in India, the UK and multinational organisations?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Defence,University Overview,"Which universities offer the strongest postgraduate education in defence, security, strategy and related technologies?",OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Defence,Careers & Employability,Which universities provide the strongest platform for experienced professionals seeking senior defence or security roles?,OpenAI,Gemini,Perplexity
+,India,Prospective Student (Postgraduate),Defence,Careers & Employability,Which postgraduate defence and security programmes provide the strongest value for professionals from students from India?,OpenAI,Gemini,Perplexity
+,India,Research Professional,Defence,Research & Innovation,"Which UK universities have the strongest research capability in defence, security, resilience and dual-use technologies?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Defence,Collaboration & Partnerships,"Which universities would make the strongest research partners for defence and security organisations in Indian universities, research institutes and industry partners?",OpenAI,Gemini,Perplexity
+,India,Research Professional,Defence,Collaboration & Partnerships,"Which universities have the strongest governance, secure facilities and partnership experience for sensitive defence-related research?",OpenAI,Gemini,Perplexity
+,Hong Kong,Prospective Student (Undergraduate),Defence,Reputation,"Which UK universities are most highly regarded for defence-related education, security studies and relevant technical disciplines?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Defence,Facilities,"Which universities offer the strongest facilities and practical learning relevant to defence, security and resilience?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Defence,Careers & Employability,"Which universities provide the strongest pathways into defence, aerospace, security and government careers?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Undergraduate),Defence,International Recognition,"Which universities offer defence-related degrees that are most respected by employers and institutions in careers in Hong Kong, the UK and Asia?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Defence,University Overview,"Which universities offer the strongest postgraduate education in defence, security, strategy and related technologies?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Defence,Careers & Employability,Which universities provide the strongest platform for experienced professionals seeking senior defence or security roles?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Prospective Student (Postgraduate),Defence,Careers & Employability,Which postgraduate defence and security programmes provide the strongest value for professionals from students from Hong Kong?,OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Defence,Research & Innovation,"Which UK universities have the strongest research capability in defence, security, resilience and dual-use technologies?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Defence,Collaboration & Partnerships,"Which universities would make the strongest research partners for defence and security organisations in Hong Kong universities, public bodies and industry partners?",OpenAI,DeepSeek,Gemini
+,Hong Kong,Research Professional,Defence,Collaboration & Partnerships,"Which universities have the strongest governance, secure facilities and partnership experience for sensitive defence-related research?",OpenAI,DeepSeek,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Defence,Reputation,"Which UK universities are most highly regarded for defence-related education, security studies and relevant technical disciplines?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Defence,Facilities,"Which universities offer the strongest facilities and practical learning relevant to defence, security and resilience?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Defence,Careers & Employability,"Which universities provide the strongest pathways into defence, aerospace, security and government careers?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Undergraduate),Defence,International Recognition,"Which universities offer defence-related degrees that are most respected by employers and institutions in careers in the United Arab Emirates, Gulf and internationally?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Defence,University Overview,"Which universities offer the strongest postgraduate education in defence, security, strategy and related technologies?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Defence,Careers & Employability,Which universities provide the strongest platform for experienced professionals seeking senior defence or security roles?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Prospective Student (Postgraduate),Defence,Careers & Employability,Which postgraduate defence and security programmes provide the strongest value for professionals from students from the United Arab Emirates?,OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Defence,Research & Innovation,"Which UK universities have the strongest research capability in defence, security, resilience and dual-use technologies?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Defence,Collaboration & Partnerships,"Which universities would make the strongest research partners for defence and security organisations in United Arab Emirates universities, government entities and industry partners?",OpenAI,Anthropic,Gemini
+,United Arab Emirates,Research Professional,Defence,Collaboration & Partnerships,"Which universities have the strongest governance, secure facilities and partnership experience for sensitive defence-related research?",OpenAI,Anthropic,Gemini

@@ -11,13 +11,14 @@ from src.execution import (
 )
 from src.ui import apply_moorhouse_theme, load_core_data, render_page_header
 
-RESULTS_PATH = 'data/openrouter_results.csv'
+RESULTS_PATH = 'data/uoS_openrouter_results.csv'
 DEFAULT_MODEL_OPTIONS = [
     'openai/gpt-4.1-mini',
     'anthropic/claude-haiku-4.5',
     'google/gemini-3.6-flash',
     'qwen/qwen3-max',
     'deepseek/deepseek-chat',
+    'perplexity/sonar',
 ]
 
 st.set_page_config(page_title='OpenRouter execution', page_icon=':material/play_circle:', layout='wide')

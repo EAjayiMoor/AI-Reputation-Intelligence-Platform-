@@ -57,6 +57,11 @@ def _to_result_row(run: OpenRouterRunResult, index: int, intent: str = '') -> di
         'RequestID': run.request_id,
         'ResponseID': run.response_id,
         'RunBatchID': run.run_batch_id,
+        'PromptTokens': run.prompt_tokens,
+        'CompletionTokens': run.completion_tokens,
+        'TotalTokens': run.total_tokens,
+        'CachedPromptTokens': run.cached_prompt_tokens,
+        'APICost': run.api_cost,
     }
 
 

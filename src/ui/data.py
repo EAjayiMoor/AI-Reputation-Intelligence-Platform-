@@ -15,8 +15,8 @@ from src.ingestion.validators import (
 )
 from src.scoring import score_results
 
-DEFAULT_PROMPTS_PATH = Path('data/Southampton_GEO_PromptBank_v2_15Segments_120Prompts 1.csv')
-DEFAULT_RESULTS_PATH = Path('data/openrouter_results.csv')
+DEFAULT_PROMPTS_PATH = Path('data/UoS_Prompt_Library_normalised.csv')
+DEFAULT_RESULTS_PATH = Path('data/uoS_openrouter_results.csv')
 
 FILTER_COLUMNS = [
     'PromptMentionType',
