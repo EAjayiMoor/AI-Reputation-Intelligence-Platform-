@@ -16,7 +16,7 @@ from src.ingestion.validators import (
 from src.scoring import score_results
 
 DEFAULT_PROMPTS_PATH = Path('data/UoS_Prompt_Library_normalised.csv')
-DEFAULT_RESULTS_PATH = Path('data/uoS_openrouter_results.csv')
+DEFAULT_RESULTS_PATH = Path('data/uos_openrouter_results.csv')
 
 FILTER_COLUMNS = [
     'PromptMentionType',
