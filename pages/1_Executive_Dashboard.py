@@ -23,7 +23,7 @@ render_page_header(
     'Headline metrics and visibility patterns',
     eyebrow='Executive view',
 )
-st.caption('Results source: OpenRouter captured outputs')
+st.caption('Results source: UoS Prompt Library · OpenRouter captured outputs')
 
 try:
     _, _, scored_df = load_core_data()
@@ -137,6 +137,7 @@ else:
         'google/gemini-3.6-flash': 'Gemini 3.6 Flash',
         'qwen/qwen3-max': 'Qwen3 Max',
         'deepseek/deepseek-chat': 'DeepSeek Chat',
+        'perplexity/sonar': 'Perplexity Sonar',
     }
     model_table = model_mention_breakdown.pivot_table(
         index='Institution',

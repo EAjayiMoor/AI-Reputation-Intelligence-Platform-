@@ -12,15 +12,6 @@ from src.execution import (
 from src.ui import apply_moorhouse_theme, load_core_data, render_page_header
 
 RESULTS_PATH = 'data/uos_openrouter_results.csv'
-DEFAULT_MODEL_OPTIONS = [
-    'openai/gpt-4.1-mini',
-    'anthropic/claude-haiku-4.5',
-    'google/gemini-3.6-flash',
-    'qwen/qwen3-max',
-    'deepseek/deepseek-chat',
-    'perplexity/sonar',
-]
-
 st.set_page_config(page_title='OpenRouter execution', page_icon=':material/play_circle:', layout='wide')
 apply_moorhouse_theme()
 render_page_header(
@@ -43,23 +34,29 @@ if 'PromptSource' not in prompts_df.columns:
     st.stop()
 
 settings = load_settings()
+existing = load_openrouter_results(RESULTS_PATH)
+actual_models = sorted(existing['ModelName'].dropna().astype(str).unique())
 dry_run = st.toggle('Dry run (no API call)', value=True)
 selected_models = st.multiselect(
     'Models to run',
-    options=DEFAULT_MODEL_OPTIONS,
-    default=DEFAULT_MODEL_OPTIONS,
-    help='Each selected model will receive the generated prompt bank as a separate OpenRouter run.',
+    options=actual_models,
+    default=actual_models,
+    help='These are the models actually assigned and captured in the current UoS prompt-library run.',
 )
 
 generated_df = generated_prompt_subset(prompts_df)
-existing = load_openrouter_results(RESULTS_PATH)
 captured_model_count = existing['ModelName'].dropna().astype(str).nunique()
 
 m1, m2, m3, m4 = st.columns(4)
 m1.metric('Total prompts', len(prompts_df), border=True)
 m2.metric('Generated prompts', len(generated_df), border=True)
-m3.metric('Models', captured_model_count, border=True)
+m3.metric('Models used', captured_model_count, border=True)
 m4.metric('Captured outputs', len(existing), border=True)
+
+st.caption(
+    f'Current source: UoS Prompt Library · {len(prompts_df):,} prompts · '
+    f'{captured_model_count} assigned models · {len(existing):,} captured outputs'
+)
 
 st.info(
     'This page is for operational capture only. It runs generated persona prompts through OpenRouter, stores the responses, and supports replay for audit QA. '
