@@ -19,6 +19,25 @@ Slice 2 (Core Analytics) is now in place:
 3. Start the app:
    - `streamlit run app.py`
 
+## Run with Docker
+
+Build and start the app with Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+The app is available at `http://localhost:8501`. To configure OpenRouter, copy
+`.env.example` to `.env`, set `OPENROUTER_API_KEY`, and run Compose again. The
+`.env` file and `.streamlit/secrets.toml` are excluded from the image build.
+
+To build and run the image directly:
+
+```bash
+docker build -t ai-reputation-intelligence-platform .
+docker run --rm -p 8501:8501 --env-file .env ai-reputation-intelligence-platform
+```
+
 ## Current data files
 
 - `data/Southampton_GEO_PromptBank_v2_15Segments_120Prompts 1.csv`

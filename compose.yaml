@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-reputation-intelligence-platform:local
+    ports:
+      - "${STREAMLIT_PORT:-8501}:8501"
+    environment:
+      OPENROUTER_API_KEY: "${OPENROUTER_API_KEY:-}"
+      OPENROUTER_MODEL: "${OPENROUTER_MODEL:-openai/gpt-4.1-mini}"
+      OPENROUTER_TIMEOUT_SECONDS: "${OPENROUTER_TIMEOUT_SECONDS:-45}"
+      OPENROUTER_APP_NAME: "${OPENROUTER_APP_NAME:-AI Reputation Intelligence Platform}"
+      OPENROUTER_APP_URL: "${OPENROUTER_APP_URL:-http://localhost:8501}"
+    restart: unless-stopped
