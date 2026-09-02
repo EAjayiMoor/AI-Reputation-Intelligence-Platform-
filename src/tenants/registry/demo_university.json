@@ -1,0 +1,18 @@
+{
+  "org_id": "demo_university",
+  "display_name": "Demo University",
+  "aliases": [
+    "Demo University",
+    "Sandbox Demo"
+  ],
+  "domains": [
+    "demo.example"
+  ],
+  "data_paths": {
+    "prompts_path": "data/moorhouse_sample_prompts.csv",
+    "results_path": "data/moorhouse_sample_results.csv"
+  },
+  "model_assignment": {
+    "OpenAI": "openai/gpt-4.1-mini"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "org_id": "moorhouse",
+  "display_name": "Moorhouse",
+  "aliases": [
+    "Moorhouse",
+    "Moorhouse Consulting"
+  ],
+  "domains": [
+    "moorhouseconsulting.com"
+  ],
+  "data_paths": {
+    "prompts_path": "data/moorhouse_prompts_empty.csv",
+    "results_path": "data/moorhouse_results_empty.csv"
+  },
+  "model_assignment": {
+    "OpenAI": "openai/gpt-4.1-mini"
+  }
+}

@@ -5,7 +5,10 @@ import streamlit as st
 from src.ui import (
     apply_filters,
     apply_moorhouse_theme,
+    render_empty_state_guidance,
     render_page_header,
+    require_active_tenant,
+    tenant_data_source_label,
     load_core_data,
     render_sidebar_filters,
 )
@@ -13,17 +16,26 @@ from src.ui.data import select_available_output_columns
 
 st.set_page_config(page_title='Prompt bank explorer', page_icon=':material/explore:', layout='wide')
 apply_moorhouse_theme()
+tenant = require_active_tenant()
+data_source = tenant_data_source_label(tenant)
 render_page_header(
     'Prompt bank explorer',
     'Inspect prompt coverage and export filtered views',
     eyebrow='Prompt intelligence',
 )
-st.caption('Results source: OpenRouter captured outputs')
+st.caption(
+    f'Active organization: {tenant.display_name} · Data source: {data_source} · '
+    'Results source: OpenRouter captured outputs'
+)
 
 try:
-    prompts_df, results_df, _ = load_core_data()
+    prompts_df, results_df, _ = load_core_data(org_id=tenant.org_id)
 except Exception as exc:
     st.error(f'Unable to load captured data: {exc}')
+    st.stop()
+
+if prompts_df.empty and results_df.empty:
+    render_empty_state_guidance(tenant, area='Prompt Bank Explorer')
     st.stop()
 
 output_columns = select_available_output_columns(results_df)

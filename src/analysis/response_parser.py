@@ -47,8 +47,14 @@ UNIVERSITY_ALIASES: dict[str, tuple[str, ...]] = {
     'Queen Mary University of London': (r'\bQueen Mary University of London\b', r'\bQMUL\b'),
 }
 
+SOUTHAMPTON_PATTERN = r'\b(?:university\s+of\s+)?southampton\b'
 
-def prompt_names_institution(prompt_text: object, intent: object = '') -> bool:
+
+def prompt_names_institution(
+    prompt_text: object,
+    intent: object = '',
+    target_institution_pattern: str = SOUTHAMPTON_PATTERN,
+) -> bool:
     """Return True when a prompt explicitly supplies an institution name."""
     if pd.isna(prompt_text):
         return False
@@ -56,7 +62,7 @@ def prompt_names_institution(prompt_text: object, intent: object = '') -> bool:
     text = str(prompt_text)
     if str(intent).strip().lower() == 'direct comparison':
         return True
-    if re.search(r'\b(?:university\s+of\s+)?southampton\b', text, flags=re.IGNORECASE):
+    if re.search(target_institution_pattern, text, flags=re.IGNORECASE):
         return True
     return any(
         re.search(alias, text, flags=re.IGNORECASE) is not None
@@ -83,18 +89,22 @@ def extract_competitors(response_text: object) -> list[str]:
     return [name for _, name in sorted(matches)]
 
 
-def extract_southampton_rank(response_text: object, intent: object = '') -> int | None:
+def extract_institution_rank(
+    response_text: object,
+    intent: object = '',
+    institution_pattern: str = SOUTHAMPTON_PATTERN,
+) -> int | None:
     if pd.isna(response_text) or str(intent).strip().lower() == 'direct comparison':
         return None
 
     text = str(response_text)
     for line in text.splitlines():
-        if 'southampton' not in line.lower():
+        if re.search(institution_pattern, line, flags=re.IGNORECASE) is None:
             continue
 
         numbered_line = re.search(
             r'^\s*(?:[-*]\s*)?(?:\*{0,2})?(\d{1,2})[.)]\s*(?:\*{0,2})?'
-            r'(?:the\s+)?(?:university\s+of\s+)?southampton\b',
+            rf'(?:the\s+)?{institution_pattern}',
             line,
             flags=re.IGNORECASE,
         )
@@ -102,7 +112,7 @@ def extract_southampton_rank(response_text: object, intent: object = '') -> int 
             return int(numbered_line.group(1))
 
         table_row = re.search(
-            r'^\s*\|\s*(\d{1,2})\s*\|[^|]*southampton',
+            rf'^\s*\|\s*(\d{{1,2}})\s*\|[^|]*{institution_pattern}',
             line,
             flags=re.IGNORECASE,
         )
@@ -118,6 +128,14 @@ def extract_southampton_rank(response_text: object, intent: object = '') -> int 
             return int(explicit_rank.group(1))
 
     return None
+
+
+def extract_southampton_rank(response_text: object, intent: object = '') -> int | None:
+    return extract_institution_rank(
+        response_text=response_text,
+        intent=intent,
+        institution_pattern=SOUTHAMPTON_PATTERN,
+    )
 
 
 def enrich_results_frame(results_df: pd.DataFrame, prompts_df: pd.DataFrame) -> pd.DataFrame:
@@ -141,6 +159,8 @@ def enrich_results_frame(results_df: pd.DataFrame, prompts_df: pd.DataFrame) -> 
         ),
         axis=1,
     )
+    enriched['OrgVisible'] = enriched['SouthamptonVisible']
+    enriched['OrgRank'] = enriched['SouthamptonRank']
     enriched['CompetitorsMentioned'] = enriched['ResponseText'].map(
         lambda response: ', '.join(extract_competitors(response))
     )

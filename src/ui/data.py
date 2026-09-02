@@ -1,7 +1,7 @@
 ﻿from __future__ import annotations
 
-from pathlib import Path
 import re
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
@@ -14,9 +14,51 @@ from src.ingestion.validators import (
     validate_required_columns,
 )
 from src.scoring import score_results
+from src.tenants import load_tenant
 
-DEFAULT_PROMPTS_PATH = Path('data/UoS_Prompt_Library_normalised.csv')
-DEFAULT_RESULTS_PATH = Path('data/uos_openrouter_results.csv')
+
+def _default_tenant_paths() -> tuple[Path, Path, str]:
+    try:
+        tenant = load_tenant('southampton')
+        return (
+            Path(tenant.data_paths.prompts_path),
+            Path(tenant.data_paths.results_path),
+            tenant.display_name,
+        )
+    except Exception:
+        return (
+            Path('data/UoS_Prompt_Library_normalised.csv'),
+            Path('data/uos_openrouter_results.csv'),
+            'University of Southampton',
+        )
+
+
+DEFAULT_PROMPTS_PATH, DEFAULT_RESULTS_PATH, DEFAULT_ORGANISATION_NAME = _default_tenant_paths()
+DEFAULT_MENTION_PATTERN = r'\bsouthampton\b'
+
+
+def _mention_pattern(values: list[str] | tuple[str, ...]) -> str:
+    cleaned = [value.strip() for value in values if value and value.strip()]
+    escaped = [re.escape(value) for value in cleaned]
+    return r'\b(?:' + '|'.join(escaped) + r')\b' if escaped else DEFAULT_MENTION_PATTERN
+
+
+def _tenant_defaults(org_id: str | None = None) -> tuple[Path, Path, str, str]:
+    if not org_id:
+        return (
+            DEFAULT_PROMPTS_PATH,
+            DEFAULT_RESULTS_PATH,
+            DEFAULT_ORGANISATION_NAME,
+            DEFAULT_MENTION_PATTERN,
+        )
+
+    tenant = load_tenant(org_id)
+    return (
+        Path(tenant.data_paths.prompts_path),
+        Path(tenant.data_paths.results_path),
+        tenant.display_name,
+        _mention_pattern([tenant.display_name, *tenant.aliases]),
+    )
 
 FILTER_COLUMNS = [
     'PromptMentionType',
@@ -41,7 +83,13 @@ def select_available_output_columns(results_df: pd.DataFrame, required_output_co
     return available
 
 
-def normalise_prompt_bank_frame(frame: pd.DataFrame) -> pd.DataFrame:
+def normalise_prompt_bank_frame(
+    frame: pd.DataFrame,
+    *,
+    organisation_name: str = DEFAULT_ORGANISATION_NAME,
+    mention_pattern: str = DEFAULT_MENTION_PATTERN,
+    force_organisation: bool = False,
+) -> pd.DataFrame:
     working = frame.copy()
 
     if 'PromptID' not in working.columns and 'prompt_id' in working.columns:
@@ -49,8 +97,10 @@ def normalise_prompt_bank_frame(frame: pd.DataFrame) -> pd.DataFrame:
     if 'PromptID' not in working.columns and 'PromptID' in working.columns:
         working['PromptID'] = working['PromptID']
 
-    if 'Organisation' not in working.columns:
-        working['Organisation'] = 'University of Southampton'
+    if force_organisation:
+        working['Organisation'] = organisation_name
+    elif 'Organisation' not in working.columns:
+        working['Organisation'] = organisation_name
 
     if 'Market' not in working.columns:
         if 'market' in working.columns:
@@ -102,11 +152,15 @@ def normalise_prompt_bank_frame(frame: pd.DataFrame) -> pd.DataFrame:
         working['Prompt']
         .fillna('')
         .astype(str)
-        .str.contains(r'\bsouthampton\b', case=False, regex=True)
+        .str.contains(mention_pattern, case=False, regex=True)
         .map({True: 'Prompted/direct', False: 'Organic'})
     )
     working['CompetitorPromptEligible'] = ~working.apply(
-        lambda row: prompt_names_institution(row.get('Prompt', ''), row.get('Intent', '')),
+        lambda row: prompt_names_institution(
+            row.get('Prompt', ''),
+            row.get('Intent', ''),
+            target_institution_pattern=mention_pattern,
+        ),
         axis=1,
     )
 
@@ -130,9 +184,19 @@ def normalise_prompt_bank_frame(frame: pd.DataFrame) -> pd.DataFrame:
 def load_core_data(
     prompts_path: str | Path = DEFAULT_PROMPTS_PATH,
     results_path: str | Path = DEFAULT_RESULTS_PATH,
+    org_id: str | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    prompts_df = normalise_prompt_bank_frame(pd.read_csv(prompts_path))
-    results_df = load_openrouter_results(results_path)
+    resolved_prompts_path, resolved_results_path, org_name, mention_pattern = _tenant_defaults(org_id)
+    prompts_source = Path(prompts_path) if org_id is None else resolved_prompts_path
+    results_source = Path(results_path) if org_id is None else resolved_results_path
+
+    prompts_df = normalise_prompt_bank_frame(
+        pd.read_csv(prompts_source),
+        organisation_name=org_name,
+        mention_pattern=mention_pattern,
+        force_organisation=(org_id is not None),
+    )
+    results_df = load_openrouter_results(results_source)
 
     prompt_validation = validate_required_columns(prompts_df, PROMPT_REQUIRED_COLUMNS)
     result_validation = validate_required_columns(results_df, RESULT_REQUIRED_COLUMNS)
@@ -175,9 +239,16 @@ def render_sidebar_filters(df: pd.DataFrame, key_prefix: str = 'global') -> dict
         if column not in df.columns:
             continue
         if column == 'PromptMentionType':
+            organisation_name = 'the organisation'
+            if 'Organisation' in df.columns:
+                org_values = df['Organisation'].dropna().astype(str).str.strip()
+                org_values = org_values[org_values != '']
+                if not org_values.empty:
+                    organisation_name = str(org_values.iloc[0])
             selections[column] = render_prompt_mention_mode_selector(
                 key=f'{key_prefix}_{column}',
                 default='Organic',
+                organisation_name=organisation_name,
             )
             continue
         values = sorted(value for value in df[column].dropna().astype(str).unique())
@@ -227,6 +298,7 @@ def apply_prompt_scope_filter(df: pd.DataFrame, scope: str) -> pd.DataFrame:
 def render_prompt_mention_mode_selector(
     key: str = 'prompt_mention_mode',
     default: str = 'Organic',
+    organisation_name: str = 'the organisation',
 ) -> str:
     mode = st.sidebar.segmented_control(
         'Prompt mention mode',
@@ -234,12 +306,12 @@ def render_prompt_mention_mode_selector(
         default=default,
         key=key,
         help=(
-            'Organic prompts do not name Southampton. Prompted/direct prompts explicitly include '
-            'Southampton in the prompt text.'
+            f'Organic prompts do not name {organisation_name}. Prompted/direct prompts explicitly include '
+            f'{organisation_name} in the prompt text.'
         ),
     )
     st.sidebar.caption(
-        'Organic = Southampton is not named in the prompt. Prompted/direct = Southampton is explicitly named.'
+        f'Organic = {organisation_name} is not named in the prompt. Prompted/direct = {organisation_name} is explicitly named.'
     )
     return mode or default
 

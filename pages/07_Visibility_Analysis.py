@@ -6,51 +6,80 @@ import streamlit as st
 
 from src.scoring import aggregate_scores
 from src.ui import (
+    METRIC_DEFINITIONS,
     MOORHOUSE_PURPLE_SCALE,
     apply_filters,
     apply_moorhouse_theme,
     render_page_header,
+    render_empty_state_guidance,
+    require_active_tenant,
+    tenant_data_source_label,
     apply_prompt_scope_filter,
     load_core_data,
     render_prompt_scope_selector,
     render_sidebar_filters,
-    render_metric_definitions,
 )
+
+
+def _metric_defs_for_org(organisation_name: str) -> dict[str, str]:
+    if organisation_name == 'University of Southampton':
+        return dict(METRIC_DEFINITIONS)
+    return {
+        key: value.replace('University of Southampton', organisation_name).replace('Southampton', organisation_name)
+        for key, value in METRIC_DEFINITIONS.items()
+    }
+
+
+def _render_metric_definitions_for_org(metric_defs: dict[str, str], *, include_components: bool = False) -> None:
+    with st.expander('How these metrics are calculated', icon=':material/info:'):
+        st.markdown(f"**Overall visibility score**  \n{metric_defs['visibility']}")
+        st.markdown(f"**Reputation score**  \n{metric_defs['reputation']}")
+        st.markdown(f"**Average rank**  \n{metric_defs['average_rank']}")
+        st.markdown(f"**Prompts in view**  \n{metric_defs['prompts_in_view']}")
+        st.markdown(f"**Organisation mentions**  \n{metric_defs['mentions']}")
+        if include_components:
+            st.markdown(f"**Rank score**  \n{metric_defs['rank_score']}")
+            st.markdown(f"**Citation score**  \n{metric_defs['citation_score']}")
 
 st.set_page_config(page_title='Visibility analysis', page_icon=':material/visibility:', layout='wide')
 apply_moorhouse_theme()
+tenant = require_active_tenant()
+data_source = tenant_data_source_label(tenant)
 render_page_header('Visibility analysis', 'Heatmap and rank analysis by segment', eyebrow='Visibility diagnostics')
 scope = render_prompt_scope_selector(key='visibility_scope_filter')
-st.caption(f'Results source: OpenRouter captured outputs | Prompt bank scope: {scope}')
+metric_defs = _metric_defs_for_org(tenant.display_name)
+st.caption(
+    f'Active organization: {tenant.display_name} | Data source: {data_source} | Results source: OpenRouter captured outputs | Prompt bank scope: {scope}'
+)
 
 try:
-    _, _, scored_df = load_core_data()
+    _, _, scored_df = load_core_data(org_id=tenant.org_id)
     scored_df = apply_prompt_scope_filter(scored_df, scope=scope)
 except Exception as exc:
     st.error(f'Unable to load captured data: {exc}')
     st.stop()
 
 if scored_df.empty:
-    st.warning('No records match this selection.')
+    render_empty_state_guidance(tenant, area='Visibility Analysis')
     st.stop()
 
 filters = render_sidebar_filters(scored_df, key_prefix='visibility_live_v2')
 filtered = apply_filters(scored_df, filters)
 
 if filtered.empty:
-    st.warning('No records match the selected filter set.')
+    render_empty_state_guidance(tenant, area='Visibility Analysis')
     st.stop()
 
 st.markdown(
-    """
+    f"""
     <div class='mh-callout'>
         <strong>How to read this page</strong>
-        <p>The heatmap shows the average visibility score for each market/subject slice. A row is scored as 100 when Southampton is visible and 0 when it is absent. Rank contribution is then weighted by placement (1 = 100, 2 = 90, 3 = 80, 4–5 = 70, 6–10 = 50, otherwise 40), and citation presence adds another 100-or-0 signal. The blended reputation score is 0.5 × visibility + 0.3 × rank + 0.2 × citation.</p>
+        <p>The heatmap shows the average visibility score for each market/subject slice. A row is scored as 100 when {tenant.display_name} is visible and 0 when it is absent. Rank contribution is then weighted by placement (1 = 100, 2 = 90, 3 = 80, 4–5 = 70, 6–10 = 50, otherwise 40), and citation presence adds another 100-or-0 signal. The blended reputation score is 0.5 × visibility + 0.3 × rank + 0.2 × citation.</p>
     </div>
     """,
     unsafe_allow_html=True,
 )
-render_metric_definitions(include_components=True)
+_render_metric_definitions_for_org(metric_defs, include_components=True)
 
 st.subheader('Visibility heatmap (market × subject)')
 heatmap_source = aggregate_scores(filtered, ['Market', 'Subject'])
@@ -78,11 +107,15 @@ heatmap_source['Visibility label'] = heatmap_source.apply(
     lambda row: f"{row['visibility_score']:.1f}" if row['Has data'] else 'No prompts',
     axis=1,
 )
-for count_column in ['prompt_count', 'southampton_mentions', 'Responses']:
+for count_column in ['prompt_count', 'org_mentions', 'southampton_mentions', 'Responses']:
+    if count_column not in heatmap_source.columns:
+        heatmap_source[count_column] = 0
     heatmap_source[count_column] = heatmap_source[count_column].fillna(0).astype(int)
 
+mention_column = 'org_mentions' if 'org_mentions' in heatmap_source.columns else 'southampton_mentions'
+
 st.caption(
-    'A numeric value means captured responses exist. 0.0 means Southampton appeared in none of them. '
+    f'A numeric value means captured responses exist. 0.0 means {tenant.display_name} appeared in none of them. '
     'Grey “No prompts” cells were not tested because that market/subject combination is absent from the prompt bank.'
 )
 base = alt.Chart(heatmap_source).encode(
@@ -105,7 +138,7 @@ heatmap = base.mark_rect(cornerRadius=4).encode(
         alt.Tooltip('Cell status:N', title='Coverage'),
         alt.Tooltip('prompt_count:Q', title='Prompts', format=',d'),
         alt.Tooltip('Responses:Q', title='Model responses', format=',d'),
-        alt.Tooltip('southampton_mentions:Q', title='Southampton mentions', format=',d'),
+        alt.Tooltip(f'{mention_column}:Q', title=f'{tenant.display_name} mentions', format=',d'),
         alt.Tooltip('visibility_score:Q', title='Visibility score', format='.1f'),
     ],
 )
@@ -124,7 +157,7 @@ visible_only = filtered[filtered['visible_bool']]
 rank_table = (
     visible_only.groupby(['Subject', 'ModelName'], as_index=False)
     .agg(
-        Southampton_mentions=('visible_bool', 'size'),
+        Org_mentions=('visible_bool', 'size'),
         Ranked_responses=('rank_float', 'count'),
         Average_rank=('rank_float', 'mean'),
     )
@@ -145,11 +178,11 @@ else:
         lambda value: 'Not ranked' if pd.isna(value) else f'{value:.2f}'
     )
     rank_table = rank_table[
-        ['Subject', 'Model', 'Southampton_mentions', 'Ranked_responses', 'Average rank']
+        ['Subject', 'Model', 'Org_mentions', 'Ranked_responses', 'Average rank']
     ].sort_values(['Subject', 'Model'])
     st.caption(
-        'A ranked mention places Southampton at a numerical position in an ordered recommendation list. '
-        '“Not ranked” means Southampton was mentioned, but no numerical placement was available.'
+        f'A ranked mention places {tenant.display_name} at a numerical position in an ordered recommendation list. '
+        f'“Not ranked” means {tenant.display_name} was mentioned, but no numerical placement was available.'
     )
     st.dataframe(
         rank_table,
@@ -157,7 +190,7 @@ else:
         column_config={
             'Subject': st.column_config.TextColumn('Subject', pinned=True),
             'Model': st.column_config.TextColumn('Model', pinned=True),
-            'Southampton_mentions': st.column_config.NumberColumn('Southampton mentions', format='%d'),
+            'Org_mentions': st.column_config.NumberColumn(f'{tenant.display_name} mentions', format='%d'),
             'Ranked_responses': st.column_config.NumberColumn('Ranked mentions', format='%d'),
             'Average rank': st.column_config.TextColumn('Average rank'),
         },

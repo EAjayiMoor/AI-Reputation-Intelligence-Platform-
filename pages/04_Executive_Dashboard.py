@@ -11,22 +11,50 @@ from src.ui import (
     apply_filters,
     apply_moorhouse_theme,
     render_page_header,
+    render_empty_state_guidance,
+    require_active_tenant,
+    tenant_data_source_label,
     load_core_data,
-    render_metric_definitions,
     render_sidebar_filters,
 )
 
 st.set_page_config(page_title='Executive dashboard', page_icon=':material/dashboard:', layout='wide')
 apply_moorhouse_theme()
+tenant = require_active_tenant()
+data_source = tenant_data_source_label(tenant)
 render_page_header(
     'Executive dashboard',
     'Headline metrics and visibility patterns',
     eyebrow='Executive view',
 )
-st.caption('Results source: UoS Prompt Library · OpenRouter captured outputs')
+
+
+def _metric_defs_for_org(organisation_name: str) -> dict[str, str]:
+    if organisation_name == 'University of Southampton':
+        return dict(METRIC_DEFINITIONS)
+    return {
+        key: value.replace('University of Southampton', organisation_name).replace('Southampton', organisation_name)
+        for key, value in METRIC_DEFINITIONS.items()
+    }
+
+
+def _render_metric_definitions_for_org(metric_defs: dict[str, str], *, include_components: bool = False) -> None:
+    with st.expander('How these metrics are calculated', icon=':material/info:'):
+        st.markdown(f"**Overall visibility score**  \n{metric_defs['visibility']}")
+        st.markdown(f"**Reputation score**  \n{metric_defs['reputation']}")
+        st.markdown(f"**Average rank**  \n{metric_defs['average_rank']}")
+        st.markdown(f"**Prompts in view**  \n{metric_defs['prompts_in_view']}")
+        st.markdown(f"**Organisation mentions**  \n{metric_defs['mentions']}")
+        if include_components:
+            st.markdown(f"**Rank score**  \n{metric_defs['rank_score']}")
+            st.markdown(f"**Citation score**  \n{metric_defs['citation_score']}")
+st.caption(
+    f'Active organization: {tenant.display_name} · Data source: {data_source} · '
+    'Results source: OpenRouter captured outputs'
+)
 
 try:
-    _, _, scored_df = load_core_data()
+    _, _, scored_df = load_core_data(org_id=tenant.org_id)
 except Exception as exc:
     st.error(f'Unable to load captured data: {exc}')
     st.stop()
@@ -35,25 +63,33 @@ selections = render_sidebar_filters(scored_df, key_prefix='exec_live_v2')
 filtered = apply_filters(scored_df, selections)
 
 if filtered.empty:
-    st.warning('No records match the selected filter set.')
+    render_empty_state_guidance(tenant, area='Executive Dashboard')
     st.stop()
 
 overall = aggregate_scores(filtered).iloc[0]
+org_mentions = int(overall.get('org_mentions', overall.get('southampton_mentions', 0)))
+metric_defs = _metric_defs_for_org(tenant.display_name)
 
 m1, m2, m3, m4, m5 = st.columns(5)
-m1.metric('Overall visibility', f"{overall['visibility_score']:.1f}/100", help=METRIC_DEFINITIONS['visibility'], border=True)
-m2.metric('Reputation score', f"{overall['reputation_score']:.1f}/100", help=METRIC_DEFINITIONS['reputation'], border=True)
-m3.metric('Prompts in view', int(filtered['PromptID'].nunique()), help=METRIC_DEFINITIONS['prompts_in_view'], border=True)
-m4.metric('Southampton mentions', int(overall['southampton_mentions']), help=METRIC_DEFINITIONS['mentions'], border=True)
+m1.metric('Overall visibility', f"{overall['visibility_score']:.1f}/100", help=metric_defs['visibility'], border=True)
+m2.metric('Reputation score', f"{overall['reputation_score']:.1f}/100", help=metric_defs['reputation'], border=True)
+m3.metric('Prompts in view', int(filtered['PromptID'].nunique()), help=metric_defs['prompts_in_view'], border=True)
+m4.metric(f'{tenant.display_name} mentions', org_mentions, help=metric_defs['mentions'], border=True)
 rank_display = '-' if overall['average_rank'] is None else f"{overall['average_rank']:.2f}"
-m5.metric('Average rank', rank_display, help=METRIC_DEFINITIONS['average_rank'], border=True)
+m5.metric('Average rank', rank_display, help=metric_defs['average_rank'], border=True)
 
-render_metric_definitions(include_components=True)
+_render_metric_definitions_for_org(metric_defs, include_components=True)
 
 market_scores = aggregate_scores(filtered, ['Market']).sort_values('visibility_score', ascending=False)
 subject_scores = aggregate_scores(filtered, ['Subject']).sort_values('visibility_score', ascending=False)
 institution_comparison = institution_mention_index(filtered, competitor_limit=10)
 model_mention_breakdown = institution_mentions_by_model(filtered, competitor_limit=10)
+institution_type_domain = (
+    institution_comparison['InstitutionType'].dropna().astype(str).unique().tolist()
+    if not institution_comparison.empty
+    else ['Competitor', 'Primary organisation']
+)
+institution_type_range = [MOORHOUSE_PURPLE if value == 'Competitor' else '#00ab8e' for value in institution_type_domain]
 
 left, right = st.columns(2)
 with left:
@@ -78,10 +114,10 @@ with right:
         color=MOORHOUSE_PURPLE,
     )
 
-st.subheader('Southampton relative to leading competitors')
+st.subheader(f'{tenant.display_name} relative to leading competitors')
 st.caption(
     'Relative mention index: the most-mentioned institution in the filtered results is set to 100. '
-    'Southampton is shown in teal; raw mention counts are available in the tooltip.'
+    f'{tenant.display_name} is shown in teal; raw mention counts are available in the tooltip.'
 )
 comparison_chart = (
     alt.Chart(institution_comparison)
@@ -103,8 +139,8 @@ comparison_chart = (
             'InstitutionType:N',
             title=None,
             scale=alt.Scale(
-                domain=['Competitor', 'Southampton'],
-                range=[MOORHOUSE_PURPLE, '#00ab8e'],
+                domain=institution_type_domain,
+                range=institution_type_range,
             ),
         ),
         tooltip=[

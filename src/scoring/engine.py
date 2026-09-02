@@ -11,6 +11,27 @@ RANK_SCORE_MAP = {
 REPUTATION_FORMULA = 'Reputation = 0.5 * Visibility + 0.3 * Rank + 0.2 * Citation'
 
 
+def _resolve_org_columns(results_df: pd.DataFrame) -> tuple[str, str]:
+    visible_column = 'OrgVisible' if 'OrgVisible' in results_df.columns else 'SouthamptonVisible'
+    rank_column = 'OrgRank' if 'OrgRank' in results_df.columns else 'SouthamptonRank'
+    return visible_column, rank_column
+
+
+def _organisation_display_name(scored_df: pd.DataFrame) -> str:
+    if 'Organisation' in scored_df.columns:
+        values = scored_df['Organisation'].dropna().astype(str).str.strip()
+        values = values[values != '']
+        if not values.empty:
+            return str(values.iloc[0])
+    if 'SouthamptonVisible' in scored_df.columns or 'SouthamptonRank' in scored_df.columns:
+        return 'University of Southampton'
+    return 'Primary organisation'
+
+
+def _organisation_type_label(organisation_name: str) -> str:
+    return 'Southampton' if organisation_name == 'University of Southampton' else 'Primary organisation'
+
+
 def _parse_visible(value: object) -> bool:
     if pd.isna(value):
         return False
@@ -55,8 +76,9 @@ def _citation_score(value: object) -> int:
 
 def score_results(results_df: pd.DataFrame) -> pd.DataFrame:
     scored = results_df.copy()
-    scored['visible_bool'] = scored['SouthamptonVisible'].map(_parse_visible)
-    scored['rank_float'] = scored['SouthamptonRank'].map(_parse_rank)
+    visible_column, rank_column = _resolve_org_columns(scored)
+    scored['visible_bool'] = scored[visible_column].map(_parse_visible)
+    scored['rank_float'] = scored[rank_column].map(_parse_rank)
 
     scored['visibility_score_row'] = scored['visible_bool'].map(lambda is_visible: 100 if is_visible else 0)
     scored['rank_score_row'] = scored.apply(
@@ -80,6 +102,7 @@ def aggregate_scores(scored_df: pd.DataFrame, group_columns: list[str] | None = 
         columns = [
             *group_columns,
             'prompt_count',
+            'org_mentions',
             'southampton_mentions',
             'average_rank',
             'visibility_score',
@@ -105,7 +128,9 @@ def aggregate_scores(scored_df: pd.DataFrame, group_columns: list[str] | None = 
         average_rank = visible_only['rank_float'].mean() if not visible_only.empty else None
 
         row['prompt_count'] = int(frame['PromptID'].nunique())
-        row['southampton_mentions'] = int(frame['visible_bool'].sum())
+        org_mentions = int(frame['visible_bool'].sum())
+        row['org_mentions'] = org_mentions
+        row['southampton_mentions'] = org_mentions
         row['average_rank'] = (
             round(float(average_rank), 2)
             if average_rank is not None and not pd.isna(average_rank)
@@ -159,21 +184,27 @@ def institution_mention_index(scored_df: pd.DataFrame, competitor_limit: int = 1
     if scored_df.empty:
         return pd.DataFrame(columns=columns)
 
+    organisation_name = _organisation_display_name(scored_df)
+    organisation_type = _organisation_type_label(organisation_name)
+
     competitors = competitor_mentions(scored_df)
-    competitors = competitors[
-        ~competitors['Competitor'].astype(str).str.contains('southampton', case=False, na=False)
-    ].head(competitor_limit)
+    competitors = competitors[competitors['Competitor'].astype(str).str.casefold() != organisation_name.casefold()]
+    if organisation_name == 'University of Southampton':
+        competitors = competitors[
+            ~competitors['Competitor'].astype(str).str.contains('southampton', case=False, na=False)
+        ]
+    competitors = competitors.head(competitor_limit)
     comparison = competitors.rename(columns={'Competitor': 'Institution'}).copy()
     comparison['InstitutionType'] = 'Competitor'
 
-    southampton = pd.DataFrame(
+    organisation = pd.DataFrame(
         [{
-            'Institution': 'University of Southampton',
+            'Institution': organisation_name,
             'Mentions': int(scored_df['visible_bool'].sum()),
-            'InstitutionType': 'Southampton',
+            'InstitutionType': organisation_type,
         }]
     )
-    comparison = pd.concat([comparison, southampton], ignore_index=True)
+    comparison = pd.concat([comparison, organisation], ignore_index=True)
     maximum_mentions = int(comparison['Mentions'].max())
     comparison['RelativeMentionIndex'] = (
         comparison['Mentions'].div(maximum_mentions).mul(100).round(1)
@@ -203,6 +234,7 @@ def institution_mentions_by_model(
     institutions = institution_mention_index(eligible, competitor_limit=competitor_limit)[
         ['Institution', 'InstitutionType']
     ]
+    organisation_name = _organisation_display_name(eligible)
     rows: list[dict[str, object]] = []
     for model_name, model_frame in eligible.groupby('ModelName', dropna=False):
         competitor_counts = competitor_mentions(model_frame).set_index('Competitor')['Mentions']
@@ -212,7 +244,7 @@ def institution_mentions_by_model(
             institution_type = str(institution_row['InstitutionType'])
             mentions = (
                 int(model_frame['visible_bool'].sum())
-                if institution_type == 'Southampton'
+                if institution.casefold() == organisation_name.casefold()
                 else int(competitor_counts.get(institution, 0))
             )
             rows.append(

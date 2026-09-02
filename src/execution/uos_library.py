@@ -10,15 +10,27 @@ import pandas as pd
 from src.execution.openrouter_runner import OpenRouterConfig, OpenRouterRunner
 from src.execution.pipeline import _to_result_row
 from src.execution.storage import append_openrouter_results, load_openrouter_results
+from src.tenants import load_tenant
 
 
-UOS_MODEL_MAP = {
-    'OpenAI': 'openai/gpt-4.1-mini',
-    'Anthropic': 'anthropic/claude-haiku-4.5',
-    'Gemini': 'google/gemini-3.6-flash',
-    'DeepSeek': 'deepseek/deepseek-chat',
-    'Perplexity': 'perplexity/sonar',
-}
+def _uos_model_map() -> dict[str, str]:
+    try:
+        mapped = load_tenant('southampton').model_assignment.labels_to_models
+        if mapped:
+            return dict(mapped)
+    except Exception:
+        pass
+
+    return {
+        'OpenAI': 'openai/gpt-4.1-mini',
+        'Anthropic': 'anthropic/claude-haiku-4.5',
+        'Gemini': 'google/gemini-3.6-flash',
+        'DeepSeek': 'deepseek/deepseek-chat',
+        'Perplexity': 'perplexity/sonar',
+    }
+
+
+UOS_MODEL_MAP = _uos_model_map()
 
 
 def load_uos_prompt_library(path: str | Path) -> pd.DataFrame:

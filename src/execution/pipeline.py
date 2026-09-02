@@ -4,7 +4,7 @@ import re
 
 import pandas as pd
 
-from src.analysis import extract_competitors, extract_southampton_rank
+from src.analysis import extract_competitors, extract_institution_rank
 from src.execution.openrouter_runner import OpenRouterConfig, OpenRouterRunResult, OpenRouterRunner
 from src.execution.storage import (
     append_openrouter_results,
@@ -39,7 +39,7 @@ def _to_result_row(run: OpenRouterRunResult, index: int, intent: str = '') -> di
     lower = response_text.lower()
     southampton_visible = 1 if 'southampton' in lower else 0
     citation_sources = _extract_citation_sources(response_text)
-    southampton_rank = extract_southampton_rank(response_text, intent=intent)
+    southampton_rank = extract_institution_rank(response_text, intent=intent)
     competitors = ', '.join(extract_competitors(response_text))
 
     return {
@@ -49,6 +49,8 @@ def _to_result_row(run: OpenRouterRunResult, index: int, intent: str = '') -> di
         'ResponseText': response_text,
         'SouthamptonVisible': southampton_visible,
         'SouthamptonRank': southampton_rank if southampton_rank is not None else '',
+        'OrgVisible': southampton_visible,
+        'OrgRank': southampton_rank if southampton_rank is not None else '',
         'CompetitorsMentioned': competitors,
         'CitationSources': citation_sources,
         'RunDate': run.run_date,

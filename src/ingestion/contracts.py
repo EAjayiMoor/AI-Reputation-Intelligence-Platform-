@@ -2,7 +2,17 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-DEFAULT_ORGANISATION = 'University of Southampton'
+from src.tenants import load_tenant
+
+
+def _default_organisation() -> str:
+    try:
+        return load_tenant('southampton').display_name
+    except Exception:
+        return 'University of Southampton'
+
+
+DEFAULT_ORGANISATION = _default_organisation()
 
 VISIBILITY_CANONICAL_COLUMNS = [
     'record_id',

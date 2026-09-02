@@ -86,3 +86,28 @@ def test_average_rank_is_none_when_live_outputs_have_no_rank_values() -> None:
 
     overall = aggregate_scores(score_results(raw)).iloc[0]
     assert overall['average_rank'] is None
+
+
+def test_scoring_supports_org_visible_and_org_rank_columns() -> None:
+    raw = pd.DataFrame(
+        [
+            {
+                'PromptID': 'P001',
+                'OrgVisible': 1,
+                'OrgRank': 2,
+                'CitationSources': '',
+            },
+            {
+                'PromptID': 'P002',
+                'OrgVisible': 0,
+                'OrgRank': '',
+                'CitationSources': '',
+            },
+        ]
+    )
+
+    overall = aggregate_scores(score_results(raw)).iloc[0]
+
+    assert overall['org_mentions'] == 1
+    assert overall['southampton_mentions'] == 1
+    assert overall['visibility_score'] == 50.0

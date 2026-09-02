@@ -46,8 +46,6 @@ METRIC_DEFINITIONS = {
         'The percentage of captured responses with at least one extracted citation or source, scored from 0 to 100.'
     ),
 }
-
-
 def apply_moorhouse_theme() -> None:
     st.markdown(
         """
@@ -326,16 +324,3 @@ def render_page_header(
         """,
         unsafe_allow_html=True,
     )
-
-
-def render_metric_definitions(*, include_components: bool = False) -> None:
-    """Render a consistent, plain-English explanation of scorecard metrics."""
-    with st.expander('How these metrics are calculated', icon=':material/info:'):
-        st.markdown(f"**Overall visibility score**  \n{METRIC_DEFINITIONS['visibility']}")
-        st.markdown(f"**Reputation score**  \n{METRIC_DEFINITIONS['reputation']}")
-        st.markdown(f"**Average rank**  \n{METRIC_DEFINITIONS['average_rank']}")
-        st.markdown(f"**Prompts in view**  \n{METRIC_DEFINITIONS['prompts_in_view']}")
-        st.markdown(f"**Southampton mentions**  \n{METRIC_DEFINITIONS['mentions']}")
-        if include_components:
-            st.markdown(f"**Rank score**  \n{METRIC_DEFINITIONS['rank_score']}")
-            st.markdown(f"**Citation score**  \n{METRIC_DEFINITIONS['citation_score']}")

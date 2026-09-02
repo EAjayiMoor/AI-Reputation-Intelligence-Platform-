@@ -1,5 +1,6 @@
 ﻿from __future__ import annotations
 
+import pandas as pd
 import streamlit as st
 
 from src.recommendations import key_gap_text
@@ -9,25 +10,51 @@ from src.ui import (
     apply_prompt_mention_mode_filter,
     apply_moorhouse_theme,
     render_page_header,
+    render_empty_state_guidance,
+    require_active_tenant,
+    tenant_data_source_label,
     apply_prompt_scope_filter,
     load_core_data,
     render_prompt_mention_mode_selector,
     render_prompt_scope_selector,
-    render_metric_definitions,
 )
+
+
+def _metric_defs_for_org(organisation_name: str) -> dict[str, str]:
+    if organisation_name == 'University of Southampton':
+        return dict(METRIC_DEFINITIONS)
+    return {
+        key: value.replace('University of Southampton', organisation_name).replace('Southampton', organisation_name)
+        for key, value in METRIC_DEFINITIONS.items()
+    }
+
+
+def _render_metric_definitions_for_org(metric_defs: dict[str, str]) -> None:
+    with st.expander('How these metrics are calculated', icon=':material/info:'):
+        st.markdown(f"**Overall visibility score**  \n{metric_defs['visibility']}")
+        st.markdown(f"**Reputation score**  \n{metric_defs['reputation']}")
+        st.markdown(f"**Average rank**  \n{metric_defs['average_rank']}")
+        st.markdown(f"**Prompts in view**  \n{metric_defs['prompts_in_view']}")
+        st.markdown(f"**Organisation mentions**  \n{metric_defs['mentions']}")
 
 st.set_page_config(page_title='Audience journey simulator', page_icon=':material/route:', layout='wide')
 apply_moorhouse_theme()
+tenant = require_active_tenant()
+data_source = tenant_data_source_label(tenant)
 render_page_header('Audience journey simulator', 'Simulate one audience pathway and narrative summary', eyebrow='Journey simulation')
 scope = render_prompt_scope_selector(key='journey_scope')
-mention_mode = render_prompt_mention_mode_selector(key='journey_mention_mode', default='Organic')
+mention_mode = render_prompt_mention_mode_selector(
+    key='journey_mention_mode',
+    default='Organic',
+    organisation_name=tenant.display_name,
+)
 st.caption(
-    f'Results source: OpenRouter captured outputs | Prompt bank scope: {scope} | '
+    f'Active organization: {tenant.display_name} | Data source: {data_source} | Results source: OpenRouter captured outputs | Prompt bank scope: {scope} | '
     f'Prompt mention mode: {mention_mode}'
 )
 
 try:
-    _, _, scored_df = load_core_data()
+    _, _, scored_df = load_core_data(org_id=tenant.org_id)
     scored_df = apply_prompt_scope_filter(scored_df, scope=scope)
     scored_df = apply_prompt_mention_mode_filter(scored_df, mode=mention_mode)
 except Exception as exc:
@@ -35,7 +62,7 @@ except Exception as exc:
     st.stop()
 
 if scored_df.empty:
-    st.warning('No records match this selection.')
+    render_empty_state_guidance(tenant, area='Audience Journey Simulator')
     st.stop()
 
 PERSONA_KEY = 'journey_live_v3_persona'
@@ -49,41 +76,67 @@ def clear_dependent_journey_filters(*keys: str) -> None:
         st.session_state.pop(key, None)
 
 
+def _sorted_non_empty(series: pd.Series) -> list[str]:
+    values = series.dropna().astype(str).str.strip()
+    values = values[values != '']
+    return sorted(values.unique())
+
+
 col1, col2, col3, col4 = st.columns(4)
+persona_options = _sorted_non_empty(scored_df['Persona'])
+if not persona_options:
+    st.error('No persona values are available for the current filters.')
+    st.stop()
+
 with col1:
     persona = st.selectbox(
         'Persona',
-        sorted(scored_df['Persona'].dropna().astype(str).unique()),
+        persona_options,
         key=PERSONA_KEY,
         on_change=clear_dependent_journey_filters,
         args=(SUBJECT_KEY, EXPERTISE_KEY, MARKET_KEY),
     )
 
 persona_df = scored_df[scored_df['Persona'].astype(str) == persona]
+subject_options = _sorted_non_empty(persona_df['Subject'])
+if not subject_options:
+    st.error('No subject values are available for the selected persona.')
+    st.stop()
+
 with col2:
     subject = st.selectbox(
         'Subject',
-        sorted(persona_df['Subject'].dropna().astype(str).unique()),
+        subject_options,
         key=SUBJECT_KEY,
         on_change=clear_dependent_journey_filters,
         args=(EXPERTISE_KEY, MARKET_KEY),
     )
 
 subject_df = persona_df[persona_df['Subject'].astype(str) == subject]
+expertise_options = _sorted_non_empty(subject_df['ExpertiseArea'])
+if not expertise_options:
+    st.error('No expertise areas are available for the selected persona and subject.')
+    st.stop()
+
 with col3:
     expertise = st.selectbox(
         'Expertise area',
-        sorted(subject_df['ExpertiseArea'].dropna().astype(str).unique()),
+        expertise_options,
         key=EXPERTISE_KEY,
         on_change=clear_dependent_journey_filters,
         args=(MARKET_KEY,),
     )
 
 pathway_df = subject_df[subject_df['ExpertiseArea'].astype(str) == expertise]
+market_options = _sorted_non_empty(pathway_df['Market'])
+if not market_options:
+    st.error('No markets are available for the selected journey path.')
+    st.stop()
+
 with col4:
     market = st.selectbox(
         'Market',
-        sorted(pathway_df['Market'].dropna().astype(str).unique()),
+        market_options,
         key=MARKET_KEY,
     )
 
@@ -112,34 +165,37 @@ else:
 summary = aggregate_scores(journey).iloc[0]
 comps = competitor_mentions(journey).head(3)
 top_competitors = ', '.join(comps['Competitor'].tolist()) if not comps.empty else 'No clear competitor mentions'
+metric_defs = _metric_defs_for_org(tenant.display_name)
 
 st.subheader('Journey metrics')
 m1, m2, m3 = st.columns(3)
-m1.metric('Visibility score', f"{summary['visibility_score']:.1f}/100", help=METRIC_DEFINITIONS['visibility'], border=True)
-m2.metric('Reputation score', f"{summary['reputation_score']:.1f}/100", help=METRIC_DEFINITIONS['reputation'], border=True)
+m1.metric('Visibility score', f"{summary['visibility_score']:.1f}/100", help=metric_defs['visibility'], border=True)
+m2.metric('Reputation score', f"{summary['reputation_score']:.1f}/100", help=metric_defs['reputation'], border=True)
 rank_display = '-' if summary['average_rank'] is None else f"{summary['average_rank']:.2f}"
-m3.metric('Average rank', rank_display, help=METRIC_DEFINITIONS['average_rank'], border=True)
+m3.metric('Average rank', rank_display, help=metric_defs['average_rank'], border=True)
 
-render_metric_definitions()
+_render_metric_definitions_for_org(metric_defs)
 
 st.subheader('Narrative summary')
 key_gap = key_gap_text(journey)
 st.write(
     (
         f"For a {persona.lower()} audience in {market} focused on {subject} ({expertise}), "
-        f"Southampton has a visibility score of {summary['visibility_score']:.1f}. "
+        f"{tenant.display_name} has a visibility score of {summary['visibility_score']:.1f}. "
         f"Top competitors in this journey are {top_competitors}. "
         f"Key gap: {key_gap}"
     )
 )
 
 st.subheader('Relevant prompts and results')
+visible_column = 'OrgVisible' if 'OrgVisible' in journey.columns else 'SouthamptonVisible'
+rank_column = 'OrgRank' if 'OrgRank' in journey.columns else 'SouthamptonRank'
 show_cols = [
     'PromptID',
     'Model',
     'Prompt',
-    'SouthamptonVisible',
-    'SouthamptonRank',
+    visible_column,
+    rank_column,
     'CompetitorsMentioned',
     'CitationSources',
 ]

@@ -12,8 +12,16 @@ from src.ui.moorhouse import (
     MOORHOUSE_PURPLE,
     MOORHOUSE_PURPLE_SCALE,
     apply_moorhouse_theme,
-    render_metric_definitions,
     render_page_header,
+)
+from src.ui.tenant_context import (
+    get_active_org_id,
+    get_active_tenant,
+    list_recent_org_ids,
+    render_empty_state_guidance,
+    require_active_tenant,
+    set_active_org_id,
+    tenant_data_source_label,
 )
 
 __all__ = [
@@ -28,6 +36,12 @@ __all__ = [
     'METRIC_DEFINITIONS',
     'MOORHOUSE_PURPLE',
     'MOORHOUSE_PURPLE_SCALE',
-    'render_metric_definitions',
     'render_page_header',
+    'get_active_org_id',
+    'get_active_tenant',
+    'list_recent_org_ids',
+    'render_empty_state_guidance',
+    'require_active_tenant',
+    'set_active_org_id',
+    'tenant_data_source_label',
 ]

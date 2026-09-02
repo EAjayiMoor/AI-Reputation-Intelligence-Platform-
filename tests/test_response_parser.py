@@ -5,6 +5,7 @@ import pandas as pd
 from src.analysis import (
     enrich_results_frame,
     extract_competitors,
+    extract_institution_rank,
     extract_southampton_rank,
     prompt_names_institution,
 )
@@ -18,6 +19,16 @@ def test_extracts_numbered_southampton_rank() -> None:
 def test_does_not_treat_comparison_section_number_as_rank() -> None:
     response = '1. **University of Southampton**\n2. **University of Bristol**'
     assert extract_southampton_rank(response, intent='Direct Comparison') is None
+
+
+def test_extracts_numbered_rank_for_custom_organisation_pattern() -> None:
+    response = '1. Firm A\n3. Moorhouse\n4. Firm B'
+    rank = extract_institution_rank(
+        response,
+        intent='General Awareness',
+        institution_pattern=r'\bmoorhouse\b',
+    )
+    assert rank == 3
 
 
 def test_extracts_and_canonicalises_competitors_without_southampton() -> None:
@@ -44,6 +55,8 @@ def test_enrichment_updates_live_analysis_fields() -> None:
 
     assert enriched.iloc[0]['SouthamptonVisible'] == 1
     assert enriched.iloc[0]['SouthamptonRank'] == 4
+    assert enriched.iloc[0]['OrgVisible'] == 1
+    assert enriched.iloc[0]['OrgRank'] == 4
     assert enriched.iloc[0]['CompetitorsMentioned'] == 'University of Oxford'
 
 

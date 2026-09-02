@@ -9,11 +9,20 @@ from src.execution import (
     load_openrouter_results,
     run_model_sweep,
 )
-from src.ui import apply_moorhouse_theme, load_core_data, render_page_header
+from src.ui import (
+    apply_moorhouse_theme,
+    load_core_data,
+    render_page_header,
+    render_empty_state_guidance,
+    require_active_tenant,
+    tenant_data_source_label,
+)
 
-RESULTS_PATH = 'data/uos_openrouter_results.csv'
 st.set_page_config(page_title='OpenRouter execution', page_icon=':material/play_circle:', layout='wide')
 apply_moorhouse_theme()
+tenant = require_active_tenant()
+data_source = tenant_data_source_label(tenant)
+RESULTS_PATH = tenant.data_paths.results_path
 render_page_header(
     'OpenRouter execution',
     'Operational page for running pending generated prompts once, collecting model outputs, and replaying them safely',
@@ -21,9 +30,13 @@ render_page_header(
 )
 
 try:
-    prompts_df, _, _ = load_core_data()
+    prompts_df, _, _ = load_core_data(org_id=tenant.org_id)
 except Exception as exc:
     st.error(f'Unable to load prompt data: {exc}')
+    st.stop()
+
+if prompts_df.empty:
+    render_empty_state_guidance(tenant, area='OpenRouter Execution')
     st.stop()
 
 if 'PromptSource' not in prompts_df.columns:
@@ -41,7 +54,7 @@ selected_models = st.multiselect(
     'Models to run',
     options=actual_models,
     default=actual_models,
-    help='These are the models actually assigned and captured in the current UoS prompt-library run.',
+    help=f'These are the models currently assigned and captured for {tenant.display_name}.',
 )
 
 generated_df = generated_prompt_subset(prompts_df)
@@ -54,7 +67,8 @@ m3.metric('Models used', captured_model_count, border=True)
 m4.metric('Captured outputs', len(existing), border=True)
 
 st.caption(
-    f'Current source: UoS Prompt Library · {len(prompts_df):,} prompts · '
+    f'Active organization: {tenant.display_name} · Data source: {data_source} · '
+    f'Current source: {tenant.display_name} prompt library · {len(prompts_df):,} prompts · '
     f'{captured_model_count} assigned models · {len(existing):,} captured outputs'
 )
 
@@ -104,6 +118,7 @@ else:
     )
 
     available_models = sorted(output_table['ModelName'].dropna().astype(str).unique())
+    visible_column = 'OrgVisible' if 'OrgVisible' in output_table.columns else 'SouthamptonVisible'
     with st.container(horizontal=True, vertical_alignment='bottom'):
         output_models = st.multiselect(
             'Filter by model',
@@ -112,7 +127,7 @@ else:
             key='captured_output_models',
         )
         visibility_filter = st.segmented_control(
-            'Southampton visibility',
+            f'{tenant.display_name} visibility',
             options=['All', 'Visible', 'Not visible'],
             default='All',
             key='captured_output_visibility',
@@ -129,11 +144,11 @@ else:
 
     if visibility_filter == 'Visible':
         filtered_outputs = filtered_outputs[
-            pd.to_numeric(filtered_outputs['SouthamptonVisible'], errors='coerce').fillna(0).eq(1)
+            pd.to_numeric(filtered_outputs[visible_column], errors='coerce').fillna(0).eq(1)
         ]
     elif visibility_filter == 'Not visible':
         filtered_outputs = filtered_outputs[
-            pd.to_numeric(filtered_outputs['SouthamptonVisible'], errors='coerce').fillna(0).eq(0)
+            pd.to_numeric(filtered_outputs[visible_column], errors='coerce').fillna(0).eq(0)
         ]
 
     search_term = output_search.strip()
@@ -162,7 +177,7 @@ else:
         'ModelName',
         'Prompt',
         'ResponseText',
-        'SouthamptonVisible',
+        visible_column,
         'CitationSources',
         'Market',
         'Persona',
@@ -185,7 +200,7 @@ else:
             'ModelName': st.column_config.TextColumn('Model', pinned=True, width='medium'),
             'Prompt': st.column_config.TextColumn('Prompt', width='large'),
             'ResponseText': st.column_config.TextColumn('Model response', width='large'),
-            'SouthamptonVisible': st.column_config.CheckboxColumn('Southampton visible'),
+            visible_column: st.column_config.CheckboxColumn(f'{tenant.display_name} visible'),
             'CitationSources': st.column_config.TextColumn('Citations', width='large'),
         },
     )

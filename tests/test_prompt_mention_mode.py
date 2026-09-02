@@ -38,3 +38,21 @@ def test_prompt_mention_mode_filter_switches_between_views() -> None:
     assert apply_prompt_mention_mode_filter(frame, 'Organic')['PromptID'].tolist() == ['P1', 'P3']
     assert apply_prompt_mention_mode_filter(frame, 'Prompted/direct')['PromptID'].tolist() == ['P2']
     assert len(apply_prompt_mention_mode_filter(frame, 'All')) == 3
+
+
+def test_prompt_mention_type_supports_custom_organisation_pattern() -> None:
+    prompts = pd.DataFrame(
+        [
+            {'prompt_id': 'P1', 'prompt_text': 'How visible is Moorhouse in AI results?'},
+            {'prompt_id': 'P2', 'prompt_text': 'Which firms lead on consulting?'},
+        ]
+    )
+
+    normalised = normalise_prompt_bank_frame(
+        prompts,
+        organisation_name='Moorhouse',
+        mention_pattern=r'\bmoorhouse\b',
+    ).set_index('PromptID')
+
+    assert normalised.loc['P1', 'PromptMentionType'] == 'Prompted/direct'
+    assert normalised.loc['P2', 'PromptMentionType'] == 'Organic'

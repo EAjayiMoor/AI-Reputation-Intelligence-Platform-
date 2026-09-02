@@ -25,6 +25,23 @@ def _response_count(frame: pd.DataFrame) -> int:
     return int(len(frame))
 
 
+def _organisation_name(frame: pd.DataFrame) -> str:
+    if 'Organisation' in frame.columns:
+        values = frame['Organisation'].dropna().astype(str).str.strip()
+        values = values[values != '']
+        if not values.empty:
+            return str(values.iloc[0])
+    if 'SouthamptonVisible' in frame.columns or 'SouthamptonRank' in frame.columns:
+        return 'University of Southampton'
+    return 'Primary organisation'
+
+
+def _organisation_mentions(overall: pd.Series) -> int:
+    if 'org_mentions' in overall:
+        return int(overall['org_mentions'])
+    return int(overall.get('southampton_mentions', 0))
+
+
 def _mention_target(response_count: int, target_score: float) -> int:
     return int(math.ceil(response_count * target_score / 100))
 
@@ -76,10 +93,11 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
 
     recommendations: list[dict[str, str]] = []
     overall = aggregate_scores(scored_df).iloc[0]
+    organisation_name = _organisation_name(scored_df)
     total_responses = _response_count(scored_df)
     visibility = float(overall['visibility_score'])
     citation = float(overall['citation_score'])
-    mention_count = int(overall['southampton_mentions'])
+    mention_count = _organisation_mentions(overall)
 
     if visibility < 65:
         target_visibility = min(65.0, visibility + 10.0)
@@ -143,7 +161,7 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             subject = str(row['Subject'])
             subject_frame = scored_df[scored_df['Subject'].astype(str) == subject]
             subject_responses = _response_count(subject_frame)
-            subject_mentions = int(row['southampton_mentions'])
+            subject_mentions = int(row.get('org_mentions', row.get('southampton_mentions', 0)))
             target = min(65.0, float(row['visibility_score']) + 15.0)
             competitor_text = _top_competitor_text(subject_frame)
             is_general = subject.strip().lower() == 'general'
@@ -199,7 +217,7 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 scope=market,
                 evidence=(
                     f'{market} is at {float(row["visibility_score"]):.1f}/100 visibility with '
-                    f'{int(row["southampton_mentions"])} mentions across {market_responses} captured responses.'
+                    f'{int(row.get("org_mentions", row.get("southampton_mentions", 0)))} mentions across {market_responses} captured responses.'
                 ),
                 objective=f'Answer the practical and trust questions that matter to prospective audiences in {market}.',
                 steps=[
@@ -324,7 +342,31 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
 
     priority_order = {'High': 0, 'Medium': 1, 'Low': 2}
     recommendations.sort(key=lambda row: (priority_order.get(row['Priority'], 9), row['Timing'], row['Action']))
-    return pd.DataFrame(recommendations[:max_recommendations], columns=RECOMMENDATION_COLUMNS)
+    recommendations_df = pd.DataFrame(recommendations[:max_recommendations], columns=RECOMMENDATION_COLUMNS)
+
+    if organisation_name != 'University of Southampton':
+        replacements = {
+            'university': 'organisation',
+            'universities': 'organisations',
+            'institution': 'organisation',
+            'institutions': 'organisations',
+            'courses': 'offers',
+            'facilities': 'capabilities',
+            'faculty': 'practice',
+            'admissions': 'evaluation',
+            'alumni': 'customers',
+        }
+        for column in ['Action', 'Scope', 'Evidence', 'Objective', 'Action plan', 'Success measure']:
+            series = recommendations_df[column].astype(str).str.replace(
+                'Southampton',
+                organisation_name,
+                regex=False,
+            )
+            for source, target in replacements.items():
+                series = series.str.replace(source, target, case=False, regex=False)
+            recommendations_df[column] = series
+
+    return recommendations_df
 
 
 def key_gap_text(filtered_df: pd.DataFrame) -> str:
@@ -332,8 +374,9 @@ def key_gap_text(filtered_df: pd.DataFrame) -> str:
         return 'No data is available for this journey selection.'
 
     overall = aggregate_scores(filtered_df).iloc[0]
+    organisation_name = _organisation_name(filtered_df)
     if float(overall['visibility_score']) < 60:
-        return 'Visibility is the main gap: Southampton is not appearing often enough in responses.'
+        return f'Visibility is the main gap: {organisation_name} is not appearing often enough in responses.'
     if float(overall['citation_score']) < 60:
-        return 'Citation strength is the main gap: Southampton sources are not referenced consistently.'
+        return f'Citation strength is the main gap: {organisation_name} sources are not referenced consistently.'
     return 'Competitive pressure is the main gap: competitors are still mentioned strongly in this segment.'

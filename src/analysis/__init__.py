@@ -1,6 +1,7 @@
 from src.analysis.response_parser import (
     enrich_results_frame,
     extract_competitors,
+    extract_institution_rank,
     prompt_names_institution,
     extract_southampton_rank,
 )
@@ -8,6 +9,7 @@ from src.analysis.response_parser import (
 __all__ = [
     'enrich_results_frame',
     'extract_competitors',
+    'extract_institution_rank',
     'prompt_names_institution',
     'extract_southampton_rank',
 ]

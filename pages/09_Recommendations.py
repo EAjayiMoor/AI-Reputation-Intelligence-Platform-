@@ -7,6 +7,9 @@ from src.ui import (
     apply_filters,
     apply_moorhouse_theme,
     render_page_header,
+    render_empty_state_guidance,
+    require_active_tenant,
+    tenant_data_source_label,
     apply_prompt_scope_filter,
     load_core_data,
     render_prompt_scope_selector,
@@ -15,26 +18,30 @@ from src.ui import (
 
 st.set_page_config(page_title='Recommendations', page_icon=':material/lightbulb:', layout='wide')
 apply_moorhouse_theme()
+tenant = require_active_tenant()
+data_source = tenant_data_source_label(tenant)
 render_page_header('Recommendations', 'Prioritised recommendation output with export', eyebrow='Action planning')
 scope = render_prompt_scope_selector(key='reco_scope')
-st.caption(f'Results source: OpenRouter captured outputs | Prompt bank scope: {scope}')
+st.caption(
+    f'Active organization: {tenant.display_name} | Data source: {data_source} | Results source: OpenRouter captured outputs | Prompt bank scope: {scope}'
+)
 
 try:
-    _, _, scored_df = load_core_data()
+    _, _, scored_df = load_core_data(org_id=tenant.org_id)
     scored_df = apply_prompt_scope_filter(scored_df, scope=scope)
 except Exception as exc:
     st.error(f'Unable to load captured data: {exc}')
     st.stop()
 
 if scored_df.empty:
-    st.warning('No records match this selection.')
+    render_empty_state_guidance(tenant, area='Recommendations')
     st.stop()
 
 filters = render_sidebar_filters(scored_df, key_prefix='reco_live_v2')
 filtered = apply_filters(scored_df, filters)
 
 if filtered.empty:
-    st.warning('No records match the selected filter set.')
+    render_empty_state_guidance(tenant, area='Recommendations')
     st.stop()
 
 recommendations = generate_recommendations(filtered)

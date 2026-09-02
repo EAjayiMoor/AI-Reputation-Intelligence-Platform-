@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from src.ui import apply_moorhouse_theme, render_page_header
+from src.ui import apply_moorhouse_theme, render_page_header, require_active_tenant, tenant_data_source_label
 
 st.set_page_config(
     page_title='AI Reputation Intelligence Platform',
@@ -11,11 +11,14 @@ st.set_page_config(
 )
 
 apply_moorhouse_theme()
+tenant = require_active_tenant()
+data_source = tenant_data_source_label(tenant)
 render_page_header(
     'AI reputation intelligence platform',
-    'University of Southampton visibility and reputation analytics',
+    f'{tenant.display_name} visibility and reputation analytics',
     eyebrow='Overview',
 )
+st.caption(f'Active organization: {tenant.display_name} · Data source: {data_source}')
 
 st.markdown(
     """
@@ -28,7 +31,7 @@ st.markdown(
 
 st.markdown('### App purpose')
 st.markdown(
-    'This Streamlit PoC supports a consultant-led AI visibility audit for Southampton across market, subject, persona, expertise, and platform views.',
+    f'This Streamlit PoC supports a consultant-led AI visibility audit for {tenant.display_name} across market, subject, persona, expertise, and platform views.',
 )
 
 st.markdown('### Recommended entry points')

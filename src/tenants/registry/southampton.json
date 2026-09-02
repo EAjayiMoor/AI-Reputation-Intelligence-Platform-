@@ -1,0 +1,23 @@
+{
+  "org_id": "southampton",
+  "display_name": "University of Southampton",
+  "aliases": [
+    "Southampton",
+    "UoS",
+    "University of Southampton"
+  ],
+  "domains": [
+    "southampton.ac.uk"
+  ],
+  "data_paths": {
+    "prompts_path": "data/UoS_Prompt_Library_normalised.csv",
+    "results_path": "data/uos_openrouter_results.csv"
+  },
+  "model_assignment": {
+    "OpenAI": "openai/gpt-4.1-mini",
+    "Anthropic": "anthropic/claude-haiku-4.5",
+    "Gemini": "google/gemini-3.6-flash",
+    "DeepSeek": "deepseek/deepseek-chat",
+    "Perplexity": "perplexity/sonar"
+  }
+}
