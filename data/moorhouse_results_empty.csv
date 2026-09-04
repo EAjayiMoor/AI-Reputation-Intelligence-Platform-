@@ -1,1 +1,1 @@
-ResultID,PromptID,Platform,ResponseText,SouthamptonVisible,SouthamptonRank,OrgVisible,OrgRank,CompetitorsMentioned,CitationSources,RunDate
+﻿ResultID,PromptID,Platform,ResponseText,SouthamptonVisible,SouthamptonRank,CompetitorsMentioned,CitationSources,RunDate,Provider,ModelName,RequestID,ResponseID,RunBatchID,PromptTokens,CompletionTokens,TotalTokens,CachedPromptTokens,APICost

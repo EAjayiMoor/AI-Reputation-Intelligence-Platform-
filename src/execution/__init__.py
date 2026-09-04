@@ -1,4 +1,10 @@
-﻿from src.execution.openrouter_runner import OpenRouterConfig, OpenRouterRunResult, OpenRouterRunner
+from src.execution.azure_prompt_generator import (
+    AzurePromptGenerator,
+    AzurePromptGenerationTrace,
+    AzurePromptGeneratorConfig,
+    append_generated_prompts_to_bank,
+)
+from src.execution.openrouter_runner import OpenRouterConfig, OpenRouterRunResult, OpenRouterRunner
 from src.execution.pipeline import run_model_sweep, run_pending_prompts_once
 from src.execution.storage import (
     OPENROUTER_RESULTS_COLUMNS,
@@ -15,6 +21,10 @@ from src.execution.uos_library import (
 )
 
 __all__ = [
+    'AzurePromptGenerator',
+    'AzurePromptGenerationTrace',
+    'AzurePromptGeneratorConfig',
+    'append_generated_prompts_to_bank',
     'OpenRouterConfig',
     'OpenRouterRunResult',
     'OpenRouterRunner',

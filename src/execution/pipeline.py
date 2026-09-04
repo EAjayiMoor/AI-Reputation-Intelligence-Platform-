@@ -45,7 +45,7 @@ def _to_result_row(run: OpenRouterRunResult, index: int, intent: str = '') -> di
     return {
         'ResultID': f"OR_{run.run_batch_id}_{index:04d}",
         'PromptID': run.prompt_id,
-        'Platform': 'OpenRouter',
+        'Platform': run.provider,
         'ResponseText': response_text,
         'SouthamptonVisible': southampton_visible,
         'SouthamptonRank': southampton_rank if southampton_rank is not None else '',
@@ -104,8 +104,6 @@ def run_pending_prompts_once(
         else {}
     )
 
-    # Checkpoint successful responses regularly so a long sweep can resume
-    # without repeating an entire model if the process is interrupted.
     for chunk_start in range(0, len(pending_rows), CHECKPOINT_SIZE):
         chunk = pending_rows[chunk_start:chunk_start + CHECKPOINT_SIZE]
         run_results = runner.run_prompt_bank(chunk, dry_run=dry_run)
@@ -145,6 +143,13 @@ def run_model_sweep(
     model_names: list[str] | tuple[str, ...] = (),
     dry_run: bool = False,
     api_key: str = '',
+    provider_name: str = 'OpenRouter',
+    base_url: str = 'https://openrouter.ai/api/v1/chat/completions',
+    timeout_seconds: int = 45,
+    api_key_header: str = 'Authorization',
+    api_key_prefix: str = 'Bearer ',
+    include_openrouter_headers: bool = True,
+    api_version: str | None = None,
     app_name: str = 'AI Reputation Intelligence Platform',
     app_url: str = 'http://localhost:8501',
 ) -> tuple[pd.DataFrame, dict[str, int]]:
@@ -169,6 +174,13 @@ def run_model_sweep(
             OpenRouterConfig(
                 api_key=api_key,
                 model_name=model_name,
+                provider_name=provider_name,
+                base_url=base_url,
+                timeout_seconds=timeout_seconds,
+                api_key_header=api_key_header,
+                api_key_prefix=api_key_prefix,
+                include_openrouter_headers=include_openrouter_headers,
+                api_version=api_version,
                 app_name=app_name,
                 app_url=app_url,
             )
@@ -193,3 +205,4 @@ def run_model_sweep(
         'success_count': int(success_count),
         'failure_count': int(failure_count),
     }
+

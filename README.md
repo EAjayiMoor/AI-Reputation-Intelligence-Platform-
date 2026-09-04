@@ -27,8 +27,8 @@ Build and start the app with Docker Compose:
 docker compose up --build
 ```
 
-The app is available at `http://localhost:8501`. To configure OpenRouter, copy
-`.env.example` to `.env`, set `OPENROUTER_API_KEY`, and run Compose again. The
+The app is available at `http://localhost:8501`. To configure your execution provider and Azure prompt generation, copy
+`.env.example` to `.env`, set provider environment values, and run Compose again. The
 `.env` file and `.streamlit/secrets.toml` are excluded from the image build.
 
 To build and run the image directly:
@@ -43,7 +43,7 @@ docker run --rm -p 8501:8501 --env-file .env ai-reputation-intelligence-platform
 - `data/Southampton_GEO_PromptBank_v2_15Segments_120Prompts 1.csv`
 - `data/openrouter_results.csv`
 
-The app uses the V2 prompt bank and captured OpenRouter outputs throughout.
+The app uses the V2 prompt bank and captured model outputs throughout.
 
 ## Source hierarchy
 
@@ -56,26 +56,24 @@ The app uses the V2 prompt bank and captured OpenRouter outputs throughout.
 
 See `docs/traceability_log.md` for requirement mapping and delivery evidence.
 
-## OpenRouter execution setup (new architecture)
+## Model execution setup (Azure OpenAI generation + OpenRouter execution)
 
 This project now supports a hybrid prompt-bank flow:
 
 - client-supplied prompts
 - persona-generated prompts
-- execution through OpenRouter across selected models
+- prompt generation through Azure OpenAI and execution through OpenRouter across selected models
 
 Set environment variables (or copy `.env.example` values into your environment):
 
-- `OPENROUTER_API_KEY`
-- `OPENROUTER_MODEL` (default: `openai/gpt-4.1-mini`)
-- `OPENROUTER_TIMEOUT_SECONDS` (default: `45`)
-- `OPENROUTER_APP_NAME`
-- `OPENROUTER_APP_URL`
+- `AIRP_EXECUTION_PROVIDER` (`openrouter` recommended for execution)
+- `OPENROUTER_*` values for OpenRouter mode
+- `AZURE_OPENAI_API_KEY` + `AZURE_FOUNDRY_*` values for Azure OpenAI prompt generation
 
 Current scaffold modules:
 
 - `src/execution/openrouter_runner.py`
+- `src/execution/azure_prompt_generator.py`
 - `src/config/settings.py`
 
-The Streamlit analytics flow can consume captured outputs (CSV replay) or live OpenRouter responses from this runner. OpenRouter execution is cost-safe: only `PromptSource=generated` rows are eligible, and only pending prompts run on explicit button click.
-
+The Streamlit analytics flow can consume captured outputs (CSV replay) or live model responses from the selected provider. Execution is cost-safe: only `PromptSource=generated` rows are eligible, and only pending prompts run on explicit button click.

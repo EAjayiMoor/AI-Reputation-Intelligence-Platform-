@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import streamlit as st
 
@@ -24,8 +24,7 @@ render_page_header(
     eyebrow='Prompt intelligence',
 )
 st.caption(
-    f'Active organization: {tenant.display_name} · Data source: {data_source} · '
-    'Results source: OpenRouter captured outputs'
+    f'Data source: {data_source} | Results source: captured model outputs'
 )
 
 try:
@@ -37,6 +36,23 @@ except Exception as exc:
 if prompts_df.empty and results_df.empty:
     render_empty_state_guidance(tenant, area='Prompt Bank Explorer')
     st.stop()
+
+generated_only = prompts_df[
+    prompts_df['PromptSource'].fillna('').astype(str).str.lower().eq('generated')
+].copy() if 'PromptSource' in prompts_df.columns else prompts_df.iloc[0:0].copy()
+azure_generated = generated_only[
+    generated_only['GenerationMethod'].fillna('').astype(str).str.lower().eq('azure_openai_chat')
+].copy() if 'GenerationMethod' in generated_only.columns else generated_only.iloc[0:0].copy()
+
+mg1, mg2, mg3 = st.columns(3)
+mg1.metric('Generated prompts (all)', len(generated_only), border=True)
+mg2.metric('Generated via Azure', len(azure_generated), border=True)
+mg3.metric('Prompt bank total', len(prompts_df), border=True)
+
+if not azure_generated.empty:
+    preview_cols = [column for column in ['PromptID', 'Organisation', 'Market', 'Persona', 'Subject', 'Intent', 'Prompt'] if column in azure_generated.columns]
+    st.caption('Latest Azure-generated prompts stored in the prompt bank.')
+    st.dataframe(azure_generated[preview_cols].tail(20).reset_index(drop=True), hide_index=True)
 
 output_columns = select_available_output_columns(results_df)
 
@@ -70,9 +86,16 @@ captured_view = combined_view[
     combined_view['ResponseText'].fillna('').astype(str).str.strip().ne('')
 ].reset_index(drop=True)
 
-selections = render_sidebar_filters(combined_view, key_prefix='prompts_live_v2')
-filtered_combined = apply_filters(combined_view, selections)
-filtered_captured = apply_filters(captured_view, selections)
+filter_base = combined_view.copy()
+filter_captured = captured_view.copy()
+if 'Organisation' in filter_base.columns:
+    filter_base['Organisation'] = 'Organisation'
+if 'Organisation' in filter_captured.columns:
+    filter_captured['Organisation'] = 'Organisation'
+
+selections = render_sidebar_filters(filter_base, key_prefix='prompts_live_v2')
+filtered_combined = apply_filters(filter_base, selections)
+filtered_captured = apply_filters(filter_captured, selections)
 
 view_mode = st.segmented_control(
     'Explorer view',

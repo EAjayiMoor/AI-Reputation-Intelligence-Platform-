@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 import json
 import uuid
-from urllib import request
+from urllib import parse, request
 
 
 OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions'
@@ -32,8 +32,13 @@ def _optional_float(value: object) -> float | None:
 class OpenRouterConfig:
     api_key: str
     model_name: str
+    provider_name: str = 'OpenRouter'
     base_url: str = OPENROUTER_API_URL
     timeout_seconds: int = 45
+    api_key_header: str = 'Authorization'
+    api_key_prefix: str = 'Bearer '
+    include_openrouter_headers: bool = True
+    api_version: str | None = None
     app_name: str = 'AI Reputation Intelligence Platform'
     app_url: str = 'http://localhost:8501'
 
@@ -62,6 +67,28 @@ class OpenRouterRunner:
     def __init__(self, config: OpenRouterConfig) -> None:
         self._config = config
 
+    def _request_url(self) -> str:
+        if not self._config.api_version:
+            return self._config.base_url
+
+        parsed = parse.urlsplit(self._config.base_url)
+        existing_query = parse.parse_qs(parsed.query, keep_blank_values=True)
+        if 'api-version' not in existing_query:
+            existing_query['api-version'] = [self._config.api_version]
+
+        query = parse.urlencode(existing_query, doseq=True)
+        return parse.urlunsplit((parsed.scheme, parsed.netloc, parsed.path, query, parsed.fragment))
+
+    def _request_headers(self) -> dict[str, str]:
+        headers: dict[str, str] = {
+            self._config.api_key_header: f'{self._config.api_key_prefix}{self._config.api_key}',
+            'Content-Type': 'application/json',
+        }
+        if self._config.include_openrouter_headers:
+            headers['HTTP-Referer'] = self._config.app_url
+            headers['X-Title'] = self._config.app_name
+        return headers
+
     def run_prompt(
         self,
         prompt_id: str,
@@ -77,7 +104,7 @@ class OpenRouterRunner:
             return OpenRouterRunResult(
                 prompt_id=prompt_id,
                 prompt_text=prompt_text,
-                provider='OpenRouter',
+                provider=self._config.provider_name,
                 model_name=self._config.model_name,
                 request_id=request_id,
                 response_id=f'resp_{uuid.uuid4().hex[:12]}',
@@ -110,14 +137,9 @@ class OpenRouterRunner:
         }
 
         req = request.Request(
-            self._config.base_url,
+            self._request_url(),
             data=json.dumps(payload).encode('utf-8'),
-            headers={
-                'Authorization': f'Bearer {self._config.api_key}',
-                'Content-Type': 'application/json',
-                'HTTP-Referer': self._config.app_url,
-                'X-Title': self._config.app_name,
-            },
+            headers=self._request_headers(),
             method='POST',
         )
 
@@ -129,15 +151,11 @@ class OpenRouterRunner:
             prompt_details = usage.get('prompt_tokens_details') or {}
             cost_value = usage.get('cost')
             response_id = str(parsed.get('id', f'resp_{uuid.uuid4().hex[:12]}'))
-            message = (
-                parsed.get('choices', [{}])[0]
-                .get('message', {})
-                .get('content', '')
-            )
+            message = parsed.get('choices', [{}])[0].get('message', {}).get('content', '')
             return OpenRouterRunResult(
                 prompt_id=prompt_id,
                 prompt_text=prompt_text,
-                provider='OpenRouter',
+                provider=self._config.provider_name,
                 model_name=self._config.model_name,
                 request_id=request_id,
                 response_id=response_id,
@@ -156,7 +174,7 @@ class OpenRouterRunner:
             return OpenRouterRunResult(
                 prompt_id=prompt_id,
                 prompt_text=prompt_text,
-                provider='OpenRouter',
+                provider=self._config.provider_name,
                 model_name=self._config.model_name,
                 request_id=request_id,
                 response_id=f'resp_{uuid.uuid4().hex[:12]}',
@@ -166,6 +184,7 @@ class OpenRouterRunner:
                 error_message=str(exc),
                 run_date=run_date,
             )
+
     def run_prompt_bank(
         self,
         prompt_rows: list[dict[str, str]],
@@ -182,3 +201,4 @@ class OpenRouterRunner:
             )
             results.append(result)
         return results
+
