@@ -21,6 +21,69 @@ from src.ui import (
 )
 
 
+MODEL_LABELS = {
+    'openai/gpt-4.1-mini': 'GPT-4.1 Mini',
+    'anthropic/claude-haiku-4.5': 'Claude Haiku 4.5',
+    'google/gemini-3.6-flash': 'Gemini 3.6 Flash',
+    'qwen/qwen3-max': 'Qwen3 Max',
+    'deepseek/deepseek-chat': 'DeepSeek Chat',
+    'perplexity/sonar': 'Perplexity Sonar',
+}
+
+
+def _measurement_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    """Return the stable measurement columns used by the Sprint 2 views."""
+    working = frame.copy()
+    if 'Mentioned' not in working.columns:
+        working['Mentioned'] = working['visible_bool']
+    if 'Recommended' not in working.columns:
+        working['Recommended'] = False
+    if 'Shortlisted' not in working.columns:
+        working['Shortlisted'] = False
+    if 'CitationPresent' not in working.columns:
+        working['CitationPresent'] = working['citation_score_row'].gt(0)
+    if 'AssociationLabel' not in working.columns:
+        working['AssociationLabel'] = 'Not available'
+    if 'ProminenceScore' not in working.columns:
+        working['ProminenceScore'] = working['rank_score_row']
+    working['Mentioned'] = working['Mentioned'].fillna(False).astype(bool)
+    working['Recommended'] = working['Recommended'].fillna(False).astype(bool)
+    working['Shortlisted'] = working['Shortlisted'].fillna(False).astype(bool)
+    working['CitationPresent'] = working['CitationPresent'].fillna(False).astype(bool)
+    working['AssociationLabel'] = working['AssociationLabel'].fillna('Not available').astype(str)
+    if 'ModelName' in working.columns:
+        working['Model'] = working['ModelName'].map(MODEL_LABELS).fillna(working['ModelName'].astype(str))
+    return working
+
+
+def _signal_summary(frame: pd.DataFrame, group_columns: list[str]) -> pd.DataFrame:
+    working = _measurement_frame(frame)
+    for column in group_columns:
+        working[column] = working[column].fillna('Unknown').astype(str)
+    summary = (
+        working.groupby(group_columns, dropna=False)
+        .agg(
+            Responses=('PromptID', 'size'),
+            Mentions=('Mentioned', 'sum'),
+            Recommendations=('Recommended', 'sum'),
+            Shortlists=('Shortlisted', 'sum'),
+            Cited=('CitationPresent', 'sum'),
+            AverageProminence=('ProminenceScore', 'mean'),
+        )
+        .reset_index()
+    )
+    summary['Mention rate'] = (summary['Mentions'].div(summary['Responses']).mul(100)).round(1)
+    summary['Citation rate'] = (summary['Cited'].div(summary['Responses']).mul(100)).round(1)
+    summary['Recommendation rate'] = (
+        summary['Recommendations'].div(summary['Mentions'].where(summary['Mentions'].gt(0))).mul(100)
+    ).fillna(0).round(1)
+    summary['Shortlist rate'] = (
+        summary['Shortlists'].div(summary['Mentions'].where(summary['Mentions'].gt(0))).mul(100)
+    ).fillna(0).round(1)
+    summary['Average prominence'] = summary['AverageProminence'].round(1)
+    return summary
+
+
 def _metric_defs_for_org(organisation_name: str) -> dict[str, str]:
     if organisation_name == 'University of Southampton':
         return dict(METRIC_DEFINITIONS)
@@ -80,6 +143,153 @@ st.markdown(
     unsafe_allow_html=True,
 )
 _render_metric_definitions_for_org(metric_defs, include_components=True)
+
+measurement_df = _measurement_frame(filtered)
+response_total = len(measurement_df)
+mention_total = int(measurement_df['Mentioned'].sum())
+mentioned_denominator = max(mention_total, 1)
+mention_rate = mention_total / response_total * 100 if response_total else 0
+recommendation_rate = measurement_df['Recommended'].sum() / mentioned_denominator * 100
+shortlist_rate = measurement_df['Shortlisted'].sum() / mentioned_denominator * 100
+citation_rate = measurement_df['CitationPresent'].sum() / response_total * 100 if response_total else 0
+positive_rate = (
+    measurement_df.loc[measurement_df['Mentioned'], 'AssociationLabel'].eq('Positive').sum()
+    / mentioned_denominator
+    * 100
+)
+
+st.subheader('LLM presence snapshot')
+st.caption(
+    'Rates are calculated from captured response rows after the current prompt-bank, scope and sidebar filters. '
+    'Recommendation, shortlist and positive-association rates use only responses that mention the organisation.'
+)
+metric_columns = st.columns(5)
+metric_columns[0].metric('Mention rate', f'{mention_rate:.1f}%', border=True)
+metric_columns[1].metric('Recommended when mentioned', f'{recommendation_rate:.1f}%', border=True)
+metric_columns[2].metric('Shortlisted when mentioned', f'{shortlist_rate:.1f}%', border=True)
+metric_columns[3].metric('Citation coverage', f'{citation_rate:.1f}%', border=True)
+metric_columns[4].metric('Positive association', f'{positive_rate:.1f}%', border=True)
+
+st.subheader('Presence signals by model')
+model_summary = _signal_summary(measurement_df, ['Model'])
+signal_long = model_summary.melt(
+    id_vars=['Model'],
+    value_vars=['Mention rate', 'Recommendation rate', 'Shortlist rate', 'Citation rate'],
+    var_name='Signal',
+    value_name='Rate',
+)
+signal_chart = (
+    alt.Chart(signal_long)
+    .mark_bar(cornerRadiusEnd=3)
+    .encode(
+        x=alt.X('Model:N', title=None, axis=alt.Axis(labelAngle=-25)),
+        y=alt.Y('Rate:Q', title='Rate (%)', scale=alt.Scale(domain=[0, 100])),
+        color=alt.Color('Signal:N', title='Signal'),
+        xOffset=alt.XOffset('Signal:N'),
+        tooltip=[
+            alt.Tooltip('Model:N'),
+            alt.Tooltip('Signal:N'),
+            alt.Tooltip('Rate:Q', title='Rate', format='.1f'),
+        ],
+    )
+    .properties(height=360)
+)
+st.altair_chart(signal_chart)
+
+model_table = model_summary[
+    [
+        'Model', 'Responses', 'Mentions', 'Mention rate', 'Average prominence',
+        'Recommendation rate', 'Shortlist rate', 'Citation rate',
+    ]
+].sort_values('Mention rate', ascending=False)
+st.dataframe(
+    model_table,
+    hide_index=True,
+    column_config={
+        'Model': st.column_config.TextColumn('Model', pinned=True),
+        'Responses': st.column_config.NumberColumn('Responses', format='%d'),
+        'Mentions': st.column_config.NumberColumn(f'{tenant.display_name} mentions', format='%d'),
+        'Mention rate': st.column_config.NumberColumn('Mention rate', format='%.1f%%'),
+        'Average prominence': st.column_config.NumberColumn('Average prominence', format='%.1f'),
+        'Recommendation rate': st.column_config.NumberColumn('Recommended when mentioned', format='%.1f%%'),
+        'Shortlist rate': st.column_config.NumberColumn('Shortlisted when mentioned', format='%.1f%%'),
+        'Citation rate': st.column_config.NumberColumn('Citation coverage', format='%.1f%%'),
+    },
+)
+
+group_columns = [column for column in ['Persona', 'Subject'] if column in measurement_df.columns]
+if group_columns:
+    st.subheader('Presence by persona and topic')
+    topic_summary = _signal_summary(measurement_df, group_columns)
+    if len(group_columns) == 2:
+        topic_heatmap = (
+            alt.Chart(topic_summary)
+            .mark_rect(cornerRadius=3)
+            .encode(
+                x=alt.X('Subject:N', title='Topic', axis=alt.Axis(labelAngle=-35)),
+                y=alt.Y('Persona:N', title='Persona'),
+                color=alt.Color(
+                    'Mention rate:Q',
+                    title='Mention rate (%)',
+                    scale=alt.Scale(domain=[0, 100], range=MOORHOUSE_PURPLE_SCALE),
+                ),
+                tooltip=[
+                    alt.Tooltip('Persona:N'),
+                    alt.Tooltip('Subject:N', title='Topic'),
+                    alt.Tooltip('Responses:Q', format=',d'),
+                    alt.Tooltip('Mention rate:Q', format='.1f'),
+                    alt.Tooltip('Average prominence:Q', format='.1f'),
+                    alt.Tooltip('Recommendation rate:Q', title='Recommended when mentioned', format='.1f'),
+                    alt.Tooltip('Shortlist rate:Q', title='Shortlisted when mentioned', format='.1f'),
+                ],
+            )
+            .properties(height=420)
+        )
+        st.altair_chart(topic_heatmap)
+    st.dataframe(
+        topic_summary.sort_values(['Mention rate', 'Responses'], ascending=[False, False]),
+        hide_index=True,
+        column_config={
+            'Responses': st.column_config.NumberColumn('Responses', format='%d'),
+            'Mentions': st.column_config.NumberColumn(f'{tenant.display_name} mentions', format='%d'),
+            'Mention rate': st.column_config.NumberColumn('Mention rate', format='%.1f%%'),
+            'Average prominence': st.column_config.NumberColumn('Average prominence', format='%.1f'),
+            'Recommendation rate': st.column_config.NumberColumn('Recommended when mentioned', format='%.1f%%'),
+            'Shortlist rate': st.column_config.NumberColumn('Shortlisted when mentioned', format='%.1f%%'),
+            'Citation rate': st.column_config.NumberColumn('Citation coverage', format='%.1f%%'),
+        },
+    )
+
+st.subheader('Association profile')
+association_frame = (
+    measurement_df.groupby(['Model', 'AssociationLabel'], as_index=False)
+    .size()
+    .rename(columns={'size': 'Responses'})
+)
+association_frame['Rate'] = association_frame.groupby('Model')['Responses'].transform(
+    lambda values: values / values.sum() * 100
+)
+association_chart = (
+    alt.Chart(association_frame)
+    .mark_bar()
+    .encode(
+        x=alt.X('Model:N', title=None, axis=alt.Axis(labelAngle=-25)),
+        y=alt.Y('Rate:Q', title='Share of responses (%)', scale=alt.Scale(domain=[0, 100])),
+        color=alt.Color('AssociationLabel:N', title='Association'),
+        tooltip=[
+            alt.Tooltip('Model:N'),
+            alt.Tooltip('AssociationLabel:N', title='Association'),
+            alt.Tooltip('Responses:Q', format=',d'),
+            alt.Tooltip('Rate:Q', title='Share', format='.1f'),
+        ],
+    )
+    .properties(height=360)
+)
+st.altair_chart(association_chart)
+st.caption(
+    'Association is measured from language in the same sentence or line as the organisation. '
+    '“Not mentioned” is kept separate from neutral sentiment.'
+)
 
 st.subheader('Visibility heatmap (market × subject)')
 heatmap_source = aggregate_scores(filtered, ['Market', 'Subject'])

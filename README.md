@@ -1,6 +1,6 @@
 ﻿# AI Reputation Intelligence Platform
 
-Streamlit proof of concept for AI reputation and visibility auditing, starting with the University of Southampton use case.
+Streamlit proof of concept for multi-organisation AI reputation and visibility auditing, initially developed for the University of Southampton use case.
 
 ## Current status
 
@@ -42,8 +42,10 @@ docker run --rm -p 8501:8501 --env-file .env ai-reputation-intelligence-platform
 
 - `data/Southampton_GEO_PromptBank_v2_15Segments_120Prompts 1.csv`
 - `data/openrouter_results.csv`
+- `data/corona_energy_prompts.csv`
+- `data/corona_energy_results.csv`
 
-The app uses the V2 prompt bank and captured model outputs throughout.
+Organisation workspaces select their own prompt bank and captured model outputs through the tenant registry.
 
 ## Source hierarchy
 

@@ -23,7 +23,7 @@ st.caption(f'Active organization: {tenant.display_name} · Data source: {data_so
 st.markdown(
     """
     <div class='mh-callout'>
-        <p>Use the Executive Dashboard page for the scorecard and chart-based summary. Execution is the operational page for Azure prompt generation and OpenRouter multi-model runs. Prompt Bank Explorer is the filterable prompt audit surface.</p>
+    <p>Use the Executive Dashboard page for the scorecard and chart-based summary. Visibility Analysis and Topic and Persona Diagnostics explain presence by segment, while Competitor Analysis shows competitive pressure. Execution is the operational page for Azure prompt generation and OpenRouter multi-model runs. Prompt Bank Explorer is the filterable prompt audit surface.</p>
     </div>
     """,
     unsafe_allow_html=True,
@@ -38,5 +38,7 @@ st.markdown('### Recommended entry points')
 st.markdown(
     '- Executive Dashboard: headline summary and benchmark charts\n'
     '- Prompt Bank Explorer: inspect prompt coverage and export filtered prompt sets\n'
+    '- Topic and Persona Diagnostics: find segment strengths, gaps and supporting response evidence\n'
+    '- Recommendations: connect measured gaps to owned actions, evidence and rerun tracking\n'
     '- Execution: generate prompts with Azure OpenAI, then run through selected OpenRouter models'
 )

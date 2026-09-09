@@ -8,6 +8,7 @@ from src.analysis import (
     extract_institution_rank,
     extract_southampton_rank,
     prompt_names_institution,
+    organisation_name_pattern,
 )
 
 
@@ -73,3 +74,39 @@ def test_prompt_institution_detection_excludes_named_comparisons() -> None:
         'Which UK universities are best for engineering?',
         intent='General Awareness',
     )
+
+
+def test_custom_organisation_and_competitor_aliases_are_detected() -> None:
+    competitors = {
+        'British Gas Business': ('British Gas',),
+        'Yü Energy': ('Yu Energy',),
+    }
+    target_pattern = organisation_name_pattern('Corona Energy', ('Corona Energy Retail',))
+    response = '1. British Gas\n2. Corona Energy Retail\n3. Yu Energy'
+
+    assert extract_institution_rank(response, institution_pattern=target_pattern) == 2
+    assert extract_competitors(response, competitors) == ['British Gas Business', 'Yü Energy']
+    assert prompt_names_institution(
+        'Compare Corona Energy with British Gas for a multi-site portfolio.',
+        target_institution_pattern=target_pattern,
+        competitor_aliases=competitors,
+    )
+
+
+def test_enrichment_uses_custom_tenant_identity() -> None:
+    results = pd.DataFrame(
+        [{'PromptID': 'CE-1', 'ResponseText': '1. British Gas\n2. Corona Energy'}]
+    )
+    prompts = pd.DataFrame([{'PromptID': 'CE-1', 'Intent': 'Supplier Discovery'}])
+
+    enriched = enrich_results_frame(
+        results,
+        prompts,
+        organisation_name='Corona Energy',
+        competitor_aliases={'British Gas Business': ('British Gas',)},
+    )
+
+    assert enriched.iloc[0]['OrgVisible'] == 1
+    assert enriched.iloc[0]['OrgRank'] == 2
+    assert enriched.iloc[0]['CompetitorsMentioned'] == 'British Gas Business'
+    assert 'SouthamptonVisible' not in enriched.columns

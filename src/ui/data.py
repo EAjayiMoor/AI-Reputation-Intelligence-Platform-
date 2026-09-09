@@ -6,12 +6,13 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from src.analysis import prompt_names_institution
+from src.analysis import enrich_llm_presence, prompt_names_institution
 from src.execution import load_openrouter_results
 from src.ingestion.validators import (
     PROMPT_REQUIRED_COLUMNS,
     RESULT_REQUIRED_COLUMNS,
     validate_required_columns,
+    validate_result_columns,
 )
 from src.scoring import score_results
 from src.tenants import load_tenant
@@ -43,13 +44,17 @@ def _mention_pattern(values: list[str] | tuple[str, ...]) -> str:
     return r'\b(?:' + '|'.join(escaped) + r')\b' if escaped else DEFAULT_MENTION_PATTERN
 
 
-def _tenant_defaults(org_id: str | None = None) -> tuple[Path, Path, str, str]:
+def _tenant_defaults(
+    org_id: str | None = None,
+) -> tuple[Path, Path, str, str, tuple[str, ...], dict[str, tuple[str, ...]] | None]:
     if not org_id:
         return (
             DEFAULT_PROMPTS_PATH,
             DEFAULT_RESULTS_PATH,
             DEFAULT_ORGANISATION_NAME,
             DEFAULT_MENTION_PATTERN,
+            ('Southampton',),
+            None,
         )
 
     tenant = load_tenant(org_id)
@@ -58,6 +63,8 @@ def _tenant_defaults(org_id: str | None = None) -> tuple[Path, Path, str, str]:
         Path(tenant.data_paths.results_path),
         tenant.display_name,
         _mention_pattern([tenant.display_name, *tenant.aliases]),
+        tenant.aliases,
+        tenant.competitors.aliases_by_name or None,
     )
 
 FILTER_COLUMNS = [
@@ -89,6 +96,7 @@ def normalise_prompt_bank_frame(
     organisation_name: str = DEFAULT_ORGANISATION_NAME,
     mention_pattern: str = DEFAULT_MENTION_PATTERN,
     force_organisation: bool = False,
+    competitor_aliases: dict[str, tuple[str, ...]] | None = None,
 ) -> pd.DataFrame:
     working = frame.copy()
 
@@ -160,6 +168,7 @@ def normalise_prompt_bank_frame(
             row.get('Prompt', ''),
             row.get('Intent', ''),
             target_institution_pattern=mention_pattern,
+            competitor_aliases=competitor_aliases,
         ),
         axis=1,
     )
@@ -186,7 +195,14 @@ def load_core_data(
     results_path: str | Path = DEFAULT_RESULTS_PATH,
     org_id: str | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
-    resolved_prompts_path, resolved_results_path, org_name, mention_pattern = _tenant_defaults(org_id)
+    (
+        resolved_prompts_path,
+        resolved_results_path,
+        org_name,
+        mention_pattern,
+        organisation_aliases,
+        competitor_aliases,
+    ) = _tenant_defaults(org_id)
     prompts_source = Path(prompts_path) if org_id is None else resolved_prompts_path
     results_source = Path(results_path) if org_id is None else resolved_results_path
 
@@ -195,11 +211,12 @@ def load_core_data(
         organisation_name=org_name,
         mention_pattern=mention_pattern,
         force_organisation=(org_id is not None),
+        competitor_aliases=competitor_aliases,
     )
     results_df = load_openrouter_results(results_source)
 
     prompt_validation = validate_required_columns(prompts_df, PROMPT_REQUIRED_COLUMNS)
-    result_validation = validate_required_columns(results_df, RESULT_REQUIRED_COLUMNS)
+    result_validation = validate_result_columns(results_df)
 
     if not prompt_validation.valid:
         missing = ', '.join(prompt_validation.missing_columns)
@@ -216,6 +233,12 @@ def load_core_data(
         suffixes=('_result', ''),
     )
     scored = score_results(merged)
+    scored = enrich_llm_presence(
+        scored,
+        organisation_name=org_name,
+        organisation_aliases=organisation_aliases,
+        competitor_aliases=competitor_aliases,
+    )
     return prompts_df, results_df, scored
 
 

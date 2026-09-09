@@ -11,6 +11,8 @@ OPENROUTER_RESULTS_COLUMNS = [
     'ResponseText',
     'SouthamptonVisible',
     'SouthamptonRank',
+    'OrgVisible',
+    'OrgRank',
     'CompetitorsMentioned',
     'CitationSources',
     'RunDate',
@@ -33,6 +35,16 @@ def load_openrouter_results(path: str | Path) -> pd.DataFrame:
         return pd.DataFrame(columns=OPENROUTER_RESULTS_COLUMNS)
 
     frame = pd.read_csv(file_path, encoding='utf-8')
+    if 'OrgVisible' not in frame.columns:
+        frame['OrgVisible'] = frame.get('SouthamptonVisible', '')
+    elif 'SouthamptonVisible' in frame.columns:
+        missing = frame['OrgVisible'].isna() | frame['OrgVisible'].astype(str).str.strip().eq('')
+        frame.loc[missing, 'OrgVisible'] = frame.loc[missing, 'SouthamptonVisible']
+    if 'OrgRank' not in frame.columns:
+        frame['OrgRank'] = frame.get('SouthamptonRank', '')
+    elif 'SouthamptonRank' in frame.columns:
+        missing = frame['OrgRank'].isna() | frame['OrgRank'].astype(str).str.strip().eq('')
+        frame.loc[missing, 'OrgRank'] = frame.loc[missing, 'SouthamptonRank']
     for column in OPENROUTER_RESULTS_COLUMNS:
         if column not in frame.columns:
             frame[column] = ''

@@ -10,6 +10,7 @@ from src.ingestion.validators import (
     PROMPT_REQUIRED_COLUMNS,
     RESULT_REQUIRED_COLUMNS,
     validate_required_columns,
+    validate_result_columns,
 )
 from src.tenants import update_tenant_data_paths
 from src.ui import (
@@ -103,7 +104,7 @@ if st.button('Validate and activate uploads', type='primary'):
     if results_upload is not None:
         try:
             results_df = _read_uploaded_frame(results_upload)
-            results_validation = validate_required_columns(results_df, RESULT_REQUIRED_COLUMNS)
+            results_validation = validate_result_columns(results_df)
             if not results_validation.valid:
                 st.error(
                     'Results file is missing required columns: '
@@ -128,4 +129,3 @@ if st.button('Validate and activate uploads', type='primary'):
     if saved_results_path:
         st.caption(f'Results path updated to `{saved_results_path}`')
     st.info('Refresh analytics pages from the sidebar to view the new data.')
-

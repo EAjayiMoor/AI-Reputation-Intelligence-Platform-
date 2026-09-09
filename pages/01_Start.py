@@ -76,16 +76,27 @@ with st.form('create_org_form'):
     name = st.text_input('Organization name*', placeholder='e.g., Moorhouse')
     aliases_raw = st.text_input('Aliases (comma separated)', placeholder='Moorhouse Consulting, MH')
     domains_raw = st.text_input('Domains (comma separated)', placeholder='moorhouseconsulting.com')
+    competitors_raw = st.text_area(
+        'Competitors (optional, one per line)',
+        placeholder='Competitor name | Alias one | Alias two',
+        help='Use a vertical bar to add aliases that should map to the same competitor.',
+    )
     prompts_path = st.text_input('Prompts file path (optional)', value='')
     results_path = st.text_input('Results file path (optional)', value='')
     submitted = st.form_submit_button('Create organization')
 
 if submitted:
     try:
+        competitors: dict[str, list[str]] = {}
+        for line in competitors_raw.splitlines():
+            values = [value.strip() for value in line.split('|') if value.strip()]
+            if values:
+                competitors[values[0]] = values[1:]
         tenant_id = create_tenant_profile(
             display_name=name,
             aliases=[value.strip() for value in aliases_raw.split(',') if value.strip()],
             domains=[value.strip() for value in domains_raw.split(',') if value.strip()],
+            competitors=competitors,
             prompts_path=prompts_path,
             results_path=results_path,
         )

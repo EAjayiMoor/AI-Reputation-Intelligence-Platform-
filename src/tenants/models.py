@@ -15,6 +15,11 @@ class TenantModelAssignment:
 
 
 @dataclass(frozen=True)
+class TenantCompetitorSet:
+    aliases_by_name: dict[str, tuple[str, ...]]
+
+
+@dataclass(frozen=True)
 class TenantConfig:
     org_id: str
     display_name: str
@@ -22,4 +27,4 @@ class TenantConfig:
     domains: tuple[str, ...]
     data_paths: TenantDataPaths
     model_assignment: TenantModelAssignment
-
+    competitors: TenantCompetitorSet

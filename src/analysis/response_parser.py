@@ -50,12 +50,42 @@ UNIVERSITY_ALIASES: dict[str, tuple[str, ...]] = {
 SOUTHAMPTON_PATTERN = r'\b(?:university\s+of\s+)?southampton\b'
 
 
+def organisation_name_pattern(
+    organisation_name: str,
+    aliases: list[str] | tuple[str, ...] = (),
+) -> str:
+    """Build a case-insensitive-safe regex for a tenant name and its aliases."""
+    names = [organisation_name, *aliases]
+    escaped = [re.escape(name.strip()) for name in names if name and name.strip()]
+    escaped = list(dict.fromkeys(escaped))
+    return rf'(?<!\w)(?:{"|".join(escaped)})(?!\w)' if escaped else r'(?!x)x'
+
+
+def _competitor_patterns(
+    competitor_aliases: dict[str, tuple[str, ...] | list[str]],
+) -> dict[str, tuple[str, ...]]:
+    return {
+        canonical: tuple(
+            dict.fromkeys(
+                [
+                    rf'(?<!\w){re.escape(value.strip())}(?!\w)'
+                    for value in [canonical, *aliases]
+                    if value and value.strip()
+                ]
+            )
+        )
+        for canonical, aliases in competitor_aliases.items()
+        if canonical and canonical.strip()
+    }
+
+
 def prompt_names_institution(
     prompt_text: object,
     intent: object = '',
     target_institution_pattern: str = SOUTHAMPTON_PATTERN,
+    competitor_aliases: dict[str, tuple[str, ...] | list[str]] | None = None,
 ) -> bool:
-    """Return True when a prompt explicitly supplies an institution name."""
+    """Return True when a prompt explicitly supplies the target or competitor name."""
     if pd.isna(prompt_text):
         return False
 
@@ -64,20 +94,33 @@ def prompt_names_institution(
         return True
     if re.search(target_institution_pattern, text, flags=re.IGNORECASE):
         return True
+    patterns = (
+        _competitor_patterns(competitor_aliases)
+        if competitor_aliases is not None
+        else UNIVERSITY_ALIASES
+    )
     return any(
         re.search(alias, text, flags=re.IGNORECASE) is not None
-        for aliases in UNIVERSITY_ALIASES.values()
+        for aliases in patterns.values()
         for alias in aliases
     )
 
 
-def extract_competitors(response_text: object) -> list[str]:
+def extract_competitors(
+    response_text: object,
+    competitor_aliases: dict[str, tuple[str, ...] | list[str]] | None = None,
+) -> list[str]:
     if pd.isna(response_text):
         return []
 
     text = str(response_text)
     matches: list[tuple[int, str]] = []
-    for canonical_name, aliases in UNIVERSITY_ALIASES.items():
+    patterns = (
+        _competitor_patterns(competitor_aliases)
+        if competitor_aliases is not None
+        else UNIVERSITY_ALIASES
+    )
+    for canonical_name, aliases in patterns.items():
         positions = [
             match.start()
             for alias in aliases
@@ -138,7 +181,14 @@ def extract_southampton_rank(response_text: object, intent: object = '') -> int 
     )
 
 
-def enrich_results_frame(results_df: pd.DataFrame, prompts_df: pd.DataFrame) -> pd.DataFrame:
+def enrich_results_frame(
+    results_df: pd.DataFrame,
+    prompts_df: pd.DataFrame,
+    *,
+    organisation_name: str = 'University of Southampton',
+    organisation_aliases: list[str] | tuple[str, ...] = ('Southampton',),
+    competitor_aliases: dict[str, tuple[str, ...] | list[str]] | None = None,
+) -> pd.DataFrame:
     enriched = results_df.copy()
     intent_by_prompt = (
         prompts_df.assign(_prompt_id=prompts_df['PromptID'].astype(str))
@@ -147,21 +197,22 @@ def enrich_results_frame(results_df: pd.DataFrame, prompts_df: pd.DataFrame) -> 
         .to_dict()
     )
 
-    enriched['SouthamptonVisible'] = enriched['ResponseText'].fillna('').astype(str).str.contains(
-        'southampton',
-        case=False,
-        regex=False,
+    target_pattern = organisation_name_pattern(organisation_name, organisation_aliases)
+    enriched['OrgVisible'] = enriched['ResponseText'].fillna('').astype(str).str.contains(
+        target_pattern, case=False, regex=True
     ).astype(int)
-    enriched['SouthamptonRank'] = enriched.apply(
-        lambda row: extract_southampton_rank(
+    enriched['OrgRank'] = enriched.apply(
+        lambda row: extract_institution_rank(
             row.get('ResponseText', ''),
             intent_by_prompt.get(str(row.get('PromptID', '')), ''),
+            institution_pattern=target_pattern,
         ),
         axis=1,
     )
-    enriched['OrgVisible'] = enriched['SouthamptonVisible']
-    enriched['OrgRank'] = enriched['SouthamptonRank']
+    if organisation_name == 'University of Southampton':
+        enriched['SouthamptonVisible'] = enriched['OrgVisible']
+        enriched['SouthamptonRank'] = enriched['OrgRank']
     enriched['CompetitorsMentioned'] = enriched['ResponseText'].map(
-        lambda response: ', '.join(extract_competitors(response))
+        lambda response: ', '.join(extract_competitors(response, competitor_aliases))
     )
     return enriched

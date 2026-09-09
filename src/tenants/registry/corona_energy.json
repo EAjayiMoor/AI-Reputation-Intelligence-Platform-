@@ -1,0 +1,36 @@
+{
+  "org_id": "corona_energy",
+  "display_name": "Corona Energy",
+  "aliases": [
+    "Corona Energy",
+    "Corona Energy Retail"
+  ],
+  "domains": [
+    "coronaenergy.co.uk"
+  ],
+  "data_paths": {
+    "prompts_path": "data/corona_energy_prompts.csv",
+    "results_path": "data/corona_energy_results.csv"
+  },
+  "model_assignment": {
+    "OpenAI": "openai/gpt-4.1-mini",
+    "Anthropic": "anthropic/claude-haiku-4.5",
+    "Gemini": "google/gemini-3.6-flash",
+    "DeepSeek": "deepseek/deepseek-chat",
+    "Perplexity": "perplexity/sonar"
+  },
+  "competitors": {
+    "British Gas Business": ["British Gas Lite", "British Gas"],
+    "EDF Energy": ["EDF"],
+    "E.ON Next": ["E.ON", "EON Next", "EON"],
+    "SSE Energy Solutions": ["SSE Business Energy", "SSE"],
+    "ScottishPower": ["Scottish Power"],
+    "TotalEnergies Gas & Power": ["TotalEnergies", "Total Gas & Power"],
+    "Drax Energy Solutions": ["Drax"],
+    "ENGIE": ["Engie"],
+    "npower Business Solutions": ["nPower Business Solutions", "npower"],
+    "Yü Energy": ["Yu Energy", "Yü Energy"],
+    "Octopus Energy for Business": ["Octopus Energy Business", "Octopus Energy"],
+    "Good Energy": []
+  }
+}

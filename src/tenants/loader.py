@@ -4,7 +4,12 @@ import json
 import os
 from pathlib import Path
 
-from src.tenants.models import TenantConfig, TenantDataPaths, TenantModelAssignment
+from src.tenants.models import (
+    TenantCompetitorSet,
+    TenantConfig,
+    TenantDataPaths,
+    TenantModelAssignment,
+)
 
 
 TENANT_REGISTRY_DIR = Path(__file__).resolve().parent / 'registry'
@@ -47,5 +52,15 @@ def load_tenant(org_id: str | None = None) -> TenantConfig:
                 if str(label).strip() and str(model).strip()
             }
         ),
+        competitors=TenantCompetitorSet(
+            aliases_by_name={
+                str(name).strip(): tuple(
+                    str(alias).strip()
+                    for alias in ([aliases] if isinstance(aliases, str) else aliases)
+                    if str(alias).strip()
+                )
+                for name, aliases in payload.get('competitors', {}).items()
+                if str(name).strip()
+            }
+        ),
     )
-

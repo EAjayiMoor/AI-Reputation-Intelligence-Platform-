@@ -4,7 +4,7 @@ import re
 
 import pandas as pd
 
-from src.analysis import extract_competitors, extract_institution_rank
+from src.analysis import extract_competitors, extract_institution_rank, organisation_name_pattern
 from src.execution.openrouter_runner import OpenRouterConfig, OpenRouterRunResult, OpenRouterRunner
 from src.execution.storage import (
     append_openrouter_results,
@@ -34,23 +34,38 @@ def _extract_citation_sources(response_text: str) -> str:
     return urls
 
 
-def _to_result_row(run: OpenRouterRunResult, index: int, intent: str = '') -> dict[str, object]:
+def _to_result_row(
+    run: OpenRouterRunResult,
+    index: int,
+    intent: str = '',
+    organisation_name: str = 'University of Southampton',
+    organisation_aliases: list[str] | tuple[str, ...] = ('Southampton',),
+    competitor_aliases: dict[str, tuple[str, ...] | list[str]] | None = None,
+) -> dict[str, object]:
     response_text = run.response_text
-    lower = response_text.lower()
-    southampton_visible = 1 if 'southampton' in lower else 0
+    target_pattern = organisation_name_pattern(organisation_name, organisation_aliases)
+    organisation_visible = 1 if re.search(target_pattern, response_text, flags=re.IGNORECASE) else 0
     citation_sources = _extract_citation_sources(response_text)
-    southampton_rank = extract_institution_rank(response_text, intent=intent)
-    competitors = ', '.join(extract_competitors(response_text))
+    organisation_rank = extract_institution_rank(
+        response_text,
+        intent=intent,
+        institution_pattern=target_pattern,
+    )
+    competitors = ', '.join(extract_competitors(response_text, competitor_aliases))
 
     return {
         'ResultID': f"OR_{run.run_batch_id}_{index:04d}",
         'PromptID': run.prompt_id,
         'Platform': run.provider,
         'ResponseText': response_text,
-        'SouthamptonVisible': southampton_visible,
-        'SouthamptonRank': southampton_rank if southampton_rank is not None else '',
-        'OrgVisible': southampton_visible,
-        'OrgRank': southampton_rank if southampton_rank is not None else '',
+        'SouthamptonVisible': organisation_visible if organisation_name == 'University of Southampton' else '',
+        'SouthamptonRank': (
+            organisation_rank
+            if organisation_name == 'University of Southampton' and organisation_rank is not None
+            else ''
+        ),
+        'OrgVisible': organisation_visible,
+        'OrgRank': organisation_rank if organisation_rank is not None else '',
         'CompetitorsMentioned': competitors,
         'CitationSources': citation_sources,
         'RunDate': run.run_date,
@@ -74,6 +89,9 @@ def run_pending_prompts_once(
     model_name: str,
     results_path: str = DEFAULT_RESULTS_PATH,
     dry_run: bool = False,
+    organisation_name: str = 'University of Southampton',
+    organisation_aliases: list[str] | tuple[str, ...] = ('Southampton',),
+    competitor_aliases: dict[str, tuple[str, ...] | list[str]] | None = None,
 ) -> tuple[pd.DataFrame, dict[str, int]]:
     generated_df = generated_prompt_subset(prompt_df)
     pending_rows = pending_prompt_rows(
@@ -118,6 +136,9 @@ def run_pending_prompts_once(
                         item,
                         index=result_index,
                         intent=str(intent_by_prompt.get(str(item.prompt_id), '')),
+                        organisation_name=organisation_name,
+                        organisation_aliases=organisation_aliases,
+                        competitor_aliases=competitor_aliases,
                     )
                 )
             else:
@@ -152,6 +173,9 @@ def run_model_sweep(
     api_version: str | None = None,
     app_name: str = 'AI Reputation Intelligence Platform',
     app_url: str = 'http://localhost:8501',
+    organisation_name: str = 'University of Southampton',
+    organisation_aliases: list[str] | tuple[str, ...] = ('Southampton',),
+    competitor_aliases: dict[str, tuple[str, ...] | list[str]] | None = None,
 ) -> tuple[pd.DataFrame, dict[str, int]]:
     if not model_names:
         return existing_results_df, {
@@ -192,6 +216,9 @@ def run_model_sweep(
             model_name=model_name,
             results_path=results_path,
             dry_run=dry_run,
+            organisation_name=organisation_name,
+            organisation_aliases=organisation_aliases,
+            competitor_aliases=competitor_aliases,
         )
         total += summary['executed_prompts']
         success_count += summary['success_count']

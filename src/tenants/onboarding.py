@@ -59,6 +59,7 @@ def create_tenant_profile(
     org_id: str | None = None,
     prompts_path: str = '',
     results_path: str = '',
+    competitors: dict[str, list[str] | tuple[str, ...]] | None = None,
 ) -> str:
     name = display_name.strip()
     if not name:
@@ -96,6 +97,13 @@ def create_tenant_profile(
         },
         'model_assignment': {
             'OpenAI': 'openai/gpt-4.1-mini',
+        },
+        'competitors': {
+            str(competitor).strip(): [
+                str(alias).strip() for alias in aliases if str(alias).strip()
+            ]
+            for competitor, aliases in (competitors or {}).items()
+            if str(competitor).strip()
         },
     }
 

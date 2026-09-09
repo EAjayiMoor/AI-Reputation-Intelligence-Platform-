@@ -98,7 +98,7 @@ with st.container(border=True):
     )
     target_context = st.text_input(
         'Target organisation/context (optional)',
-        value='',
+        value=tenant.display_name,
         placeholder='Example: B2B SaaS procurement in EMEA, healthcare diagnostics market, or consumer fintech in LATAM',
     )
 
@@ -173,7 +173,7 @@ if generate_button:
         )
     )
 
-    organisation_context = target_context.strip() or 'target organisation'
+    organisation_context = target_context.strip() or tenant.display_name
     full_brief = generation_request.strip()
     if additional_brief.strip():
         full_brief = f'{full_brief}\\n\\nConstraints: {additional_brief.strip()}'
@@ -202,7 +202,7 @@ if generate_button:
         try:
             inserted = append_generated_prompts_to_bank(
                 prompts_path=prompt_bank_path,
-                organisation_name=target_context.strip() or 'Generated Context',
+                organisation_name=target_context.strip() or tenant.display_name,
                 rows=generated_rows,
                 platform='OpenRouter',
             )
@@ -303,6 +303,9 @@ if execute:
         api_version=(settings.azure_foundry_api_version if provider_slug == 'azure_foundry' else None),
         app_name=settings.openrouter_app_name,
         app_url=settings.openrouter_app_url,
+        organisation_name=tenant.display_name,
+        organisation_aliases=tenant.aliases,
+        competitor_aliases=tenant.competitors.aliases_by_name or None,
     )
 
     st.success(

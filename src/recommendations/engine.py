@@ -105,21 +105,21 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
         _add_recommendation(
             recommendations,
             priority='High',
-            action='Build a model-readable Southampton evidence hub',
+            action=f'Build a model-readable {organisation_name} evidence hub',
             category='Visibility',
             scope='All captured audiences and markets',
             evidence=(
-                f'Southampton appears in {mention_count} of {total_responses} captured responses '
+                f'{organisation_name} appears in {mention_count} of {total_responses} captured responses '
                 f'({visibility:.1f}/100 visibility).'
             ),
-            objective='Make Southampton easier for answer engines to identify, verify and include in broad recommendations.',
+            objective=f'Make {organisation_name} easier for answer engines to identify, verify and include in broad recommendations.',
             steps=[
-                'Audit the highest-value prompts where Southampton is absent and group the missing evidence by decision need.',
-                'Create or consolidate a central evidence hub linking courses, research strengths, rankings, outcomes and location information.',
+                f'Audit the highest-value prompts where {organisation_name} is absent and group the missing evidence by decision need.',
+                'Create or consolidate a central evidence hub linking services, capabilities, credentials, outcomes and market information.',
                 'Rewrite key pages with explicit headings, concise factual summaries, dated proof points and direct links to primary evidence.',
                 'Rerun the same prompt and model set after publication so the uplift is directly comparable.',
             ],
-            owner='Digital marketing and SEO, with institutional data owners',
+            owner='Digital marketing and SEO, with relevant data owners',
             timing='0–30 days',
             success_measure=(
                 f'Reach at least {target_visibility:.1f}/100 visibility '
@@ -135,19 +135,19 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             priority='High',
             action='Strengthen citation-ready proof points on priority pages',
             category='Citations',
-            scope='Southampton-owned web content',
+            scope=f'{organisation_name}-owned web content',
             evidence=(
                 f'Only {cited_responses} of {total_responses} responses contain an extracted citation '
                 f'({citation:.1f}/100 citation score).'
             ),
-            objective='Increase the likelihood that models support Southampton mentions with authoritative Southampton evidence.',
+            objective=f'Increase the likelihood that models support {organisation_name} mentions with authoritative first-party evidence.',
             steps=[
-                'Identify the claims most often needed in recommendation answers: rankings, graduate outcomes, research impact, facilities and entry routes.',
+                'Identify the claims most often needed in recommendation answers: service outcomes, credentials, capabilities, value and routes to engagement.',
                 'Give each claim a stable source page with a publication date, named owner, plain-language summary and link to the underlying evidence.',
-                'Add internal links from programme and research pages to those proof points using descriptive link text.',
+                'Add internal links from service and insight pages to those proof points using descriptive link text.',
                 'Check citation extraction by model and manually review a sample before the next full sweep.',
             ],
-            owner='Content governance, SEO and institutional research',
+            owner='Content governance, SEO and business intelligence',
             timing='0–45 days',
             success_measure=f'Raise citation score to at least {target_citation:.1f}/100 in the next matched sweep.',
         )
@@ -166,14 +166,14 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             competitor_text = _top_competitor_text(subject_frame)
             is_general = subject.strip().lower() == 'general'
             action = (
-                'Fix broad university discovery coverage'
+                'Fix broad market discovery coverage'
                 if is_general
                 else f'Build a stronger {subject} authority pathway'
             )
             content_focus = (
-                'institution-level comparison, reputation, student experience, location, outcomes and reasons-to-choose content'
+                'organisation-level comparison, reputation, customer experience, market coverage, outcomes and reasons-to-choose content'
                 if is_general
-                else f'{subject} courses, distinctive research, facilities, outcomes and external validation'
+                else f'{subject} services, distinctive capabilities, outcomes and external validation'
             )
             _add_recommendation(
                 recommendations,
@@ -186,14 +186,14 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                     f'({subject_mentions} mentions across {subject_responses} responses). '
                     f'Leading extracted competitors: {competitor_text}.'
                 ),
-                objective=f'Increase Southampton inclusion when users ask about {subject.lower()} options.',
+                objective=f'Increase {organisation_name} inclusion when users ask about {subject.lower()} options.',
                 steps=[
                     f'Map absent prompts to gaps in {content_focus}.',
                     f'Create one authoritative {subject.lower()} overview page and strengthen the supporting pages around the three largest gaps.',
                     'Use clear comparison criteria and attributable evidence without unsupported superiority claims.',
                     f'Retest the {subject.lower()} prompt subset across every captured model.',
                 ],
-                owner='Relevant faculty marketing lead, supported by SEO and web publishing',
+                owner='Relevant proposition marketing lead, supported by SEO and web publishing',
                 timing='30–60 days',
                 success_measure=(
                     f'Raise {subject} visibility to at least {target:.1f}/100 '
@@ -221,12 +221,12 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 ),
                 objective=f'Answer the practical and trust questions that matter to prospective audiences in {market}.',
                 steps=[
-                    f'Review the absent {market} prompts and identify recurring needs across admissions, cost, visas, careers, safety and recognition.',
-                    f'Create a {market}-specific landing journey with localised proof, alumni outcomes, entry guidance and relevant contacts.',
-                    'Link the journey directly from the international and programme pages that models already discover.',
+                    f'Review the absent {market} prompts and identify recurring needs across cost, service fit, implementation, trust and proof.',
+                    f'Create a {market}-specific landing journey with relevant evidence, customer outcomes, buying guidance and contacts.',
+                    'Link the journey directly from the service and insight pages that models already discover.',
                     f'Rerun the {market} subset and compare visibility by subject and model.',
                 ],
-                owner='International recruitment and regional marketing, supported by admissions',
+                owner='Regional marketing and commercial leads',
                 timing='30–60 days',
                 success_measure=(
                     f'Raise {market} visibility to at least {target:.1f}/100 '
@@ -251,14 +251,14 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 f'{persona} is the weakest captured audience at '
                 f'{float(persona_row["visibility_score"]):.1f}/100 visibility across {persona_responses} responses.'
             ),
-            objective=f'Make Southampton evidence directly answer the evaluation criteria used by {persona.lower()} audiences.',
+            objective=f'Make {organisation_name} evidence directly answer the evaluation criteria used by {persona.lower()} audiences.',
             steps=[
                 'Use the journey simulator to isolate the lowest-performing subjects and intents for this audience.',
-                'Interview the relevant recruitment or research team to confirm the five most important decision criteria.',
+                'Interview the relevant commercial or subject-matter team to confirm the five most important decision criteria.',
                 'Create a concise audience landing page that answers those criteria and links to primary proof.',
                 'Retest this persona separately and compare its uplift with the other audiences.',
             ],
-            owner='Audience marketing lead with recruitment or research communications',
+            owner='Audience marketing lead with commercial and subject-matter teams',
             timing='45–75 days',
             success_measure=f'Raise this audience to at least {target:.1f}/100 visibility in the next matched sweep.',
         )
@@ -270,21 +270,21 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
         _add_recommendation(
             recommendations,
             priority='Medium',
-            action='Improve Southampton placement in recommendation lists',
+            action=f'Improve {organisation_name} placement in recommendation lists',
             category='Rank',
             scope='Explicitly ranked responses',
             evidence=(
-                f'Southampton averages position {float(average_rank):.2f} across {len(ranked)} responses with an explicit rank. '
+                f'{organisation_name} averages position {float(average_rank):.2f} across {len(ranked)} responses with an explicit rank. '
                 f'The most frequent competitors are {top_competitors}.'
             ),
-            objective='Move Southampton from lower-list inclusion into the consideration set users are most likely to inspect.',
+            objective=f'Move {organisation_name} from lower-list inclusion into the consideration set users are most likely to inspect.',
             steps=[
-                'Compare Southampton pages against the leading competitors for the decision criteria used in low-ranked prompts.',
-                'Close evidence gaps with specific outcomes, facilities, research strengths and differentiators tied to those criteria.',
+                f'Compare {organisation_name} pages against the leading competitors for the decision criteria used in low-ranked prompts.',
+                'Close evidence gaps with specific outcomes, capabilities, credentials and differentiators tied to those criteria.',
                 'Publish transparent comparison content where it helps users make a defensible choice.',
                 'Track both average rank and the number of ranked observations to avoid over-reading a small sample.',
             ],
-            owner='SEO strategy and faculty content leads',
+            owner='SEO strategy and proposition content leads',
             timing='60–90 days',
             success_measure='Improve average explicit rank by at least 1.5 positions while increasing the ranked sample size.',
         )
@@ -309,10 +309,10 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                     f'{model_name} has the lowest sufficiently sampled visibility at '
                     f'{float(weak_model["visibility_score"]):.1f}/100 across {len(model_frame)} responses.'
                 ),
-                objective='Understand whether this model is missing Southampton because of evidence, retrieval or response-format differences.',
+                objective=f'Understand whether this model is missing {organisation_name} because of evidence, retrieval or response-format differences.',
                 steps=[
                     'Sample absent responses and classify each gap as retrieval, evidence coverage, competitive preference or extraction error.',
-                    'Check whether Southampton pages surface for the same query language outside the model response.',
+                    f'Check whether {organisation_name} pages surface for the same query language outside the model response.',
                     'Apply the relevant content fixes, then rerun only the failed prompt subset before paying for a full sweep.',
                     'Keep model-level results separate so gains in one model do not mask weakness in another.',
                 ],
@@ -343,28 +343,6 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
     priority_order = {'High': 0, 'Medium': 1, 'Low': 2}
     recommendations.sort(key=lambda row: (priority_order.get(row['Priority'], 9), row['Timing'], row['Action']))
     recommendations_df = pd.DataFrame(recommendations[:max_recommendations], columns=RECOMMENDATION_COLUMNS)
-
-    if organisation_name != 'University of Southampton':
-        replacements = {
-            'university': 'organisation',
-            'universities': 'organisations',
-            'institution': 'organisation',
-            'institutions': 'organisations',
-            'courses': 'offers',
-            'facilities': 'capabilities',
-            'faculty': 'practice',
-            'admissions': 'evaluation',
-            'alumni': 'customers',
-        }
-        for column in ['Action', 'Scope', 'Evidence', 'Objective', 'Action plan', 'Success measure']:
-            series = recommendations_df[column].astype(str).str.replace(
-                'Southampton',
-                organisation_name,
-                regex=False,
-            )
-            for source, target in replacements.items():
-                series = series.str.replace(source, target, case=False, regex=False)
-            recommendations_df[column] = series
 
     return recommendations_df
 

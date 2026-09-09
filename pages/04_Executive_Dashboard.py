@@ -116,7 +116,7 @@ with right:
 
 st.subheader(f'{tenant.display_name} relative to leading competitors')
 st.caption(
-    'Relative mention index: the most-mentioned institution in the filtered results is set to 100. '
+    'Relative mention index: the most-mentioned organisation in the filtered results is set to 100. '
     f'{tenant.display_name} is shown in teal; raw mention counts are available in the tooltip.'
 )
 comparison_chart = (
@@ -125,7 +125,7 @@ comparison_chart = (
     .encode(
         x=alt.X(
             'RelativeMentionIndex:Q',
-            title='Relative mention index (highest institution = 100)',
+            title='Relative mention index (highest organisation = 100)',
             scale=alt.Scale(domain=[0, 100]),
             axis=alt.Axis(grid=True, tickCount=6),
         ),
@@ -144,7 +144,7 @@ comparison_chart = (
             ),
         ),
         tooltip=[
-            alt.Tooltip('Institution:N', title='Institution'),
+            alt.Tooltip('Institution:N', title='Organisation'),
             alt.Tooltip('Mentions:Q', title='Raw mentions', format=',d'),
             alt.Tooltip('RelativeMentionIndex:Q', title='Relative mention index', format='.1f'),
         ],
@@ -162,7 +162,7 @@ comparison_labels = (
 )
 if institution_comparison.empty:
     st.info(
-        'No institution-neutral prompts match this view. Competitor counts exclude prompts that name any university.'
+        'No organisation-neutral prompts match this view. Competitor counts exclude prompts that name the target or a configured competitor.'
     )
 else:
     st.altair_chart(comparison_chart + comparison_labels)
@@ -191,14 +191,14 @@ else:
 
     st.subheader('Organic mentions by model')
     st.caption(
-        'Raw response-level mentions from institution-neutral prompts only. '
-        'Each model contributes up to one mention per institution per response.'
+        'Raw response-level mentions from organisation-neutral prompts only. '
+        'Each model contributes up to one mention per organisation per response.'
     )
     st.dataframe(
         model_table,
         hide_index=True,
         column_config={
-            'Institution': st.column_config.TextColumn('Institution', pinned=True, width='large'),
+            'Institution': st.column_config.TextColumn('Organisation', pinned=True, width='large'),
             'Organic mention rate': st.column_config.NumberColumn('Organic mention rate', format='%.1f%%'),
         },
     )

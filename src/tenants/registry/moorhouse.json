@@ -9,10 +9,28 @@
     "moorhouseconsulting.com"
   ],
   "data_paths": {
-    "prompts_path": "data/moorhouse_prompts_empty.csv",
-    "results_path": "data/moorhouse_results_empty.csv"
+    "prompts_path": "data/moorhouse_prompts.csv",
+    "results_path": "data/moorhouse_results.csv"
   },
   "model_assignment": {
-    "OpenAI": "openai/gpt-4.1-mini"
+    "OpenAI": "openai/gpt-4.1-mini",
+    "Anthropic": "anthropic/claude-haiku-4.5",
+    "Gemini": "google/gemini-3.6-flash",
+    "DeepSeek": "deepseek/deepseek-chat",
+    "Perplexity": "perplexity/sonar"
+  },
+  "competitors": {
+    "Baringa": ["Baringa Partners"],
+    "PA Consulting": ["PA Consulting Group"],
+    "Elixirr": [],
+    "Gate One": ["Gate One Consulting"],
+    "Q5": ["Q5 Partners"],
+    "North Highland": ["The North Highland Company"],
+    "Newton": ["Newton Europe"],
+    "Kearney": ["A.T. Kearney"],
+    "Deloitte": ["Deloitte Consulting"],
+    "PwC": ["PricewaterhouseCoopers"],
+    "KPMG": ["KPMG Consulting"],
+    "Accenture": ["Accenture Consulting"]
   }
 }
