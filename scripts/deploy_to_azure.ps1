@@ -29,13 +29,16 @@ az webapp deployment container config --enable-cd true -g $ResourceGroup -n $App
 
 Write-Host "Building and pushing image to ACR..." -ForegroundColor Green
 az acr build -r $AcrName -t "$ImageName`:$ImageTag" .
+if ($LASTEXITCODE -ne 0) {
+    throw "ACR build failed. Stopping deploy before web app update."
+}
 
 $containerImage = "$AcrName.azurecr.io/$ImageName`:$ImageTag"
 Write-Host "Pointing App Service to image: $containerImage" -ForegroundColor Green
 az webapp config container set `
   -g $ResourceGroup -n $AppName `
   --container-image-name $containerImage `
-  --docker-registry-server-url "https://$AcrName.azurecr.io"
+  --container-registry-url "https://$AcrName.azurecr.io"
 
 Write-Host "Restarting App Service..." -ForegroundColor Green
 az webapp restart -g $ResourceGroup -n $AppName
