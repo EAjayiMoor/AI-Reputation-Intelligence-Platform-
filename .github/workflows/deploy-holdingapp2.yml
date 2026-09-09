@@ -1,0 +1,74 @@
+﻿name: Deploy holdingapp2
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Image tag to deploy (leave blank for timestamp build)"
+        required: false
+        type: string
+      skip_build:
+        description: "Skip ACR build and deploy existing tag"
+        required: false
+        default: false
+        type: boolean
+
+env:
+  RESOURCE_GROUP: RG-DEMO-UKW
+  APP_NAME: holdingapp2
+  ACR_NAME: crmhcdemo
+  IMAGE_NAME: holdingapp2
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Resolve image tag
+        id: meta
+        run: |
+          if [ -n "${{ inputs.image_tag }}" ]; then
+            TAG="${{ inputs.image_tag }}"
+          else
+            TAG=$(date +%Y%m%d%H%M%S)
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Using tag: $TAG"
+
+      - name: Build and push image
+        if: ${{ !inputs.skip_build }}
+        run: |
+          az acr build -r "$ACR_NAME" -t "$IMAGE_NAME:${{ steps.meta.outputs.tag }}" .
+
+      - name: Enable container CD
+        run: |
+          az webapp deployment container config --enable-cd true -g "$RESOURCE_GROUP" -n "$APP_NAME"
+
+      - name: Configure container image
+        run: |
+          az webapp config container set \
+            -g "$RESOURCE_GROUP" -n "$APP_NAME" \
+            --container-image-name "$ACR_NAME.azurecr.io/$IMAGE_NAME:${{ steps.meta.outputs.tag }}" \
+            --container-registry-url "https://$ACR_NAME.azurecr.io"
+
+      - name: Restart app
+        run: |
+          az webapp restart -g "$RESOURCE_GROUP" -n "$APP_NAME"
+
+      - name: Validate deployed image
+        run: |
+          EXPECTED="DOCKER|$ACR_NAME.azurecr.io/$IMAGE_NAME:${{ steps.meta.outputs.tag }}"
+          ACTUAL=$(az webapp config show -g "$RESOURCE_GROUP" -n "$APP_NAME" --query linuxFxVersion -o tsv)
+          echo "Expected: $EXPECTED"
+          echo "Actual:   $ACTUAL"
+          test "$ACTUAL" = "$EXPECTED"

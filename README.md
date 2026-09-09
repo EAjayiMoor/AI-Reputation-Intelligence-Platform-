@@ -79,3 +79,33 @@ Current scaffold modules:
 - `src/config/settings.py`
 
 The Streamlit analytics flow can consume captured outputs (CSV replay) or live model responses from the selected provider. Execution is cost-safe: only `PromptSource=generated` rows are eligible, and only pending prompts run on explicit button click.
+
+## Azure deployment (robust)
+
+Use the clean-context deploy script to avoid local folder permission issues (for example `.pytest_cache`):
+
+```powershell
+.\scripts\deploy_clean.ps1 -ImageTag "20260904-3"
+```
+
+Useful options:
+
+- Skip image build and deploy an existing ACR tag:
+
+```powershell
+.\scripts\deploy_clean.ps1 -ImageTag "20260904-3" -SkipBuild
+```
+
+- Print commands without executing:
+
+```powershell
+.\scripts\deploy_clean.ps1 -ImageTag "20260904-3" -DryRun
+```
+
+One-click wrapper:
+
+```powershell
+.\scripts\deploy_latest.ps1 -ImageTag "20260904-3"
+```
+
+A GitHub Actions workflow is also included at `.github/workflows/deploy-holdingapp2.yml` (manual trigger) for repeatable deploys from a clean runner.
