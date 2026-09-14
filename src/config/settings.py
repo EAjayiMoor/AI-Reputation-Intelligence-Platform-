@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import streamlit as st
-from streamlit.errors import StreamlitSecretNotFoundError
 
 from src.execution import OpenRouterConfig
 
@@ -183,7 +182,7 @@ def _read_setting(name: str, default: str | None = None) -> str | None:
 
     try:
         secret_value = st.secrets.get(name, default)
-    except StreamlitSecretNotFoundError:
+    except Exception:
         return default
 
     return str(secret_value) if secret_value is not None else None

@@ -254,7 +254,6 @@ def render_sidebar_filters(df: pd.DataFrame, key_prefix: str = 'global') -> dict
     st.sidebar.button(
         'Clear filters',
         key=f'{key_prefix}_clear_filters',
-        icon=':material/filter_alt_off:',
         on_click=clear_filters,
     )
 
@@ -323,16 +322,28 @@ def render_prompt_mention_mode_selector(
     default: str = 'Organic',
     organisation_name: str = 'the organisation',
 ) -> str:
-    mode = st.sidebar.segmented_control(
-        'Prompt mention mode',
-        options=['Organic', 'Prompted/direct', 'All'],
-        default=default,
-        key=key,
-        help=(
-            f'Organic prompts do not name {organisation_name}. Prompted/direct prompts explicitly include '
-            f'{organisation_name} in the prompt text.'
-        ),
+    options = ['Organic', 'Prompted/direct', 'All']
+    help_text = (
+        f'Organic prompts do not name {organisation_name}. Prompted/direct prompts explicitly include '
+        f'{organisation_name} in the prompt text.'
     )
+    default_index = options.index(default) if default in options else 0
+    try:
+        mode = st.sidebar.segmented_control(
+            'Prompt mention mode',
+            options=options,
+            default=default,
+            key=key,
+            help=help_text,
+        )
+    except Exception:
+        mode = st.sidebar.radio(
+            'Prompt mention mode',
+            options=options,
+            index=default_index,
+            key=key,
+            help=help_text,
+        )
     st.sidebar.caption(
         f'Organic = {organisation_name} is not named in the prompt. Prompted/direct = {organisation_name} is explicitly named.'
     )

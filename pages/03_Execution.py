@@ -90,7 +90,7 @@ persona_options = sorted(source_df['Persona'].dropna().astype(str).unique()) if 
 subject_options = sorted(source_df['Subject'].dropna().astype(str).unique()) if 'Subject' in source_df.columns else []
 intent_options = sorted(source_df['Intent'].dropna().astype(str).unique()) if 'Intent' in source_df.columns else []
 
-with st.container(border=True):
+with st.container():
     generation_request = st.text_area(
         'What prompts should be generated?',
         placeholder='Example: Generate prompts for professionals comparing AI governance platforms, implementation effort, compliance risk, and ROI.',
@@ -249,10 +249,10 @@ generated_df = generated_prompt_subset(prompts_df) if not prompts_df.empty else 
 captured_model_count = existing['ModelName'].dropna().astype(str).nunique()
 
 m1, m2, m3, m4 = st.columns(4)
-m1.metric('Total prompts', len(prompts_df), border=True)
-m2.metric('Generated prompts', len(generated_df), border=True)
-m3.metric('Models used', captured_model_count, border=True)
-m4.metric('Captured outputs', len(existing), border=True)
+m1.metric('Total prompts', len(prompts_df))
+m2.metric('Generated prompts', len(generated_df))
+m3.metric('Models used', captured_model_count)
+m4.metric('Captured outputs', len(existing))
 
 st.caption(
     f'Data source: {data_source} | Execution provider: {provider_label} | '
@@ -419,7 +419,7 @@ else:
     selected_rows = selection.selection.rows
     if selected_rows:
         selected_output = display_outputs.iloc[selected_rows[0]]
-        with st.container(border=True):
+        with st.container():
             header_parts = [
                 str(selected_output.get('PromptID', '')).strip(),
                 str(selected_output.get('Provider', '')).strip(),
@@ -438,7 +438,6 @@ else:
         data=display_outputs.to_csv(index=False).encode('utf-8'),
         file_name='filtered_openrouter_outputs.csv',
         mime='text/csv',
-        icon=':material/download:',
     )
 
 

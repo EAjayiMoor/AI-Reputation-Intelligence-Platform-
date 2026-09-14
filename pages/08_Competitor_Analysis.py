@@ -101,10 +101,20 @@ st.caption(
 )
 if target_summary is not None:
     target_metrics = st.columns(4)
-    target_metrics[0].metric(f'{tenant.display_name} mention rate', f"{float(target_summary['MentionRate']):.1f}%", border=True)
-    target_metrics[1].metric('First-mentioned share', f"{float(target_summary['FirstMentionedRate']):.1f}%", border=True)
-    target_metrics[2].metric('Shortlist share', f"{float(target_summary['ShortlistRate']):.1f}%", border=True)
-    target_metrics[3].metric('Recommendation share', f"{float(target_summary['RecommendationRate']):.1f}%", border=True)
+    target_metrics[0].metric(f'{tenant.display_name} mention rate', f"{float(target_summary['MentionRate']):.1f}%")
+    target_metrics[1].metric('First-mentioned share', f"{float(target_summary['FirstMentionedRate']):.1f}%")
+    target_metrics[2].metric('Shortlist share', f"{float(target_summary['ShortlistRate']):.1f}%")
+    target_metrics[3].metric('Recommendation share', f"{float(target_summary['RecommendationRate']):.1f}%")
+
+if target_summary is not None and not competitor_summary.empty:
+    top_competitor = competitor_summary.sort_values('MentionRate', ascending=False).iloc[0]
+    mention_gap = float(top_competitor['MentionRate']) - float(target_summary['MentionRate'])
+    sov_denominator = float(target_summary['MentionRate']) + float(top_competitor['MentionRate'])
+    sov_value = float(target_summary['MentionRate']) / sov_denominator * 100 if sov_denominator > 0 else 0.0
+    pressure_columns = st.columns(3)
+    pressure_columns[0].metric('Top competitor', str(top_competitor['Entity']))
+    pressure_columns[1].metric('Mention-rate gap', f'{mention_gap:.1f}pp')
+    pressure_columns[2].metric('Share-of-voice proxy', f'{sov_value:.1f}%')
 
 signal_entities = pd.concat(
     [
@@ -172,7 +182,6 @@ if not signal_entities.empty:
         data=signal_entities.to_csv(index=False).encode('utf-8'),
         file_name=f'{tenant.org_id}_competitive_signals.csv',
         mime='text/csv',
-        icon=':material/download:',
     )
 
 st.subheader('Organisation co-occurrence')
@@ -240,7 +249,6 @@ else:
             data=cooccurrence.to_csv(index=False).encode('utf-8'),
             file_name=f'{tenant.org_id}_competitive_cooccurrence.csv',
             mime='text/csv',
-            icon=':material/download:',
         )
 
 def _group_competitive_view(frame: pd.DataFrame, group_column: str) -> pd.DataFrame:

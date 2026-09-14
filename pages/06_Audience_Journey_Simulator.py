@@ -3,6 +3,7 @@
 import pandas as pd
 import streamlit as st
 
+from src.analysis import compute_scope_metrics, format_rate_with_denominator
 from src.recommendations import key_gap_text
 from src.scoring import aggregate_scores, competitor_mentions
 from src.ui import (
@@ -169,10 +170,25 @@ metric_defs = _metric_defs_for_org(tenant.display_name)
 
 st.subheader('Journey metrics')
 m1, m2, m3 = st.columns(3)
-m1.metric('Visibility score', f"{summary['visibility_score']:.1f}/100", help=metric_defs['visibility'], border=True)
-m2.metric('Reputation score', f"{summary['reputation_score']:.1f}/100", help=metric_defs['reputation'], border=True)
+m1.metric('Visibility score', f"{summary['visibility_score']:.1f}/100", help=metric_defs['visibility'])
+m2.metric('Reputation score', f"{summary['reputation_score']:.1f}/100", help=metric_defs['reputation'])
 rank_display = '-' if summary['average_rank'] is None else f"{summary['average_rank']:.2f}"
-m3.metric('Average rank', rank_display, help=metric_defs['average_rank'], border=True)
+m3.metric('Average rank', rank_display, help=metric_defs['average_rank'])
+
+journey_metrics = compute_scope_metrics(journey, owned_domains=tenant.domains)
+st.caption(
+    'Journey evidence confidence: '
+    + format_rate_with_denominator(
+        int(journey_metrics['mention_responses']),
+        int(journey_metrics['responses']),
+    )
+    + ' mention presence, '
+    + format_rate_with_denominator(
+        int(journey_metrics['citation_responses']),
+        int(journey_metrics['responses']),
+    )
+    + ' citation coverage.'
+)
 
 _render_metric_definitions_for_org(metric_defs)
 

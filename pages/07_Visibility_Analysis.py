@@ -4,11 +4,13 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
+from src.analysis import compute_scope_metrics, format_rate_with_denominator, split_scope_frames
 from src.scoring import aggregate_scores
 from src.ui import (
     METRIC_DEFINITIONS,
     MOORHOUSE_PURPLE_SCALE,
     apply_filters,
+    apply_prompt_mention_mode_filter,
     apply_moorhouse_theme,
     render_page_header,
     render_empty_state_guidance,
@@ -127,11 +129,19 @@ if scored_df.empty:
     st.stop()
 
 filters = render_sidebar_filters(scored_df, key_prefix='visibility_live_v2')
-filtered = apply_filters(scored_df, filters)
+mention_mode = str(filters.get('PromptMentionType', 'All'))
+base_filters = {column: value for column, value in filters.items() if column != 'PromptMentionType'}
+filtered_scope = apply_filters(scored_df, base_filters)
+filtered = apply_prompt_mention_mode_filter(filtered_scope, mode=mention_mode)
 
 if filtered.empty:
     render_empty_state_guidance(tenant, area='Visibility Analysis')
     st.stop()
+
+scope_metrics = {
+    scope.key: compute_scope_metrics(scope.frame, owned_domains=tenant.domains)
+    for scope in split_scope_frames(filtered_scope)
+}
 
 st.markdown(
     f"""
@@ -164,11 +174,44 @@ st.caption(
     'Recommendation, shortlist and positive-association rates use only responses that mention the organisation.'
 )
 metric_columns = st.columns(5)
-metric_columns[0].metric('Mention rate', f'{mention_rate:.1f}%', border=True)
-metric_columns[1].metric('Recommended when mentioned', f'{recommendation_rate:.1f}%', border=True)
-metric_columns[2].metric('Shortlisted when mentioned', f'{shortlist_rate:.1f}%', border=True)
-metric_columns[3].metric('Citation coverage', f'{citation_rate:.1f}%', border=True)
-metric_columns[4].metric('Positive association', f'{positive_rate:.1f}%', border=True)
+metric_columns[0].metric(
+    'Mention rate',
+    format_rate_with_denominator(mention_total, response_total),
+)
+metric_columns[1].metric('Recommended when mentioned', f'{recommendation_rate:.1f}%')
+metric_columns[2].metric('Shortlisted when mentioned', f'{shortlist_rate:.1f}%')
+metric_columns[3].metric(
+    'Citation coverage',
+    format_rate_with_denominator(int(measurement_df['CitationPresent'].sum()), response_total),
+)
+metric_columns[4].metric('Positive association', f'{positive_rate:.1f}%')
+
+st.caption(
+    'Scope comparison - '
+    + ' | '.join(
+        [
+            (
+                f"{label}: "
+                f"{format_rate_with_denominator(int(scope_metrics[key]['mention_responses']), int(scope_metrics[key]['responses']))}"
+            )
+            for key, label in [
+                ('all', 'All'),
+                ('organic', 'Organic'),
+                ('prompted_direct', 'Prompted/direct'),
+            ]
+        ]
+    )
+)
+
+owned_columns = st.columns(3)
+for column, (key, label) in zip(
+    owned_columns,
+    [('all', 'All'), ('organic', 'Organic'), ('prompted_direct', 'Prompted/direct')],
+):
+    column.metric(
+        f'Owned source share ({label})',
+        f"{float(scope_metrics[key]['owned_source_share']):.1f}%",
+    )
 
 st.subheader('Presence signals by model')
 model_summary = _signal_summary(measurement_df, ['Model'])

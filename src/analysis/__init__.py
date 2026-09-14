@@ -13,6 +13,18 @@ from src.analysis.llm_presence import (
     enrich_llm_presence,
 )
 from src.analysis.segment_diagnostics import outlier_responses, run_history_summary, segment_summary
+from src.analysis.reporting_metrics import (
+    SCOPE_ALL,
+    SCOPE_LABELS,
+    SCOPE_ORGANIC,
+    SCOPE_ORDER,
+    SCOPE_PROMPTED,
+    compute_scope_metrics,
+    format_rate_with_denominator,
+    prompt_coverage_index,
+    segment_balance_score,
+    split_scope_frames,
+)
 
 __all__ = [
     'enrich_results_frame',
@@ -28,4 +40,14 @@ __all__ = [
     'outlier_responses',
     'run_history_summary',
     'segment_summary',
+    'SCOPE_ALL',
+    'SCOPE_LABELS',
+    'SCOPE_ORGANIC',
+    'SCOPE_ORDER',
+    'SCOPE_PROMPTED',
+    'compute_scope_metrics',
+    'format_rate_with_denominator',
+    'prompt_coverage_index',
+    'segment_balance_score',
+    'split_scope_frames',
 ]

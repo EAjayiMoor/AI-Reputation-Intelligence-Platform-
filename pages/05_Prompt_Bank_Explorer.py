@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import streamlit as st
 
+from src.analysis import prompt_coverage_index, segment_balance_score, split_scope_frames
 from src.ui import (
     apply_filters,
     apply_moorhouse_theme,
@@ -45,9 +46,28 @@ azure_generated = generated_only[
 ].copy() if 'GenerationMethod' in generated_only.columns else generated_only.iloc[0:0].copy()
 
 mg1, mg2, mg3 = st.columns(3)
-mg1.metric('Generated prompts (all)', len(generated_only), border=True)
-mg2.metric('Generated via Azure', len(azure_generated), border=True)
-mg3.metric('Prompt bank total', len(prompts_df), border=True)
+mg1.metric('Generated prompts (all)', len(generated_only))
+mg2.metric('Generated via Azure', len(azure_generated))
+mg3.metric('Prompt bank total', len(prompts_df))
+
+scope_frames = split_scope_frames(prompts_df)
+scope_lookup = {scope.key: int(scope.frame['PromptID'].nunique()) for scope in scope_frames}
+coverage_score = prompt_coverage_index(results_df, prompts_df=prompts_df)
+balance_market = segment_balance_score(prompts_df, 'Market')
+balance_subject = segment_balance_score(prompts_df, 'Subject')
+balance_persona = segment_balance_score(prompts_df, 'Persona')
+
+st.subheader('Template-standard prompt diagnostics')
+dx1, dx2, dx3, dx4 = st.columns(4)
+dx1.metric('Prompt coverage index', f'{coverage_score:.1f}%')
+dx2.metric('Organic prompts', scope_lookup.get('organic', 0))
+dx3.metric('Prompted/direct prompts', scope_lookup.get('prompted_direct', 0))
+dx4.metric('All prompts', scope_lookup.get('all', 0))
+
+balance_columns = st.columns(3)
+balance_columns[0].metric('Market balance score', f'{balance_market:.1f}')
+balance_columns[1].metric('Subject balance score', f'{balance_subject:.1f}')
+balance_columns[2].metric('Persona balance score', f'{balance_persona:.1f}')
 
 if not azure_generated.empty:
     preview_cols = [column for column in ['PromptID', 'Organisation', 'Market', 'Persona', 'Subject', 'Intent', 'Prompt'] if column in azure_generated.columns]
@@ -97,11 +117,20 @@ selections = render_sidebar_filters(filter_base, key_prefix='prompts_live_v2')
 filtered_combined = apply_filters(filter_base, selections)
 filtered_captured = apply_filters(filter_captured, selections)
 
-view_mode = st.segmented_control(
-    'Explorer view',
-    options=['Prompt bank only', 'Prompt + captured output', 'Captured output only'],
-    default='Prompt + captured output',
-)
+explorer_options = ['Prompt bank only', 'Prompt + captured output', 'Captured output only']
+try:
+    view_mode = st.segmented_control(
+        'Explorer view',
+        options=explorer_options,
+        default='Prompt + captured output',
+    )
+except Exception:
+    view_mode = st.radio(
+        'Explorer view',
+        options=explorer_options,
+        index=1,
+        horizontal=True,
+    )
 
 if view_mode == 'Prompt bank only':
     prompt_table = filtered_combined[prompt_columns].drop_duplicates(subset=['PromptID']).reset_index(drop=True)
@@ -113,7 +142,7 @@ else:
 if view_mode != 'Captured output only':
     prompt_table = prompt_table.sort_values(['Market', 'Subject', 'Persona', 'PromptID'], na_position='last').reset_index(drop=True)
 
-st.metric('Filtered prompt count', len(prompt_table), border=True)
+st.metric('Filtered prompt count', len(prompt_table))
 st.caption('Prompt bank view with one row per captured prompt/model response. Model outputs are not collapsed.')
 st.dataframe(prompt_table, hide_index=True)
 

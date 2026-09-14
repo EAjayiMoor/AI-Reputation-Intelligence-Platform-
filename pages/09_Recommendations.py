@@ -62,17 +62,36 @@ evidence_rows = outlier_responses(filtered, limit=12)
 
 high_count = int(recommendations['Priority'].eq('High').sum())
 medium_count = int(recommendations['Priority'].eq('Medium').sum())
-with st.container(horizontal=True):
-    st.metric('Prioritised actions', len(recommendations), border=True)
-    st.metric('High priority', high_count, border=True)
-    st.metric('Medium priority', medium_count, border=True)
+high_share = (high_count / len(recommendations) * 100) if len(recommendations) else 0
 
-priority_filter = st.segmented_control(
-    'Priority',
-    options=['All', 'High', 'Medium'],
-    default='All',
-    key='recommendation_priority',
+priority_lift_map = {'High': 8.0, 'Medium': 4.0, 'Low': 2.0}
+recommendations = recommendations.copy()
+recommendations['Expected lift score'] = (
+    recommendations['Priority'].map(priority_lift_map).fillna(1.0)
 )
+recommendations['Status'] = 'Planned'
+with st.container(horizontal=True):
+    st.metric('Prioritised actions', len(recommendations))
+    st.metric('High priority', high_count)
+    st.metric('Medium priority', medium_count)
+    st.metric('High-priority share', f'{high_share:.1f}%')
+
+priority_options = ['All', 'High', 'Medium']
+try:
+    priority_filter = st.segmented_control(
+        'Priority',
+        options=priority_options,
+        default='All',
+        key='recommendation_priority',
+    )
+except Exception:
+    priority_filter = st.radio(
+        'Priority',
+        options=priority_options,
+        index=0,
+        key='recommendation_priority',
+        horizontal=True,
+    )
 visible_recommendations = (
     recommendations
     if priority_filter == 'All'
@@ -107,7 +126,7 @@ st.subheader('Portfolio view')
 st.dataframe(
     visible_recommendations,
     hide_index=True,
-    column_order=['Priority', 'Action', 'Scope', 'Evidence', 'Owner', 'Timing', 'Success measure'],
+    column_order=['Priority', 'Action', 'Scope', 'Evidence', 'Owner', 'Timing', 'Expected lift score', 'Status', 'Success measure'],
     column_config={
         'Priority': st.column_config.TextColumn('Priority', pinned=True, width='small'),
         'Action': st.column_config.TextColumn('Action', pinned=True, width='large'),
@@ -115,6 +134,8 @@ st.dataframe(
         'Evidence': st.column_config.TextColumn('Evidence', width='large'),
         'Owner': st.column_config.TextColumn('Owner', width='medium'),
         'Timing': st.column_config.TextColumn('Timing', width='small'),
+        'Expected lift score': st.column_config.NumberColumn('Expected lift score', format='%.1f'),
+        'Status': st.column_config.TextColumn('Status', width='small'),
         'Success measure': st.column_config.TextColumn('Success measure', width='large'),
     },
 )
@@ -158,7 +179,6 @@ else:
         data=evidence_rows.to_csv(index=False).encode('utf-8'),
         file_name=f'{tenant.org_id}_recommendation_evidence.csv',
         mime='text/csv',
-        icon=':material/download:',
     )
 
 history = run_history_summary(filtered)

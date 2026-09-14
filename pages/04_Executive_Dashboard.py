@@ -3,12 +3,14 @@
 import altair as alt
 import streamlit as st
 
+from src.analysis import compute_scope_metrics, format_rate_with_denominator, split_scope_frames
 from src.recommendations import generate_recommendations
 from src.scoring import aggregate_scores, institution_mention_index, institution_mentions_by_model
 from src.ui import (
     METRIC_DEFINITIONS,
     MOORHOUSE_PURPLE,
     apply_filters,
+    apply_prompt_mention_mode_filter,
     apply_moorhouse_theme,
     render_page_header,
     render_empty_state_guidance,
@@ -48,6 +50,38 @@ def _render_metric_definitions_for_org(metric_defs: dict[str, str], *, include_c
         if include_components:
             st.markdown(f"**Rank score**  \n{metric_defs['rank_score']}")
             st.markdown(f"**Citation score**  \n{metric_defs['citation_score']}")
+
+
+def _visibility_chart(frame, category: str) -> alt.Chart:
+    """Build a readable, consistently aligned visibility chart."""
+    chart_data = frame[[category, 'visibility_score']].copy()
+    chart_data[category] = chart_data[category].fillna('Unknown').astype(str)
+    chart_data['visibility_score'] = chart_data['visibility_score'].fillna(0).astype(float)
+    chart_data = chart_data.sort_values('visibility_score', ascending=False).reset_index(drop=True)
+    category_order = chart_data[category].tolist()
+    chart_height = max(220, min(420, len(chart_data) * 34))
+
+    bars = alt.Chart(chart_data).mark_bar(cornerRadiusEnd=4, color=MOORHOUSE_PURPLE).encode(
+        x=alt.X(
+            'visibility_score:Q',
+            title='Visibility score',
+            scale=alt.Scale(domain=[0, 100]),
+            axis=alt.Axis(grid=True, values=[0, 20, 40, 60, 80, 100]),
+        ),
+        y=alt.Y(
+            f'{category}:N',
+            title=None,
+            sort=category_order,
+            axis=alt.Axis(labelLimit=180),
+        ),
+        tooltip=[
+            alt.Tooltip(f'{category}:N', title=category),
+            alt.Tooltip('visibility_score:Q', title='Visibility score', format='.1f'),
+        ],
+    )
+    return bars.properties(height=chart_height)
+
+
 st.caption(
     f'Active organization: {tenant.display_name} · Data source: {data_source} · '
     'Results source: OpenRouter captured outputs'
@@ -60,23 +94,65 @@ except Exception as exc:
     st.stop()
 
 selections = render_sidebar_filters(scored_df, key_prefix='exec_live_v2')
-filtered = apply_filters(scored_df, selections)
+mention_mode = str(selections.get('PromptMentionType', 'All'))
+base_selections = {column: value for column, value in selections.items() if column != 'PromptMentionType'}
+filtered_scope = apply_filters(scored_df, base_selections)
+filtered = apply_prompt_mention_mode_filter(filtered_scope, mention_mode)
+
+if scored_df.empty:
+    render_empty_state_guidance(tenant, area='Executive dashboard')
+    st.stop()
 
 if filtered.empty:
-    render_empty_state_guidance(tenant, area='Executive Dashboard')
+    st.warning('No captured responses match the current filters.')
+    st.caption('Clear one or more sidebar filters, or choose a different prompt mention mode.')
     st.stop()
+
+scope_frames = split_scope_frames(filtered_scope)
+scope_metrics = {
+    scope.key: compute_scope_metrics(scope.frame, owned_domains=tenant.domains)
+    for scope in scope_frames
+}
+
+st.subheader('Presence by prompt scope')
+st.caption(
+    'This comparison keeps the market, subject, persona, expertise, intent, model and platform filters, '
+    'then separates results by whether the prompt names the organisation.'
+)
+scope_columns = st.columns(3)
+for scope_column, scope in zip(scope_columns, scope_frames):
+    metrics = scope_metrics[scope.key]
+    with scope_column.container(border=True, height='stretch'):
+        st.markdown(f'**{scope.label}**')
+        st.metric(
+            'Response presence',
+            format_rate_with_denominator(
+                int(metrics['mention_responses']),
+                int(metrics['responses']),
+            ),
+        )
+        st.caption(
+            f"Prompt presence: {format_rate_with_denominator(int(metrics['mention_prompts']), int(metrics['prompts']))}"
+        )
+        st.caption(
+            f"Citation coverage: {format_rate_with_denominator(int(metrics['citation_responses']), int(metrics['responses']))}"
+        )
+        pressure = metrics['competitor_pressure_ratio']
+        pressure_text = '-' if pressure is None else f'{pressure:.2f}'
+        st.caption(f'Competitor-to-organisation mention ratio: {pressure_text}')
 
 overall = aggregate_scores(filtered).iloc[0]
 org_mentions = int(overall.get('org_mentions', overall.get('southampton_mentions', 0)))
 metric_defs = _metric_defs_for_org(tenant.display_name)
 
-m1, m2, m3, m4, m5 = st.columns(5)
-m1.metric('Overall visibility', f"{overall['visibility_score']:.1f}/100", help=metric_defs['visibility'], border=True)
-m2.metric('Reputation score', f"{overall['reputation_score']:.1f}/100", help=metric_defs['reputation'], border=True)
-m3.metric('Prompts in view', int(filtered['PromptID'].nunique()), help=metric_defs['prompts_in_view'], border=True)
-m4.metric(f'{tenant.display_name} mentions', org_mentions, help=metric_defs['mentions'], border=True)
 rank_display = '-' if overall['average_rank'] is None else f"{overall['average_rank']:.2f}"
-m5.metric('Average rank', rank_display, help=metric_defs['average_rank'], border=True)
+st.subheader(f'Selected view: {mention_mode}')
+with st.container(horizontal=True):
+    st.metric('Overall visibility', f"{overall['visibility_score']:.1f}/100", help=metric_defs['visibility'], border=True)
+    st.metric('Reputation score', f"{overall['reputation_score']:.1f}/100", help=metric_defs['reputation'], border=True)
+    st.metric('Prompts in view', int(filtered['PromptID'].nunique()), help=metric_defs['prompts_in_view'], border=True)
+    st.metric(f'{tenant.display_name} mentions', org_mentions, help=metric_defs['mentions'], border=True)
+    st.metric('Average rank', rank_display, help=metric_defs['average_rank'], border=True)
 
 _render_metric_definitions_for_org(metric_defs, include_components=True)
 
@@ -84,55 +160,78 @@ market_scores = aggregate_scores(filtered, ['Market']).sort_values('visibility_s
 subject_scores = aggregate_scores(filtered, ['Subject']).sort_values('visibility_score', ascending=False)
 institution_comparison = institution_mention_index(filtered, competitor_limit=10)
 model_mention_breakdown = institution_mentions_by_model(filtered, competitor_limit=10)
+comparison_display = institution_comparison.copy()
+if not comparison_display.empty:
+    comparison_display['InstitutionType'] = comparison_display['InstitutionType'].where(
+        comparison_display['InstitutionType'].astype(str) == 'Competitor',
+        'Primary organisation',
+    )
+
+top_competitor_name = '-'
+top_competitor_gap = '-'
+if not comparison_display.empty:
+    target_rows = comparison_display[
+        comparison_display['InstitutionType'].astype(str) == 'Primary organisation'
+    ]
+    competitor_rows = comparison_display[
+        comparison_display['InstitutionType'].astype(str) == 'Competitor'
+    ]
+    if not target_rows.empty and not competitor_rows.empty:
+        target_index = float(target_rows['RelativeMentionIndex'].iloc[0])
+        top_competitor = competitor_rows.sort_values('RelativeMentionIndex', ascending=False).iloc[0]
+        top_competitor_name = str(top_competitor['Institution'])
+        top_competitor_gap = f"{float(top_competitor['RelativeMentionIndex']) - target_index:.1f}"
+
+pressure_value = scope_metrics['organic']['competitor_pressure_ratio']
+pressure_display = '-' if pressure_value is None else f'{pressure_value:.2f}'
+with st.container(horizontal=True):
+    st.metric('Organic competitor-to-organisation ratio', pressure_display, border=True)
+    st.metric('Most-mentioned competitor', top_competitor_name, border=True)
+    st.metric('Competitor lead (index points)', top_competitor_gap, border=True)
+
 institution_type_domain = (
-    institution_comparison['InstitutionType'].dropna().astype(str).unique().tolist()
-    if not institution_comparison.empty
+    comparison_display['InstitutionType'].dropna().astype(str).unique().tolist()
+    if not comparison_display.empty
     else ['Competitor', 'Primary organisation']
 )
 institution_type_range = [MOORHOUSE_PURPLE if value == 'Competitor' else '#00ab8e' for value in institution_type_domain]
 
 left, right = st.columns(2)
 with left:
-    st.subheader('Visibility by market')
-    st.bar_chart(
-        market_scores,
-        x='Market',
-        y='visibility_score',
-        x_label='Market',
-        y_label='Visibility score',
-        color=MOORHOUSE_PURPLE,
-    )
+    with st.container(border=True, height='stretch'):
+        st.subheader('Visibility by market')
+        st.altair_chart(_visibility_chart(market_scores, 'Market'))
 
 with right:
-    st.subheader('Visibility by subject')
-    st.bar_chart(
-        subject_scores,
-        x='Subject',
-        y='visibility_score',
-        x_label='Subject',
-        y_label='Visibility score',
-        color=MOORHOUSE_PURPLE,
-    )
+    with st.container(border=True, height='stretch'):
+        st.subheader('Visibility by subject')
+        st.altair_chart(_visibility_chart(subject_scores, 'Subject'))
 
 st.subheader(f'{tenant.display_name} relative to leading competitors')
 st.caption(
     'Relative mention index: the most-mentioned organisation in the filtered results is set to 100. '
     f'{tenant.display_name} is shown in teal; raw mention counts are available in the tooltip.'
 )
+institution_order = (
+    comparison_display.sort_values('RelativeMentionIndex', ascending=False)['Institution'].tolist()
+    if not comparison_display.empty
+    else []
+)
+comparison_height = max(260, min(520, len(comparison_display) * 38))
 comparison_chart = (
-    alt.Chart(institution_comparison)
+    alt.Chart(comparison_display)
     .mark_bar(cornerRadiusEnd=4)
     .encode(
         x=alt.X(
             'RelativeMentionIndex:Q',
             title='Relative mention index (highest organisation = 100)',
-            scale=alt.Scale(domain=[0, 100]),
-            axis=alt.Axis(grid=True, tickCount=6),
+            scale=alt.Scale(domain=[0, 110]),
+            axis=alt.Axis(grid=True, values=[0, 20, 40, 60, 80, 100]),
         ),
         y=alt.Y(
             'Institution:N',
             title=None,
-            sort='-x',
+            sort=institution_order,
             axis=alt.Axis(labelLimit=260),
         ),
         color=alt.Color(
@@ -149,18 +248,18 @@ comparison_chart = (
             alt.Tooltip('RelativeMentionIndex:Q', title='Relative mention index', format='.1f'),
         ],
     )
-    .properties(height=420)
+    .properties(height=comparison_height)
 )
 comparison_labels = (
-    alt.Chart(institution_comparison)
-    .mark_text(align='right', baseline='middle', dx=-6, color='white', font='Poppins', fontSize=12)
+    alt.Chart(comparison_display)
+    .mark_text(align='left', baseline='middle', dx=6, color=MOORHOUSE_PURPLE, font='Poppins', fontSize=12)
     .encode(
         x=alt.X('RelativeMentionIndex:Q'),
-        y=alt.Y('Institution:N', sort='-x'),
+        y=alt.Y('Institution:N', sort=institution_order),
         text=alt.Text('RelativeMentionIndex:Q', format='.1f'),
     )
 )
-if institution_comparison.empty:
+if comparison_display.empty:
     st.info(
         'No organisation-neutral prompts match this view. Competitor counts exclude prompts that name the target or a configured competitor.'
     )
@@ -182,7 +281,6 @@ else:
         aggfunc='sum',
         fill_value=0,
     ).rename(columns=model_labels)
-    institution_order = institution_comparison['Institution'].tolist()
     model_table = model_table.reindex(institution_order)
     model_table['Total'] = model_table.sum(axis=1)
     neutral_responses = int(filtered['CompetitorPromptEligible'].fillna(False).astype(bool).sum())

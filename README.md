@@ -10,6 +10,7 @@ Slice 2 (Core Analytics) is now in place:
 - reusable sidebar filters across market, subject, persona, expertise area, intent and platform
 - executive dashboard page with headline metrics and core charts
 - prompt bank explorer with filtered table, coverage summary and CSV export
+- microsite export page with both UI-faithful snapshot ZIP and rendered pro-report ZIP outputs
 
 ## Run locally
 
@@ -57,6 +58,22 @@ Organisation workspaces select their own prompt bank and captured model outputs 
 ## Traceability
 
 See `docs/traceability_log.md` for requirement mapping and delivery evidence.
+
+## Microsite export (downloadable stakeholder pack)
+
+Use the `Microsite export` page in Streamlit to download one of two static client-ready microsite ZIPs:
+
+- `Download snapshot microsite (.zip)` for exact captured page visuals
+- `Download rendered microsite (pro) (.zip)` for a polished, structured report with real text, cards, charts, and tables
+
+If the page reports missing assets, generate them locally first:
+
+```bash
+python scripts/capture_streamlit_pages.py
+python scripts/build_screenshot_html.py
+```
+
+Both exports are read-only static packages. The snapshot mode preserves exact visuals, while rendered mode preserves structure and readability.
 
 ## Model execution setup (Azure OpenAI generation + OpenRouter execution)
 

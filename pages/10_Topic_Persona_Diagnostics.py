@@ -74,14 +74,26 @@ if segments.empty:
 weakest = segments.sort_values(['AverageReputationScore', 'Responses']).iloc[0]
 strongest = segments.sort_values(['AverageReputationScore', 'Responses'], ascending=[False, False]).iloc[0]
 metric_columns = st.columns(4)
-metric_columns[0].metric('Segments in view', f"{len(segments):,}", border=True)
-metric_columns[1].metric('Weakest segment', f"{float(weakest['AverageReputationScore']):.1f}/100", border=True)
-metric_columns[2].metric('Strongest segment', f"{float(strongest['AverageReputationScore']):.1f}/100", border=True)
-metric_columns[3].metric('Segments needing action', f"{int(segments['Diagnosis'].ne('Strength').sum()):,}", border=True)
+metric_columns[0].metric('Segments in view', f"{len(segments):,}")
+metric_columns[1].metric('Weakest segment', f"{float(weakest['AverageReputationScore']):.1f}/100")
+metric_columns[2].metric('Strongest segment', f"{float(strongest['AverageReputationScore']):.1f}/100")
+metric_columns[3].metric('Segments needing action', f"{int(segments['Diagnosis'].ne('Strength').sum()):,}")
 st.caption(
     f"Weakest: {', '.join(str(weakest[column]) for column in segment_columns)}. "
     f"Strongest: {', '.join(str(strongest[column]) for column in segment_columns)}."
 )
+
+top_opportunities = segments.sort_values(['OpportunityScore', 'Responses'], ascending=[False, False]).head(3)
+st.subheader('Top opportunity segments')
+for _, segment in top_opportunities.iterrows():
+    segment_name = ' x '.join(str(segment[column]) for column in segment_columns)
+    recoverability = float(segment['CitationRate']) - float(segment['MentionRate'])
+    st.caption(
+        f"{segment_name}: opportunity {float(segment['OpportunityScore']):.1f} | "
+        f"mention rate {float(segment['MentionRate']):.1f}% | "
+        f"citation rate {float(segment['CitationRate']):.1f}% | "
+        f"recoverability signal {recoverability:.1f}pp"
+    )
 
 st.subheader('Reputation map by persona and topic')
 if len(segment_columns) == 2:
@@ -140,7 +152,6 @@ st.download_button(
     data=segment_display.to_csv(index=False).encode('utf-8'),
     file_name=f'{tenant.org_id}_segment_diagnostics.csv',
     mime='text/csv',
-    icon=':material/download:',
 )
 
 st.subheader('Persona and expertise patterns')
@@ -172,12 +183,22 @@ st.subheader('Outlier responses and evidence')
 st.caption(
     'Gaps surface absent, negative, uncited or low-prominence responses. Strengths surface recommended, shortlisted or positively associated responses.'
 )
-outlier_mode = st.segmented_control(
-    'Evidence set',
-    options=['All', 'Gaps', 'Strengths'],
-    default='All',
-    key='diagnostics_outlier_mode',
-)
+evidence_options = ['All', 'Gaps', 'Strengths']
+try:
+    outlier_mode = st.segmented_control(
+        'Evidence set',
+        options=evidence_options,
+        default='All',
+        key='diagnostics_outlier_mode',
+    )
+except Exception:
+    outlier_mode = st.radio(
+        'Evidence set',
+        options=evidence_options,
+        index=0,
+        key='diagnostics_outlier_mode',
+        horizontal=True,
+    )
 outliers = outlier_responses(filtered, limit=15)
 if outlier_mode != 'All':
     outliers = outliers[outliers['OutlierType'] == outlier_mode[:-1]]
@@ -211,5 +232,4 @@ else:
         data=outliers.to_csv(index=False).encode('utf-8'),
         file_name=f'{tenant.org_id}_outlier_evidence.csv',
         mime='text/csv',
-        icon=':material/download:',
     )
