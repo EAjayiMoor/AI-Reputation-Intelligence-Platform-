@@ -53,3 +53,11 @@ This log maps implemented work to source documents and evidence.
 |---|---|---|---|
 | OpenRouter runner scaffold | updated sprint plan Story 3.4 | Done | `src/execution/openrouter_runner.py` |
 | Environment config scaffold | updated product spec NFR + architecture | Done | `src/config/settings.py`, `.env.example` |
+# 2026-10-06 — Evidence-led intervention logic
+
+- Replaced priority-derived expected-lift scores and fixed percentage-point uplift claims with transparent baseline counts and matched-rerun measurement thresholds.
+- Added firm-wide, sector/service, market, persona, and model/platform intervention levels so recommendations retain the scope of the measured finding.
+- Added affected signal, rationale, evidence strength, target calculation, validation method, and confidence to the recommendation engine, Streamlit page, CSV export, and rendered microsite.
+- Samples below 30 responses now receive no percentage uplift target; larger binary samples use a one-sided 95% binomial threshold and clearly label it as a measurement threshold rather than a forecast.
+- Added `docs/recommendation-methodology.md` with the calculation, limitations, validation standard, and primary-source evidence basis.
+- Verification coverage: `tests/test_recommendations.py` and `tests/test_recommendations_page.py`.

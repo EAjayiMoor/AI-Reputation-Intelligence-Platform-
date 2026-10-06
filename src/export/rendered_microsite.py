@@ -391,7 +391,7 @@ def build_rendered_microsite_html(
 
     <section class="section">
       <h2>Priority moves: Recommendations</h2>
-      <p class="section-intro">These actions are generated from the same selected response set as the Recommendations page. Each action includes its objective, supporting evidence, delivery steps, owner, timing, and success measure.</p>
+      <p class="section-intro">These actions are generated from the same selected response set as the Recommendations page. They are evidence-led hypotheses rather than guarantees about proprietary model behaviour. Calculated targets are measurement thresholds, not forecasts, and require matched reruns.</p>
       {recommendation_cards}
     </section>
 
@@ -563,9 +563,15 @@ def _render_recommendation_cards(frame: pd.DataFrame) -> str:
         action = _html_text(row.get('Action'), fallback='Recommended action')
         evidence = _html_text(row.get('Evidence'), fallback='No supporting evidence recorded.')
         objective = _html_text(row.get('Objective'), fallback='No objective recorded.')
+        rationale = _html_text(row.get('Why this may matter'), fallback='No rationale recorded.')
+        method_basis = _html_text(row.get('Method basis'), fallback='No method basis recorded.')
+        target_calculation = _html_text(row.get('Target calculation'), fallback='No target calculation recorded.')
+        validation_method = _html_text(row.get('Validation method'), fallback='No validation method recorded.')
         action_plan = _html_text(row.get('Action plan'), fallback='No action plan recorded.')
-        success_measure = _html_text(row.get('Success measure'), fallback='No success measure recorded.')
-        metadata = _metadata_badges(row, ['Priority', 'Category', 'Scope', 'Owner', 'Timing'])
+        metadata = _metadata_badges(
+            row,
+            ['Priority', 'Intervention level', 'Category', 'Scope', 'Affected signal', 'Evidence strength', 'Confidence', 'Owner', 'Timing'],
+        )
         cards.append(
             '<article class="detail-card">'
             f'<h3>{action}</h3>'
@@ -574,10 +580,16 @@ def _render_recommendation_cards(frame: pd.DataFrame) -> str:
             f'<p class="detail-text">{evidence}</p>'
             '<div class="detail-label">Objective</div>'
             f'<p class="detail-text">{objective}</p>'
+            '<div class="detail-label">Why this may matter</div>'
+            f'<p class="detail-text">{rationale}</p>'
+            '<div class="detail-label">Method basis</div>'
+            f'<p class="detail-text">{method_basis}</p>'
             '<div class="detail-label">Action plan</div>'
             f'<p class="detail-text">{action_plan}</p>'
-            '<div class="detail-label">Success measure</div>'
-            f'<p class="detail-text">{success_measure}</p>'
+            '<div class="detail-label">Target calculation</div>'
+            f'<p class="detail-text">{target_calculation}</p>'
+            '<div class="detail-label">Validation method</div>'
+            f'<p class="detail-text">{validation_method}</p>'
             '</article>'
         )
     return f'<div class="detail-list">{"".join(cards)}</div>'

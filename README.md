@@ -59,6 +59,8 @@ Organisation workspaces select their own prompt bank and captured model outputs 
 
 See `docs/traceability_log.md` for requirement mapping and delivery evidence.
 
+The evidence standard, intervention levels, uplift-threshold calculation, and interpretation limits for generated recommendations are documented in `docs/recommendation-methodology.md`.
+
 ## Microsite export (downloadable stakeholder pack)
 
 Use the `Microsite export` page in Streamlit to download one of two static client-ready microsite ZIPs:

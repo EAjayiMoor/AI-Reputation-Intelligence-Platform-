@@ -64,11 +64,7 @@ high_count = int(recommendations['Priority'].eq('High').sum())
 medium_count = int(recommendations['Priority'].eq('Medium').sum())
 high_share = (high_count / len(recommendations) * 100) if len(recommendations) else 0
 
-priority_lift_map = {'High': 8.0, 'Medium': 4.0, 'Low': 2.0}
 recommendations = recommendations.copy()
-recommendations['Expected lift score'] = (
-    recommendations['Priority'].map(priority_lift_map).fillna(1.0)
-)
 recommendations['Status'] = 'Planned'
 with st.container(horizontal=True):
     st.metric('Prioritised actions', len(recommendations))
@@ -99,12 +95,22 @@ visible_recommendations = (
 )
 
 st.subheader('Action plan')
+st.info(
+    'Recommendations are evidence-led hypotheses, not guarantees about proprietary model behaviour. '
+    'Where the benchmark has at least 30 responses, the target is the minimum next-run signal above a '
+    'one-sided 95% binomial threshold under the baseline rate: a measurement threshold, not a forecast. '
+    'Smaller samples remain directional and receive no percentage uplift target.',
+    icon=':material/science:',
+)
 st.caption('Recommendations are generated from the captured responses under the current sidebar filters.')
 
 for _, recommendation in visible_recommendations.iterrows():
     label = f"{recommendation['Priority']} · {recommendation['Action']}"
     with st.expander(label, icon=':material/task_alt:'):
-        st.caption(f"{recommendation['Category']} · {recommendation['Scope']} · {recommendation['Timing']}")
+        st.caption(
+            f"{recommendation['Intervention level']} · {recommendation['Category']} · "
+            f"{recommendation['Scope']} · {recommendation['Timing']}"
+        )
         st.markdown(f"**Evidence**  \n{recommendation['Evidence']}")
         linked_evidence = _evidence_for_recommendation(recommendation, evidence_rows)
         if not linked_evidence.empty:
@@ -117,26 +123,43 @@ for _, recommendation in visible_recommendations.iterrows():
                 )
                 st.write(excerpt)
         st.markdown(f"**Objective**  \n{recommendation['Objective']}")
+        st.markdown(f"**Signal affected**  \n{recommendation['Affected signal']}")
+        st.markdown(f"**Why this may matter**  \n{recommendation['Why this may matter']}")
+        st.caption(
+            f"Evidence strength: {recommendation['Evidence strength']} · "
+            f"Confidence: {recommendation['Confidence']}"
+        )
+        st.markdown(f"**Method basis**  \n{recommendation['Method basis']}")
         st.markdown('**Actions**')
         st.markdown(recommendation['Action plan'])
         st.markdown(f"**Owner**  \n{recommendation['Owner']}")
-        st.markdown(f"**Success measure**  \n{recommendation['Success measure']}")
+        st.markdown(f"**Baseline**  \n{recommendation['Baseline']}")
+        st.markdown(f"**Target calculation**  \n{recommendation['Target calculation']}")
+        st.markdown(f"**Validation method**  \n{recommendation['Validation method']}")
 
 st.subheader('Portfolio view')
 st.dataframe(
     visible_recommendations,
     hide_index=True,
-    column_order=['Priority', 'Action', 'Scope', 'Evidence', 'Owner', 'Timing', 'Expected lift score', 'Status', 'Success measure'],
+    column_order=[
+        'Priority', 'Action', 'Intervention level', 'Scope', 'Affected signal',
+        'Evidence strength', 'Method basis', 'Baseline', 'Target calculation', 'Confidence',
+        'Owner', 'Timing', 'Status',
+    ],
     column_config={
         'Priority': st.column_config.TextColumn('Priority', pinned=True, width='small'),
         'Action': st.column_config.TextColumn('Action', pinned=True, width='large'),
         'Scope': st.column_config.TextColumn('Scope', width='medium'),
-        'Evidence': st.column_config.TextColumn('Evidence', width='large'),
+        'Intervention level': st.column_config.TextColumn('Level', width='small'),
+        'Affected signal': st.column_config.TextColumn('Signal affected', width='medium'),
+        'Evidence strength': st.column_config.TextColumn('Evidence strength', width='medium'),
+        'Method basis': st.column_config.TextColumn('Method basis', width='large'),
+        'Baseline': st.column_config.TextColumn('Baseline', width='medium'),
+        'Target calculation': st.column_config.TextColumn('Target calculation', width='large'),
+        'Confidence': st.column_config.TextColumn('Confidence', width='medium'),
         'Owner': st.column_config.TextColumn('Owner', width='medium'),
         'Timing': st.column_config.TextColumn('Timing', width='small'),
-        'Expected lift score': st.column_config.NumberColumn('Expected lift score', format='%.1f'),
         'Status': st.column_config.TextColumn('Status', width='small'),
-        'Success measure': st.column_config.TextColumn('Success measure', width='large'),
     },
 )
 

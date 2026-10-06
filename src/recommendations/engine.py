@@ -18,7 +18,77 @@ RECOMMENDATION_COLUMNS = [
     'Owner',
     'Timing',
     'Success measure',
+    'Intervention level',
+    'Affected signal',
+    'Why this may matter',
+    'Evidence strength',
+    'Method basis',
+    'Baseline',
+    'Target calculation',
+    'Validation method',
+    'Confidence',
 ]
+
+MIN_BENCHMARK_RESPONSES = 30
+
+CATEGORY_METHOD = {
+    'Visibility': (
+        'Firm-wide',
+        'Discoverability and entity clarity',
+        'Crawlable, internally linked pages with explicit factual descriptions help retrieval systems discover and interpret an organisation. Whether a foundation model uses that evidence remains model- and query-dependent.',
+        'Supported retrieval practice; model outcome experimental',
+        'Google Search: how crawling, indexing and serving work — https://developers.google.com/search/docs/fundamentals/how-search-works',
+    ),
+    'Citations': (
+        'Firm-wide',
+        'Evidence retrievability and authority',
+        'Stable primary-source pages make claims easier to retrieve and cite. Publication alone does not guarantee that a model will select or cite the source.',
+        'Supported retrieval practice; model outcome experimental',
+        'Google Search: helpful, reliable content and crawlable links — https://developers.google.com/search/docs/fundamentals/creating-helpful-content',
+    ),
+    'Subject visibility': (
+        'Sector/service',
+        'Topic relevance and evidence coverage',
+        'Evidence that directly answers the observed subject-level decision needs can improve retrieval relevance for that segment. The effect must be tested on the same prompts.',
+        'Evidence-led hypothesis',
+        'Observed subject benchmark plus Google people-first content guidance — https://developers.google.com/search/docs/fundamentals/creating-helpful-content',
+    ),
+    'Market visibility': (
+        'Market',
+        'Market relevance and local proof',
+        'Market-specific evidence can answer location-dependent evaluation criteria that generic pages miss. Any change in model inclusion must be verified experimentally.',
+        'Evidence-led hypothesis',
+        'Observed market benchmark; intervention outcome requires matched testing',
+    ),
+    'Audience journey': (
+        'Persona',
+        'Audience relevance and decision-fit',
+        'Content aligned to the measured persona questions may be more retrievable for those needs, but persona targeting is an experimental intervention rather than a guaranteed model signal.',
+        'Experimental hypothesis',
+        'Observed persona benchmark; no external causal claim',
+    ),
+    'Rank': (
+        'Firm-wide',
+        'Comparative evidence and prominence',
+        'Clear, attributable evidence against the criteria present in low-ranked responses may strengthen comparative relevance. Proprietary model ordering logic is not observable.',
+        'Experimental hypothesis',
+        'Observed ranked-response benchmark; proprietary ordering logic is unknown',
+    ),
+    'Model variance': (
+        'Model/platform',
+        'Retrieval and model-specific coverage',
+        'A model-specific gap can reflect retrieval, evidence coverage, response policy or measurement error. Diagnosis must precede intervention and cannot be generalised to other models.',
+        'Diagnostic hypothesis',
+        'Observed model-level benchmark; no cross-model causal claim',
+    ),
+    'Measurement': (
+        'Firm-wide',
+        'Measurement stability',
+        'A fixed prompt and model benchmark makes changes comparable over time, although repeated model outputs remain variable and are not perfectly independent observations.',
+        'Measurement practice',
+        'Matched benchmark design and documented one-sided binomial threshold',
+    ),
+}
 
 
 def _response_count(frame: pd.DataFrame) -> int:
@@ -42,8 +112,70 @@ def _organisation_mentions(overall: pd.Series) -> int:
     return int(overall.get('southampton_mentions', 0))
 
 
-def _mention_target(response_count: int, target_score: float) -> int:
-    return int(math.ceil(response_count * target_score / 100))
+def _binomial_tail(successes: int, trials: int, probability: float) -> float:
+    if successes <= 0:
+        return 1.0
+    if probability <= 0:
+        return 0.0
+    if probability >= 1:
+        return 1.0 if successes <= trials else 0.0
+
+    log_probability = (
+        math.lgamma(trials + 1)
+        - math.lgamma(successes + 1)
+        - math.lgamma(trials - successes + 1)
+        + successes * math.log(probability)
+        + (trials - successes) * math.log1p(-probability)
+    )
+    term = math.exp(log_probability)
+    total = term
+    odds = probability / (1 - probability)
+    for value in range(successes, trials):
+        term *= (trials - value) / (value + 1) * odds
+        total += term
+    return min(total, 1.0)
+
+
+def _measurement_plan(successes: int | None, responses: int) -> tuple[str, str, str, str]:
+    if successes is None:
+        return (
+            f'{responses} relevant responses; this outcome is not a binary rate.',
+            'No numeric uplift is forecast. Compare the same observations in a matched rerun and report the change with its sample size.',
+            'Treat movement as directional until it repeats in a second matched rerun.',
+            'Low — experimental outcome',
+        )
+
+    rate = successes / responses * 100 if responses else 0.0
+    baseline = f'{successes} of {responses} responses ({rate:.1f}%).'
+    if responses < MIN_BENCHMARK_RESPONSES:
+        return (
+            baseline,
+            f'No percentage uplift target is set because this segment has fewer than {MIN_BENCHMARK_RESPONSES} responses. Expand or combine the matched benchmark before quantifying uplift.',
+            'Rerun the same matched prompts and models; report counts and rates, but do not claim uplift from this sample alone.',
+            'Low — directional sample',
+        )
+
+    baseline_probability = successes / responses
+    if successes == 0:
+        baseline_probability = 0.5 / responses
+    threshold = next(
+        (
+            candidate
+            for candidate in range(successes + 1, responses + 1)
+            if _binomial_tail(candidate, responses, baseline_probability) <= 0.05
+        ),
+        responses,
+    )
+    threshold_rate = threshold / responses * 100
+    target = (
+        f'{threshold} of {responses} responses ({threshold_rate:.1f}%) is the minimum next-run signal '
+        'above a one-sided 95% binomial threshold under the baseline rate. This is a measurement threshold, not a forecast.'
+    )
+    validation = (
+        'Rerun the same matched prompts, models and scoring rules after the intervention. '
+        'Investigate the signal only if the threshold is met, then require a second matched rerun before attributing a sustained effect.'
+    )
+    return baseline, target, validation, 'Medium — benchmark threshold'
 
 
 def _top_competitor_text(frame: pd.DataFrame, limit: int = 3) -> str:
@@ -68,8 +200,11 @@ def _add_recommendation(
     steps: list[str],
     owner: str,
     timing: str,
-    success_measure: str,
+    responses: int,
+    successes: int | None,
 ) -> None:
+    intervention_level, affected_signal, rationale, evidence_strength, method_basis = CATEGORY_METHOD[category]
+    baseline, target_calculation, validation_method, confidence = _measurement_plan(successes, responses)
     rows.append(
         {
             'Priority': priority,
@@ -81,7 +216,16 @@ def _add_recommendation(
             'Action plan': '\n'.join(f'{index}. {step}' for index, step in enumerate(steps, start=1)),
             'Owner': owner,
             'Timing': timing,
-            'Success measure': success_measure,
+            'Success measure': target_calculation,
+            'Intervention level': intervention_level,
+            'Affected signal': affected_signal,
+            'Why this may matter': rationale,
+            'Evidence strength': evidence_strength,
+            'Method basis': method_basis,
+            'Baseline': baseline,
+            'Target calculation': target_calculation,
+            'Validation method': validation_method,
+            'Confidence': confidence,
         }
     )
 
@@ -100,8 +244,6 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
     mention_count = _organisation_mentions(overall)
 
     if visibility < 65:
-        target_visibility = min(65.0, visibility + 10.0)
-        target_mentions = _mention_target(total_responses, target_visibility)
         _add_recommendation(
             recommendations,
             priority='High',
@@ -121,15 +263,12 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             ],
             owner='Digital marketing and SEO, with relevant data owners',
             timing='0–30 days',
-            success_measure=(
-                f'Reach at least {target_visibility:.1f}/100 visibility '
-                f'({target_mentions} of {total_responses} responses) in the next matched sweep.'
-            ),
+            responses=total_responses,
+            successes=mention_count,
         )
 
     if citation < 60:
         cited_responses = int(scored_df['citation_score_row'].gt(0).sum())
-        target_citation = min(60.0, citation + 15.0)
         _add_recommendation(
             recommendations,
             priority='High',
@@ -149,7 +288,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             ],
             owner='Content governance, SEO and business intelligence',
             timing='0–45 days',
-            success_measure=f'Raise citation score to at least {target_citation:.1f}/100 in the next matched sweep.',
+            responses=total_responses,
+            successes=cited_responses,
         )
 
     if 'Subject' in scored_df.columns:
@@ -162,7 +302,6 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             subject_frame = scored_df[scored_df['Subject'].astype(str) == subject]
             subject_responses = _response_count(subject_frame)
             subject_mentions = int(row.get('org_mentions', row.get('southampton_mentions', 0)))
-            target = min(65.0, float(row['visibility_score']) + 15.0)
             competitor_text = _top_competitor_text(subject_frame)
             is_general = subject.strip().lower() == 'general'
             action = (
@@ -195,10 +334,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 ],
                 owner='Relevant proposition marketing lead, supported by SEO and web publishing',
                 timing='30–60 days',
-                success_measure=(
-                    f'Raise {subject} visibility to at least {target:.1f}/100 '
-                    f'({_mention_target(subject_responses, target)} of {subject_responses} responses).'
-                ),
+                responses=subject_responses,
+                successes=subject_mentions,
             )
 
     if 'Market' in scored_df.columns:
@@ -208,7 +345,6 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             market = str(row['Market'])
             market_frame = scored_df[scored_df['Market'].astype(str) == market]
             market_responses = _response_count(market_frame)
-            target = min(60.0, float(row['visibility_score']) + 12.0)
             _add_recommendation(
                 recommendations,
                 priority='High' if float(row['visibility_score']) < 30 else 'Medium',
@@ -228,10 +364,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 ],
                 owner='Regional marketing and commercial leads',
                 timing='30–60 days',
-                success_measure=(
-                    f'Raise {market} visibility to at least {target:.1f}/100 '
-                    f'({_mention_target(market_responses, target)} of {market_responses} responses).'
-                ),
+                responses=market_responses,
+                successes=int(row.get('org_mentions', row.get('southampton_mentions', 0))),
             )
 
     if 'Persona' in scored_df.columns and scored_df['Persona'].nunique(dropna=True) > 1:
@@ -240,7 +374,6 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
         persona = str(persona_row['Persona'])
         persona_frame = scored_df[scored_df['Persona'].astype(str) == persona]
         persona_responses = _response_count(persona_frame)
-        target = min(60.0, float(persona_row['visibility_score']) + 12.0)
         _add_recommendation(
             recommendations,
             priority='Medium',
@@ -260,7 +393,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             ],
             owner='Audience marketing lead with commercial and subject-matter teams',
             timing='45–75 days',
-            success_measure=f'Raise this audience to at least {target:.1f}/100 visibility in the next matched sweep.',
+            responses=persona_responses,
+            successes=int(persona_row.get('org_mentions', persona_row.get('southampton_mentions', 0))),
         )
 
     ranked = scored_df[scored_df['rank_float'].notna()]
@@ -286,7 +420,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             ],
             owner='SEO strategy and proposition content leads',
             timing='60–90 days',
-            success_measure='Improve average explicit rank by at least 1.5 positions while increasing the ranked sample size.',
+            responses=len(ranked),
+            successes=None,
         )
 
     if 'ModelName' in scored_df.columns:
@@ -318,7 +453,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 ],
                 owner='AI visibility analyst with SEO technical lead',
                 timing='0–30 days',
-                success_measure='Reduce the gap between this model and the best sufficiently sampled model by at least 50%.',
+                responses=len(model_frame),
+                successes=int(weak_model.get('org_mentions', weak_model.get('southampton_mentions', 0))),
             )
 
     if not recommendations:
@@ -337,7 +473,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             ],
             owner='AI visibility analyst',
             timing='Monthly',
-            success_measure='Maintain all headline scores within five points of baseline or document the cause of movement.',
+            responses=total_responses,
+            successes=mention_count,
         )
 
     priority_order = {'High': 0, 'Medium': 1, 'Low': 2}
