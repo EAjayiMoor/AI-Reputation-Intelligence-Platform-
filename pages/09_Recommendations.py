@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 
 from src.analysis import outlier_responses, run_history_summary
-from src.recommendations import generate_recommendations
+from src.recommendations import build_leader_evidence_matrix, generate_recommendations
 from src.ui import (
     apply_filters,
     apply_moorhouse_theme,
@@ -58,6 +58,7 @@ if filtered.empty:
     st.stop()
 
 recommendations = generate_recommendations(filtered)
+leader_matrix = build_leader_evidence_matrix(filtered)
 evidence_rows = outlier_responses(filtered, limit=12)
 
 high_count = int(recommendations['Priority'].eq('High').sum())
@@ -94,6 +95,26 @@ visible_recommendations = (
     else recommendations[recommendations['Priority'] == priority_filter].reset_index(drop=True)
 )
 
+st.subheader('Leader evidence matrix')
+st.caption(
+    'Uses every eligible organisation-neutral response in the current filtered view. '
+    'Segment rows with fewer than 30 responses are directional. Public evidence is a curated '
+    'snapshot reviewed on 6 October 2026 and is not evidence that a competitor practice caused its score.'
+)
+st.dataframe(
+    leader_matrix,
+    hide_index=True,
+    column_config={
+        'Lens': st.column_config.TextColumn('Lens', pinned=True, width='small'),
+        'Segment': st.column_config.TextColumn('Segment', pinned=True, width='medium'),
+        'Eligible responses': st.column_config.NumberColumn('Eligible responses', format='%d'),
+        'Organisation mentions': st.column_config.NumberColumn('Organisation mentions', format='%d'),
+        'Organisation rate': st.column_config.NumberColumn('Organisation rate', format='%.1f%%'),
+        'Leader mentions': st.column_config.NumberColumn('Leader mentions', format='%d'),
+        'Leader rate': st.column_config.NumberColumn('Leader rate', format='%.1f%%'),
+        'Gap (pp)': st.column_config.NumberColumn('Gap (pp)', format='%.1f'),
+    },
+)
 st.subheader('Action plan')
 st.info(
     'Recommendations are evidence-led hypotheses, not guarantees about proprietary model behaviour. '
@@ -130,6 +151,27 @@ for _, recommendation in visible_recommendations.iterrows():
             f"Confidence: {recommendation['Confidence']}"
         )
         st.markdown(f"**Method basis**  \n{recommendation['Method basis']}")
+        st.markdown(f"**Benchmark comparator**  \n{recommendation['Comparator']}")
+        st.markdown(f"**Comparative performance**  \n{recommendation['Comparative performance']}")
+        st.markdown(
+            f"**Comparator evidence pattern**  \n{recommendation['Comparator evidence pattern']}"
+        )
+        st.markdown(
+            f"**{tenant.display_name} evidence position**  \n"
+            f"{recommendation['Organisation evidence position']}"
+        )
+        st.caption(
+            f"Comparative evidence quality: {recommendation['Evidence quality rating']} "
+            f"({int(recommendation['Evidence quality score'])}/100)"
+        )
+        if recommendation['Comparator sources']:
+            st.markdown(f"**Comparator sources**  \n{recommendation['Comparator sources']}")
+        st.markdown(f"**Comparative limitation**  \n{recommendation['Comparative limitation']}")
+        st.markdown(f"**Comparable peer**  \n{recommendation['Comparable peer']}")
+        st.markdown(f"**Peer performance**  \n{recommendation['Peer performance']}")
+        st.markdown(f"**Peer evidence pattern**  \n{recommendation['Peer evidence pattern']}")
+        if recommendation['Peer sources']:
+            st.markdown(f"**Peer sources**  \n{recommendation['Peer sources']}")
         st.markdown('**Actions**')
         st.markdown(recommendation['Action plan'])
         st.markdown(f"**Owner**  \n{recommendation['Owner']}")
@@ -143,6 +185,8 @@ st.dataframe(
     hide_index=True,
     column_order=[
         'Priority', 'Action', 'Intervention level', 'Scope', 'Affected signal',
+        'Comparator', 'Comparative performance', 'Comparable peer', 'Peer performance',
+        'Evidence quality rating',
         'Evidence strength', 'Method basis', 'Baseline', 'Target calculation', 'Confidence',
         'Owner', 'Timing', 'Status',
     ],
@@ -152,6 +196,11 @@ st.dataframe(
         'Scope': st.column_config.TextColumn('Scope', width='medium'),
         'Intervention level': st.column_config.TextColumn('Level', width='small'),
         'Affected signal': st.column_config.TextColumn('Signal affected', width='medium'),
+        'Comparator': st.column_config.TextColumn('Comparator', width='medium'),
+        'Comparative performance': st.column_config.TextColumn('Comparative performance', width='large'),
+        'Comparable peer': st.column_config.TextColumn('Comparable peer', width='medium'),
+        'Peer performance': st.column_config.TextColumn('Peer performance', width='large'),
+        'Evidence quality rating': st.column_config.TextColumn('Comparative evidence', width='small'),
         'Evidence strength': st.column_config.TextColumn('Evidence strength', width='medium'),
         'Method basis': st.column_config.TextColumn('Method basis', width='large'),
         'Baseline': st.column_config.TextColumn('Baseline', width='medium'),

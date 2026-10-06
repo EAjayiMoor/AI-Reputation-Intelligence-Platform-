@@ -41,6 +41,24 @@ The intervention rationales use documented retrieval principles while treating m
 
 These sources support discoverability and content-quality practices. They do not establish a direct causal rule for inclusion in every foundation-model response. The application therefore labels actions as supported practice, evidence-led hypothesis, diagnostic hypothesis, or experimental hypothesis as appropriate.
 
+## Comparative evidence lens
+
+The leader evidence matrix uses every organisation-neutral response eligible under the current filters. It reports the overall leader and leaders by subject, market, persona, and model. It also identifies the strongest configured comparable peer so that a large global firm is not treated as the only useful benchmark.
+
+Each recommendation records:
+
+- the measured organisation and leader mention counts and rates;
+- the percentage-point gap;
+- the strongest configured comparable peer and its performance;
+- a curated public-evidence pattern and its source URLs;
+- the organisation's current public-evidence position;
+- an evidence-quality score and rating; and
+- a limitation stating that the observed association does not prove causation.
+
+Public-evidence snapshots are manually curated and dated. A missing snapshot is reported as `Not curated`; the tool does not invent an evidence pattern. Comparisons with fewer than 30 eligible responses are capped at `Directional`, even when strong public evidence exists. A `Strong` rating therefore requires an adequate benchmark, a measured performance gap, response-level competitor evidence, a curated public-evidence record, and a matched validation method.
+
+The matrix is exhaustive within the configured benchmark: it covers all eligible responses and all available subject, market, persona, and model segments. It is not an exhaustive crawl of the public internet.
+
 ## Interpretation
 
 A recommendation is decision support, not a promise. A credible claim of improvement requires:

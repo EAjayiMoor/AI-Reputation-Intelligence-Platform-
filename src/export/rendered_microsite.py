@@ -16,7 +16,7 @@ from src.analysis import (
     segment_summary,
     split_scope_frames,
 )
-from src.recommendations import generate_recommendations
+from src.recommendations import build_leader_evidence_matrix, generate_recommendations
 from src.scoring import aggregate_scores
 
 
@@ -121,6 +121,15 @@ def build_rendered_microsite_html(
         ],
     )
     recommendations = generate_recommendations(scored_df, max_recommendations=8)
+    leader_evidence = build_leader_evidence_matrix(scored_df)
+    leader_evidence_table = _render_table(
+        leader_evidence,
+        [
+            'Lens', 'Segment', 'Eligible responses', 'Organisation mentions',
+            'Organisation rate', 'Leader', 'Leader mentions', 'Leader rate',
+            'Gap (pp)', 'Comparison confidence', 'Public evidence status',
+        ],
+    )
     evidence = outlier_responses(scored_df, limit=8)
     history = run_history_summary(scored_df)
 
@@ -392,6 +401,9 @@ def build_rendered_microsite_html(
     <section class="section">
       <h2>Priority moves: Recommendations</h2>
       <p class="section-intro">These actions are generated from the same selected response set as the Recommendations page. They are evidence-led hypotheses rather than guarantees about proprietary model behaviour. Calculated targets are measurement thresholds, not forecasts, and require matched reruns.</p>
+      <h3>Leader evidence matrix</h3>
+      <p class="section-intro">Uses all eligible organisation-neutral responses. Segment comparisons below 30 responses are directional; public evidence status refers to the curated evidence register and does not establish causation.</p>
+      {leader_evidence_table}
       {recommendation_cards}
     </section>
 
@@ -565,6 +577,22 @@ def _render_recommendation_cards(frame: pd.DataFrame) -> str:
         objective = _html_text(row.get('Objective'), fallback='No objective recorded.')
         rationale = _html_text(row.get('Why this may matter'), fallback='No rationale recorded.')
         method_basis = _html_text(row.get('Method basis'), fallback='No method basis recorded.')
+        comparator = _html_text(row.get('Comparator'), fallback='No eligible comparator.')
+        comparative_performance = _html_text(
+            row.get('Comparative performance'), fallback='No comparative performance available.'
+        )
+        comparator_pattern = _html_text(
+            row.get('Comparator evidence pattern'), fallback='No comparator evidence pattern recorded.'
+        )
+        organisation_position = _html_text(
+            row.get('Organisation evidence position'), fallback='No organisation evidence position recorded.'
+        )
+        comparator_sources = _html_text(row.get('Comparator sources'))
+        comparative_limitation = _html_text(
+            row.get('Comparative limitation'), fallback='No comparative limitation recorded.'
+        )
+        comparable_peer = _html_text(row.get('Comparable peer'), fallback='No comparable peer recorded.')
+        peer_performance = _html_text(row.get('Peer performance'), fallback='No peer performance recorded.')
         target_calculation = _html_text(row.get('Target calculation'), fallback='No target calculation recorded.')
         validation_method = _html_text(row.get('Validation method'), fallback='No validation method recorded.')
         action_plan = _html_text(row.get('Action plan'), fallback='No action plan recorded.')
@@ -584,6 +612,22 @@ def _render_recommendation_cards(frame: pd.DataFrame) -> str:
             f'<p class="detail-text">{rationale}</p>'
             '<div class="detail-label">Method basis</div>'
             f'<p class="detail-text">{method_basis}</p>'
+            '<div class="detail-label">Benchmark comparator</div>'
+            f'<p class="detail-text">{comparator}</p>'
+            '<div class="detail-label">Comparative performance</div>'
+            f'<p class="detail-text">{comparative_performance}</p>'
+            '<div class="detail-label">Comparator evidence pattern</div>'
+            f'<p class="detail-text">{comparator_pattern}</p>'
+            '<div class="detail-label">Organisation evidence position</div>'
+            f'<p class="detail-text">{organisation_position}</p>'
+            '<div class="detail-label">Comparator sources</div>'
+            f'<p class="detail-text">{comparator_sources}</p>'
+            '<div class="detail-label">Comparative limitation</div>'
+            f'<p class="detail-text">{comparative_limitation}</p>'
+            '<div class="detail-label">Comparable peer</div>'
+            f'<p class="detail-text">{comparable_peer}</p>'
+            '<div class="detail-label">Peer performance</div>'
+            f'<p class="detail-text">{peer_performance}</p>'
             '<div class="detail-label">Action plan</div>'
             f'<p class="detail-text">{action_plan}</p>'
             '<div class="detail-label">Target calculation</div>'

@@ -61,3 +61,12 @@ This log maps implemented work to source documents and evidence.
 - Samples below 30 responses now receive no percentage uplift target; larger binary samples use a one-sided 95% binomial threshold and clearly label it as a measurement threshold rather than a forecast.
 - Added `docs/recommendation-methodology.md` with the calculation, limitations, validation standard, and primary-source evidence basis.
 - Verification coverage: `tests/test_recommendations.py` and `tests/test_recommendations_page.py`.
+
+## 2026-10-06 — Comparative leader evidence lens
+
+- Added overall and segment-level leader selection across all eligible organisation-neutral responses.
+- Added a separate comparable-peer benchmark so global scale leaders are not the only comparison.
+- Added dated, source-linked public-evidence snapshots for Moorhouse, Deloitte, Accenture, PA Consulting, and Baringa; missing competitor evidence is explicitly labelled `Not curated`.
+- Extended recommendations, CSV output, the Streamlit page, and the rendered microsite with comparative performance, evidence patterns, organisation position, peer evidence, evidence-quality scoring, and causality limitations.
+- Directional samples below 30 eligible responses cannot receive a `Strong` comparative evidence rating.
+- Verification coverage: `tests/test_comparator_evidence.py`, `tests/test_recommendations_page.py`, and `tests/test_microsite_export.py`.

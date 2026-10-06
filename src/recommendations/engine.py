@@ -4,6 +4,7 @@ import math
 
 import pandas as pd
 
+from src.recommendations.comparator import comparator_context
 from src.scoring import aggregate_scores, competitor_mentions
 
 
@@ -27,6 +28,18 @@ RECOMMENDATION_COLUMNS = [
     'Target calculation',
     'Validation method',
     'Confidence',
+    'Comparator',
+    'Comparative performance',
+    'Comparator evidence pattern',
+    'Organisation evidence position',
+    'Comparator sources',
+    'Evidence quality score',
+    'Evidence quality rating',
+    'Comparative limitation',
+    'Comparable peer',
+    'Peer performance',
+    'Peer evidence pattern',
+    'Peer sources',
 ]
 
 MIN_BENCHMARK_RESPONSES = 30
@@ -202,9 +215,12 @@ def _add_recommendation(
     timing: str,
     responses: int,
     successes: int | None,
+    benchmark_frame: pd.DataFrame,
+    organisation_name: str,
 ) -> None:
     intervention_level, affected_signal, rationale, evidence_strength, method_basis = CATEGORY_METHOD[category]
     baseline, target_calculation, validation_method, confidence = _measurement_plan(successes, responses)
+    comparison = comparator_context(benchmark_frame, organisation_name)
     rows.append(
         {
             'Priority': priority,
@@ -226,6 +242,18 @@ def _add_recommendation(
             'Target calculation': target_calculation,
             'Validation method': validation_method,
             'Confidence': confidence,
+            'Comparator': comparison['comparator'],
+            'Comparative performance': comparison['performance'],
+            'Comparator evidence pattern': comparison['pattern'],
+            'Organisation evidence position': comparison['organisation_position'],
+            'Comparator sources': comparison['sources'],
+            'Evidence quality score': comparison['score'],
+            'Evidence quality rating': comparison['rating'],
+            'Comparative limitation': comparison['limitation'],
+            'Comparable peer': comparison['comparable_peer'],
+            'Peer performance': comparison['peer_performance'],
+            'Peer evidence pattern': comparison['peer_pattern'],
+            'Peer sources': comparison['peer_sources'],
         }
     )
 
@@ -265,6 +293,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             timing='0–30 days',
             responses=total_responses,
             successes=mention_count,
+            benchmark_frame=scored_df,
+            organisation_name=organisation_name,
         )
 
     if citation < 60:
@@ -290,6 +320,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             timing='0–45 days',
             responses=total_responses,
             successes=cited_responses,
+            benchmark_frame=scored_df,
+            organisation_name=organisation_name,
         )
 
     if 'Subject' in scored_df.columns:
@@ -336,6 +368,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 timing='30–60 days',
                 responses=subject_responses,
                 successes=subject_mentions,
+                benchmark_frame=subject_frame,
+                organisation_name=organisation_name,
             )
 
     if 'Market' in scored_df.columns:
@@ -366,6 +400,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 timing='30–60 days',
                 responses=market_responses,
                 successes=int(row.get('org_mentions', row.get('southampton_mentions', 0))),
+                benchmark_frame=market_frame,
+                organisation_name=organisation_name,
             )
 
     if 'Persona' in scored_df.columns and scored_df['Persona'].nunique(dropna=True) > 1:
@@ -395,6 +431,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             timing='45–75 days',
             responses=persona_responses,
             successes=int(persona_row.get('org_mentions', persona_row.get('southampton_mentions', 0))),
+            benchmark_frame=persona_frame,
+            organisation_name=organisation_name,
         )
 
     ranked = scored_df[scored_df['rank_float'].notna()]
@@ -422,6 +460,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             timing='60–90 days',
             responses=len(ranked),
             successes=None,
+            benchmark_frame=ranked,
+            organisation_name=organisation_name,
         )
 
     if 'ModelName' in scored_df.columns:
@@ -455,6 +495,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
                 timing='0–30 days',
                 responses=len(model_frame),
                 successes=int(weak_model.get('org_mentions', weak_model.get('southampton_mentions', 0))),
+                benchmark_frame=model_frame,
+                organisation_name=organisation_name,
             )
 
     if not recommendations:
@@ -475,6 +517,8 @@ def generate_recommendations(scored_df: pd.DataFrame, *, max_recommendations: in
             timing='Monthly',
             responses=total_responses,
             successes=mention_count,
+            benchmark_frame=scored_df,
+            organisation_name=organisation_name,
         )
 
     priority_order = {'High': 0, 'Medium': 1, 'Low': 2}

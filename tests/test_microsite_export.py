@@ -119,6 +119,7 @@ def test_rendered_microsite_archive_contains_report_sections(tmp_path: Path) -> 
     assert 'AI Reputation Intelligence Report' in html
     assert 'Visibility Diagnostics' in html
     assert 'Recommendations' in html
+    assert 'Leader evidence matrix' in html
     assert 'END-OF-FULL-RESPONSE' in html
     assert '<div class="detail-list">' in html
     assert '<div class="table-wrap">' in html
