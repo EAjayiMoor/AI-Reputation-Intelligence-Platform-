@@ -70,3 +70,4 @@ This log maps implemented work to source documents and evidence.
 - Extended recommendations, CSV output, the Streamlit page, and the rendered microsite with comparative performance, evidence patterns, organisation position, peer evidence, evidence-quality scoring, and causality limitations.
 - Directional samples below 30 eligible responses cannot receive a `Strong` comparative evidence rating.
 - Verification coverage: `tests/test_comparator_evidence.py`, `tests/test_recommendations_page.py`, and `tests/test_microsite_export.py`.
+- Deployed commit `9d86430` to Azure image `holdingapp2:20261006-comparator-1`; the live Recommendations route returned HTTP 200 after restart.
