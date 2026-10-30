@@ -114,21 +114,25 @@ with col2:
     )
 
 subject_df = persona_df[persona_df['Subject'].astype(str) == subject]
-expertise_options = _sorted_non_empty(subject_df['ExpertiseArea'])
+dimension = 'ExpertiseArea'
+expertise_options = _sorted_non_empty(subject_df[dimension])
+if not expertise_options and 'Category' in subject_df:
+    dimension = 'Category'
+    expertise_options = _sorted_non_empty(subject_df[dimension])
 if not expertise_options:
     st.error('No expertise areas are available for the selected persona and subject.')
     st.stop()
 
 with col3:
     expertise = st.selectbox(
-        'Expertise area',
+        'Category' if dimension == 'Category' else 'Expertise area',
         expertise_options,
         key=EXPERTISE_KEY,
         on_change=clear_dependent_journey_filters,
         args=(MARKET_KEY,),
     )
 
-pathway_df = subject_df[subject_df['ExpertiseArea'].astype(str) == expertise]
+pathway_df = subject_df[subject_df[dimension].astype(str) == expertise]
 market_options = _sorted_non_empty(pathway_df['Market'])
 if not market_options:
     st.error('No markets are available for the selected journey path.')

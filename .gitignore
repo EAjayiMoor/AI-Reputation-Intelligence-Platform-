@@ -22,3 +22,6 @@ pytest-cache-files-*/
 .DS_Store
 Thumbs.db
 *.tmp
+
+# Uploaded workbooks and live run outputs (stored outside source control)
+data/runs/

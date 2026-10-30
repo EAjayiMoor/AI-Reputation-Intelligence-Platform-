@@ -71,6 +71,7 @@ FILTER_COLUMNS = [
     'PromptMentionType',
     'Market',
     'Subject',
+    'Category',
     'Persona',
     'ExpertiseArea',
     'Intent',
@@ -131,6 +132,9 @@ def normalise_prompt_bank_frame(
     if 'Subject' not in working.columns:
         working['Subject'] = working['subject'] if 'subject' in working.columns else ''
 
+    if 'Category' not in working.columns:
+        working['Category'] = working['category'] if 'category' in working.columns else ''
+
     if 'ExpertiseArea' not in working.columns:
         working['ExpertiseArea'] = (
             working['geo_objective']
@@ -189,12 +193,26 @@ def normalise_prompt_bank_frame(
     return working.reset_index(drop=True)
 
 
-@st.cache_data(show_spinner=False, ttl=5)
 def load_core_data(
     prompts_path: str | Path = DEFAULT_PROMPTS_PATH,
     results_path: str | Path = DEFAULT_RESULTS_PATH,
     org_id: str | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    # Resolve session state before entering the cache. Paths identify the run
+    # in the cache key and cannot leak a different session's selected dataset.
+    run_id = None
+    if org_id:
+        from src.runs.selection import resolve_run_tenant
+        from src.ui.run_context import selected_run_id
+        run_id = selected_run_id(org_id)
+        tenant = resolve_run_tenant(load_tenant(org_id), run_id)
+        prompts_path = tenant.data_paths.prompts_path
+        results_path = tenant.data_paths.results_path
+    return _load_core_data(prompts_path, results_path, org_id, run_id)
+
+
+@st.cache_data(show_spinner=False, ttl=5)
+def _load_core_data(prompts_path, results_path, org_id, run_id=None):
     (
         resolved_prompts_path,
         resolved_results_path,
@@ -203,17 +221,27 @@ def load_core_data(
         organisation_aliases,
         competitor_aliases,
     ) = _tenant_defaults(org_id)
-    prompts_source = Path(prompts_path) if org_id is None else resolved_prompts_path
-    results_source = Path(results_path) if org_id is None else resolved_results_path
+    from src.runs.demos import demo_for_run
+    demo = demo_for_run(org_id, run_id)
+    if demo and not competitor_aliases:
+        # None selects the university catalogue; {} explicitly selects no entities.
+        competitor_aliases = None
+    prompts_source = Path(prompts_path)
+    results_source = Path(results_path)
 
     prompts_df = normalise_prompt_bank_frame(
-        pd.read_csv(prompts_source),
+        pd.read_csv(prompts_source, keep_default_na=not bool(run_id)),
         organisation_name=org_name,
         mention_pattern=mention_pattern,
         force_organisation=(org_id is not None),
         competitor_aliases=competitor_aliases,
     )
     results_df = load_openrouter_results(results_source)
+    if demo:
+        from src.analysis.response_parser import extract_competitors
+        results_df = results_df.copy()
+        results_df['CompetitorsMentioned'] = results_df['ResponseText'].map(
+            lambda text: ', '.join(extract_competitors(text, competitor_aliases=competitor_aliases)))
 
     prompt_validation = validate_required_columns(prompts_df, PROMPT_REQUIRED_COLUMNS)
     result_validation = validate_result_columns(results_df)
@@ -242,7 +270,13 @@ def load_core_data(
     return prompts_df, results_df, scored
 
 
+load_core_data.clear = _load_core_data.clear
+
+
 def render_sidebar_filters(df: pd.DataFrame, key_prefix: str = 'global') -> dict[str, str]:
+    from src.ui.run_context import selected_run_id
+    org_id = st.session_state.get('active_org_id', '')
+    key_prefix = f"{key_prefix}_{org_id}_{selected_run_id(org_id) or 'saved'}"
     st.sidebar.header('Filters')
     selections: dict[str, str] = {}
     filter_keys = [f'{key_prefix}_{column}' for column in FILTER_COLUMNS if column in df.columns]
@@ -282,6 +316,18 @@ def render_sidebar_filters(df: pd.DataFrame, key_prefix: str = 'global') -> dict
             key=f'{key_prefix}_{column}',
         )
 
+    evidence = apply_filters(df, selections)
+    if 'ResponseText' in evidence:
+        evidence = evidence[evidence['ResponseText'].fillna('').astype(str).str.strip().ne('')]
+        prompts = evidence['PromptID'].nunique()
+        models = evidence['ModelName'].nunique() if 'ModelName' in evidence else 0
+        st.sidebar.caption(f'Evidence in selected view: {len(evidence)} responses · {prompts} prompts · {models} models')
+        if 'visible_bool' in evidence:
+            from src.analysis import compute_scope_metrics, format_rate_with_denominator
+            metrics = compute_scope_metrics(evidence)
+            st.sidebar.caption('Response presence: ' + format_rate_with_denominator(
+                metrics['mention_responses'], metrics['responses']) + ' · Citation coverage: ' +
+                format_rate_with_denominator(metrics['citation_responses'], metrics['responses']))
     return selections
 
 

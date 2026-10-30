@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import streamlit as st
 
-from src.analysis import prompt_coverage_index, segment_balance_score, split_scope_frames
+from src.analysis import segment_balance_score, split_scope_frames, format_rate_with_denominator
 from src.ui import (
     apply_filters,
     apply_moorhouse_theme,
@@ -52,14 +52,13 @@ mg3.metric('Prompt bank total', len(prompts_df))
 
 scope_frames = split_scope_frames(prompts_df)
 scope_lookup = {scope.key: int(scope.frame['PromptID'].nunique()) for scope in scope_frames}
-coverage_score = prompt_coverage_index(results_df, prompts_df=prompts_df)
 balance_market = segment_balance_score(prompts_df, 'Market')
 balance_subject = segment_balance_score(prompts_df, 'Subject')
 balance_persona = segment_balance_score(prompts_df, 'Persona')
 
 st.subheader('Template-standard prompt diagnostics')
 dx1, dx2, dx3, dx4 = st.columns(4)
-dx1.metric('Prompt coverage index', f'{coverage_score:.1f}%')
+dx1.metric('Prompt coverage index', format_rate_with_denominator(results_df['PromptID'].nunique(), prompts_df['PromptID'].nunique()))
 dx2.metric('Organic prompts', scope_lookup.get('organic', 0))
 dx3.metric('Prompted/direct prompts', scope_lookup.get('prompted_direct', 0))
 dx4.metric('All prompts', scope_lookup.get('all', 0))
@@ -81,6 +80,7 @@ prompt_columns = [
     'Market',
     'Persona',
     'Subject',
+    'Category',
     'ExpertiseArea',
     'Intent',
     'Platform',
@@ -142,7 +142,7 @@ else:
 if view_mode != 'Captured output only':
     prompt_table = prompt_table.sort_values(['Market', 'Subject', 'Persona', 'PromptID'], na_position='last').reset_index(drop=True)
 
-st.metric('Filtered prompt count', len(prompt_table))
+st.metric('Filtered prompt count', prompt_table['PromptID'].nunique())
 st.caption('Prompt bank view with one row per captured prompt/model response. Model outputs are not collapsed.')
 st.dataframe(prompt_table, hide_index=True)
 

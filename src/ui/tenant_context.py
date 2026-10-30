@@ -44,7 +44,8 @@ def get_active_tenant() -> TenantConfig | None:
 def require_active_tenant() -> TenantConfig:
     tenant = get_active_tenant()
     if tenant is not None:
-        return tenant
+        from src.ui.run_context import render_run_selector
+        return render_run_selector(tenant)
 
     st.warning('Select or create an organisation from the Start page before using this view.')
     st.info('Open `Start` from the sidebar to choose your active workspace.')
@@ -52,16 +53,21 @@ def require_active_tenant() -> TenantConfig:
 
 
 def tenant_data_source_label(tenant: TenantConfig) -> str:
-    return 'Demo' if tenant.org_id.startswith('demo') else 'Live'
+    from src.runs.store import RunStore
+    from src.ui.run_context import selected_run_id
+    run_id = selected_run_id(tenant.org_id)
+    if not run_id:
+        return 'Saved demo'
+    from src.runs.executor import run_summary
+    run = run_summary(RunStore(), tenant.org_id, run_id)
+    mode = 'Simulated' if run['mode'] == 'dry_run' else 'Live'
+    from src.ui.run_dates import dated_run_name
+    return f"{mode}: {dated_run_name(run)} ({run['display_status']})"
 
 
 def render_empty_state_guidance(tenant: TenantConfig, *, area: str = 'this page') -> None:
-    source = tenant_data_source_label(tenant)
-    if source == 'Live':
-        st.warning(f'No live data is available for {tenant.display_name} in {area}.')
-        st.info(
-            'Next steps: (1) upload/import a prompt bank for this organisation, '
-            '(2) run prompt execution capture, and (3) refresh this page.'
-        )
+    from src.ui.run_context import selected_run_id
+    if selected_run_id(tenant.org_id):
+        st.info(f'The selected run has no captured responses for {area} yet. Its uploaded prompts are available in Prompt Bank Explorer.')
     else:
-        st.warning(f'No demo data is available for {tenant.display_name} in {area}.')
+        st.warning(f'No saved demo data is available for {tenant.display_name} in {area}.')

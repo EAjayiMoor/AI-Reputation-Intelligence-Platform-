@@ -4,7 +4,7 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from src.analysis import outlier_responses, run_history_summary
+from src.analysis import outlier_responses, run_history_summary, format_rate_with_denominator
 from src.recommendations import build_leader_evidence_matrix, generate_recommendations
 from src.ui import (
     apply_filters,
@@ -63,7 +63,6 @@ evidence_rows = outlier_responses(filtered, limit=12)
 
 high_count = int(recommendations['Priority'].eq('High').sum())
 medium_count = int(recommendations['Priority'].eq('Medium').sum())
-high_share = (high_count / len(recommendations) * 100) if len(recommendations) else 0
 
 recommendations = recommendations.copy()
 recommendations['Status'] = 'Planned'
@@ -71,7 +70,7 @@ with st.container(horizontal=True):
     st.metric('Prioritised actions', len(recommendations))
     st.metric('High priority', high_count)
     st.metric('Medium priority', medium_count)
-    st.metric('High-priority share', f'{high_share:.1f}%')
+    st.metric('High-priority share', format_rate_with_denominator(high_count, len(recommendations)))
 
 priority_options = ['All', 'High', 'Medium']
 try:

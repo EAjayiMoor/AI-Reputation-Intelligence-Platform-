@@ -152,6 +152,8 @@ class OpenRouterRunner:
             cost_value = usage.get('cost')
             response_id = str(parsed.get('id', f'resp_{uuid.uuid4().hex[:12]}'))
             message = parsed.get('choices', [{}])[0].get('message', {}).get('content', '')
+            if parsed.get('error') or not isinstance(message, str) or not message.strip():
+                raise ValueError('Provider returned no usable response text.')
             return OpenRouterRunResult(
                 prompt_id=prompt_id,
                 prompt_text=prompt_text,

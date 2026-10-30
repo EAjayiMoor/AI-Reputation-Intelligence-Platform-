@@ -2,6 +2,9 @@
 
 import altair as alt
 import streamlit as st
+from src.runs.demos import demo_for_run
+from src.ui.run_context import selected_run_id
+from src.ui.demo_dashboard import render_demo_dashboard
 
 from src.analysis import compute_scope_metrics, format_rate_with_denominator, split_scope_frames
 from src.recommendations import generate_recommendations
@@ -24,9 +27,10 @@ st.set_page_config(page_title='Executive dashboard', page_icon=':material/dashbo
 apply_moorhouse_theme()
 tenant = require_active_tenant()
 data_source = tenant_data_source_label(tenant)
+demo = demo_for_run(tenant.org_id, selected_run_id(tenant.org_id))
 render_page_header(
-    'Executive dashboard',
-    'Headline metrics and visibility patterns',
+    demo['label'] if demo else 'Executive dashboard',
+    demo['description'] if demo else 'Headline metrics and visibility patterns',
     eyebrow='Executive view',
 )
 
@@ -91,6 +95,13 @@ try:
     _, _, scored_df = load_core_data(org_id=tenant.org_id)
 except Exception as exc:
     st.error(f'Unable to load captured data: {exc}')
+    st.stop()
+
+if demo:
+    if scored_df.empty:
+        render_empty_state_guidance(tenant, area=demo['label'])
+    else:
+        render_demo_dashboard(tenant, demo, scored_df)
     st.stop()
 
 selections = render_sidebar_filters(scored_df, key_prefix='exec_live_v2')
@@ -284,6 +295,7 @@ else:
     model_table = model_table.reindex(institution_order)
     model_table['Total'] = model_table.sum(axis=1)
     neutral_responses = int(filtered['CompetitorPromptEligible'].fillna(False).astype(bool).sum())
+    model_table['Responses evaluated'] = neutral_responses
     model_table['Organic mention rate'] = model_table['Total'].div(neutral_responses).mul(100).round(1)
     model_table = model_table.reset_index()
 

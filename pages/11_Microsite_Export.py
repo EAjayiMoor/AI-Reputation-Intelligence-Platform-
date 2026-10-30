@@ -4,7 +4,8 @@ from datetime import datetime
 
 import streamlit as st
 
-from src.analysis import compute_scope_metrics, split_scope_frames
+from src.analysis import compute_scope_metrics, split_scope_frames, format_rate_with_denominator
+from src.ui.run_context import selected_run_id
 from src.export.microsite import build_microsite_archive, default_microsite_paths, missing_microsite_assets
 from src.export.rendered_microsite import build_rendered_microsite_archive
 from src.ui import (
@@ -34,33 +35,36 @@ st.info(
     'Interactive filters are not active in the downloaded copy.'
 )
 
-paths = default_microsite_paths()
-missing_assets = missing_microsite_assets()
+if selected_run_id(tenant.org_id) is None:
+    paths = default_microsite_paths()
+    missing_assets = missing_microsite_assets()
 
-st.markdown(f"- Microsite HTML: `{paths['html']}`")
-st.markdown(f"- Snapshot assets: `{paths['snapshots_dir']}`")
+    st.markdown(f"- Microsite HTML: `{paths['html']}`")
+    st.markdown(f"- Snapshot assets: `{paths['snapshots_dir']}`")
 
-if missing_assets:
-    st.warning('Snapshot microsite assets are missing. You can still use the rendered microsite export below.')
-    st.code(
-        'python scripts/capture_streamlit_pages.py\n'
-        'python scripts/build_screenshot_html.py',
-        language='bash',
-    )
-    for missing_path in missing_assets:
-        st.caption(f'Missing: {missing_path}')
+    if missing_assets:
+        st.warning('Snapshot microsite assets are missing. You can still use the rendered microsite export below.')
+        st.code(
+            'python scripts/capture_streamlit_pages.py\n'
+            'python scripts/build_screenshot_html.py',
+            language='bash',
+        )
+        for missing_path in missing_assets:
+            st.caption(f'Missing: {missing_path}')
+    else:
+        archive_bytes = build_microsite_archive()
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f'{tenant.org_id}_microsite_export_{timestamp}.zip'
+
+        st.success('Snapshot microsite pack is ready to download.')
+        st.download_button(
+            label='Download snapshot microsite (.zip)',
+            data=archive_bytes,
+            file_name=filename,
+            mime='application/zip',
+        )
 else:
-    archive_bytes = build_microsite_archive()
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    filename = f'{tenant.org_id}_microsite_export_{timestamp}.zip'
-
-    st.success('Snapshot microsite pack is ready to download.')
-    st.download_button(
-        label='Download snapshot microsite (.zip)',
-        data=archive_bytes,
-        file_name=filename,
-        mime='application/zip',
-    )
+    st.info("Use the rendered export below for the selected run. Prebuilt snapshot exports belong to the saved demo.")
 
 st.divider()
 st.subheader('Rendered microsite export (pro)')
@@ -91,8 +95,8 @@ for scope_col, scope_frame in zip(scope_cols, scope_frames):
     scope_metrics = compute_scope_metrics(scope_frame.frame, owned_domains=tenant.domains)
     scope_col.metric(f'{scope_frame.label} responses', int(scope_metrics['responses']))
     scope_col.caption(
-        f"Presence {float(scope_metrics['presence_rate_response']):.1f}% | "
-        f"Citation {float(scope_metrics['citation_coverage']):.1f}%"
+        f"Presence {format_rate_with_denominator(int(scope_metrics['mention_responses']), int(scope_metrics['responses']))} | "
+        f"Citation {format_rate_with_denominator(int(scope_metrics['citation_responses']), int(scope_metrics['responses']))}"
     )
 
 pro_archive = build_rendered_microsite_archive(
@@ -102,7 +106,7 @@ pro_archive = build_rendered_microsite_archive(
     org_id=tenant.org_id,
     prompt_scope=prompt_scope,
     mention_mode=mention_mode,
-    filters=filters,
+    filters={**filters, 'Data run': f"{data_source} · Run ID: {selected_run_id(tenant.org_id) or 'saved'}"},
     owned_domains=tenant.domains,
     organisation_aliases=tenant.aliases,
     competitor_aliases=tenant.competitors.aliases_by_name or None,

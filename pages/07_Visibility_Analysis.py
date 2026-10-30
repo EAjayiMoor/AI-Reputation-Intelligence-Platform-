@@ -157,16 +157,6 @@ _render_metric_definitions_for_org(metric_defs, include_components=True)
 measurement_df = _measurement_frame(filtered)
 response_total = len(measurement_df)
 mention_total = int(measurement_df['Mentioned'].sum())
-mentioned_denominator = max(mention_total, 1)
-mention_rate = mention_total / response_total * 100 if response_total else 0
-recommendation_rate = measurement_df['Recommended'].sum() / mentioned_denominator * 100
-shortlist_rate = measurement_df['Shortlisted'].sum() / mentioned_denominator * 100
-citation_rate = measurement_df['CitationPresent'].sum() / response_total * 100 if response_total else 0
-positive_rate = (
-    measurement_df.loc[measurement_df['Mentioned'], 'AssociationLabel'].eq('Positive').sum()
-    / mentioned_denominator
-    * 100
-)
 
 st.subheader('LLM presence snapshot')
 st.caption(
@@ -178,13 +168,13 @@ metric_columns[0].metric(
     'Mention rate',
     format_rate_with_denominator(mention_total, response_total),
 )
-metric_columns[1].metric('Recommended when mentioned', f'{recommendation_rate:.1f}%')
-metric_columns[2].metric('Shortlisted when mentioned', f'{shortlist_rate:.1f}%')
+metric_columns[1].metric('Recommended when mentioned', format_rate_with_denominator(int(measurement_df['Recommended'].sum()), mention_total))
+metric_columns[2].metric('Shortlisted when mentioned', format_rate_with_denominator(int(measurement_df['Shortlisted'].sum()), mention_total))
 metric_columns[3].metric(
     'Citation coverage',
     format_rate_with_denominator(int(measurement_df['CitationPresent'].sum()), response_total),
 )
-metric_columns[4].metric('Positive association', f'{positive_rate:.1f}%')
+metric_columns[4].metric('Positive association', format_rate_with_denominator(int(measurement_df.loc[measurement_df['Mentioned'], 'AssociationLabel'].eq('Positive').sum()), mention_total))
 
 st.caption(
     'Scope comparison - '
@@ -210,7 +200,7 @@ for column, (key, label) in zip(
 ):
     column.metric(
         f'Owned source share ({label})',
-        f"{float(scope_metrics[key]['owned_source_share']):.1f}%",
+        format_rate_with_denominator(int(scope_metrics[key]['owned_citation_responses']), int(scope_metrics[key]['citation_responses'])),
     )
 
 st.subheader('Presence signals by model')

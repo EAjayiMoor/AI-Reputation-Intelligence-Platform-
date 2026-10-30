@@ -104,6 +104,7 @@ def compute_scope_metrics(frame: pd.DataFrame, *, owned_domains: Iterable[str] =
     )
 
     owned_source_share = 0.0
+    owned_hits = 0
     if 'CitationSources' in working.columns and citation_responses > 0:
         owned_hits = _domain_hits(working['CitationSources'], owned_domains)
         owned_source_share = _rate(owned_hits, citation_responses)
@@ -120,6 +121,7 @@ def compute_scope_metrics(frame: pd.DataFrame, *, owned_domains: Iterable[str] =
         'citation_when_mentioned_count': citation_when_mentioned,
         'citation_when_mentioned': _rate(citation_when_mentioned, mention_responses),
         'owned_source_share': owned_source_share,
+        'owned_citation_responses': owned_hits,
         'competitor_responses': competitor_responses,
         'competitor_pressure_ratio': pressure_ratio,
     }

@@ -3,6 +3,7 @@ from __future__ import annotations
 import altair as alt
 import pandas as pd
 import streamlit as st
+from src.analysis import format_rate_with_denominator
 
 from src.analysis import outlier_responses, segment_summary
 from src.ui import (
@@ -90,8 +91,8 @@ for _, segment in top_opportunities.iterrows():
     recoverability = float(segment['CitationRate']) - float(segment['MentionRate'])
     st.caption(
         f"{segment_name}: opportunity {float(segment['OpportunityScore']):.1f} | "
-        f"mention rate {float(segment['MentionRate']):.1f}% | "
-        f"citation rate {float(segment['CitationRate']):.1f}% | "
+        f"mention rate {format_rate_with_denominator(int(segment['MentionedResponses']), int(segment['Responses']))} | "
+        f"citation rate {format_rate_with_denominator(int(segment['CitedResponses']), int(segment['Responses']))} | "
         f"recoverability signal {recoverability:.1f}pp"
     )
 

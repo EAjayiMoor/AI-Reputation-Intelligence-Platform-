@@ -2,6 +2,12 @@ from __future__ import annotations
 
 import streamlit as st
 
+from src.runs.demos import DEMO_RUNS
+from src.runs.store import RunStore
+from src.runs.executor import run_summary
+from src.ui.run_context import select_run
+from src.ui.run_dates import format_run_timestamp
+
 from src.tenants import create_tenant_profile, list_tenants, load_tenant
 from src.ui import (
     apply_moorhouse_theme,
@@ -17,10 +23,34 @@ st.set_page_config(page_title='Start', page_icon=':material/home:', layout='wide
 apply_moorhouse_theme()
 render_page_header(
     'Start',
-    'Select an organisation workspace or create a new profile',
-    eyebrow='Workspace setup',
+    'Choose a saved demo or open an organisation workspace',
+    eyebrow='Reputation intelligence',
 )
 
+st.subheader('Choose a demo')
+store = RunStore()
+for column, demo in zip(st.columns(2), DEMO_RUNS):
+    with column, st.container(border=True):
+        st.subheader(demo['label'])
+        st.write(demo['description'])
+        try:
+            state = run_summary(store, demo['org_id'], demo['run_id'])
+            available = state['display_status'] == 'Complete' and not state['archived']
+        except (OSError, ValueError):
+            state, available = None, False
+        if available:
+            st.caption(f"{state['prompt_count']} prompts · {len(state['models'])} models · {state['completed_requests']} saved responses")
+            st.caption(f"Created {format_run_timestamp(state['created_at'])}")
+        else:
+            st.caption('This saved demo is unavailable in the current environment.')
+        if st.button(f"Open {demo['label']}", key=f"start_demo_{demo['run_id']}",
+                     type='primary', width='stretch', disabled=not available):
+            set_active_org_id(demo['org_id'])
+            select_run(demo['org_id'], demo['run_id'])
+            st.switch_page('pages/04_Executive_Dashboard.py')
+
+st.divider()
+st.subheader('Organisation workspaces')
 tenant_ids = list_tenants()
 tenant_map: dict[str, str] = {}
 for tenant_id in tenant_ids:

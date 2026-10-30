@@ -59,6 +59,23 @@ Organisation workspaces select their own prompt bank and captured model outputs 
 
 See `docs/traceability_log.md` for requirement mapping and delivery evidence.
 
+Live upload, isolated execution runs, and demo readiness are tracked in
+[the demo sprint board](docs/demo-readiness-sprints.md). The run-storage backend
+and five-column Excel onboarding are implemented locally, with a shared saved/live
+run selector. The Execution page runs every uploaded prompt through selected
+OpenRouter models, saves progress and retries unfinished requests. Dashboards
+include Category filters, run status, response coverage and sample counts.
+Run History supports reopening, renaming, archiving/restoring and downloading
+run bundles, original uploads and responses. Both 50-prompt, five-model demo
+batches have completed locally; the smaller live rehearsal and hosted storage
+verification remain in Sprint 5.
+
+Uploaded workbooks and model outputs live in `data/runs/` (or `AIRP_RUNS_DIR`)
+and are excluded from Git. The Demo Careers and Demo Research entry points refer
+to those saved runs; preserve and migrate the run storage separately when moving
+the app to another environment. Demo cards are unavailable until their saved run
+files are present. A Git commit does not back up the uploaded workbooks or outputs.
+
 The evidence standard, intervention levels, uplift-threshold calculation, and interpretation limits for generated recommendations are documented in `docs/recommendation-methodology.md`.
 
 ## Microsite export (downloadable stakeholder pack)
@@ -97,7 +114,20 @@ Current scaffold modules:
 - `src/execution/azure_prompt_generator.py`
 - `src/config/settings.py`
 
-The Streamlit analytics flow can consume captured outputs (CSV replay) or live model responses from the selected provider. Execution is cost-safe: only `PromptSource=generated` rows are eligible, and only pending prompts run on explicit button click.
+The prepared-upload demo flow is Data Onboarding → create a live or simulated
+run → Execution → select models → run every uploaded prompt → dashboard.
+The Execution page uses OpenRouter settings directly. Configure
+`OPENROUTER_API_KEY`, `OPENROUTER_MODELS`, and optionally
+`OPENROUTER_BASE_URL` / `OPENROUTER_TIMEOUT_SECONDS`. Refresh the model list on
+the page to load current OpenRouter text-model IDs. The chosen models are fixed
+after execution starts. Successful responses are checkpointed individually;
+retrying skips saved prompt/model pairs. An OS file lock prevents two workers
+from writing the same run at once.
+
+Simulated runs make no model requests and retain labelled placeholder responses
+separately from live runs. Saved demo data is read-only in Execution. The Azure
+prompt-generation modules and legacy capture scripts remain available separately;
+the prepared-upload page executes the workbook's existing prompts.
 
 ## Azure deployment (robust)
 

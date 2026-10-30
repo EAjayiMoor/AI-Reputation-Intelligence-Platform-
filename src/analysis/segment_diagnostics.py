@@ -46,7 +46,7 @@ def segment_summary(
     """Aggregate presence and narrative signals for a topic/persona segment."""
     output_columns = [
         *group_columns,
-        'Responses', 'MentionedResponses', 'MentionRate', 'AverageProminence',
+        'Responses', 'MentionedResponses', 'CitedResponses', 'MentionRate', 'AverageProminence',
         'RecommendationRate', 'ShortlistRate', 'CitationRate', 'PositiveAssociationRate',
         'AverageReputationScore', 'OpportunityScore', 'Diagnosis',
     ]

@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from src.ui import apply_moorhouse_theme, render_page_header, require_active_tenant, tenant_data_source_label
+from src.ui import apply_moorhouse_theme, render_page_header, require_active_tenant, tenant_data_source_label, get_active_org_id
 
 st.set_page_config(
     page_title='AI Reputation Intelligence Platform',
@@ -11,6 +11,8 @@ st.set_page_config(
 )
 
 apply_moorhouse_theme()
+if not get_active_org_id():
+    st.switch_page('pages/01_Start.py')
 tenant = require_active_tenant()
 data_source = tenant_data_source_label(tenant)
 render_page_header(
@@ -23,7 +25,7 @@ st.caption(f'Active organization: {tenant.display_name} · Data source: {data_so
 st.markdown(
     """
     <div class='mh-callout'>
-    <p>Use the Executive Dashboard page for the scorecard and chart-based summary. Visibility Analysis and Topic and Persona Diagnostics explain presence by segment, while Competitor Analysis shows competitive pressure. Execution is the operational page for Azure prompt generation and OpenRouter multi-model runs. Prompt Bank Explorer is the filterable prompt audit surface.</p>
+    <p>Use the Executive Dashboard page for the scorecard and chart-based summary. Visibility Analysis and Topic and Persona Diagnostics explain presence by segment, while Competitor Analysis shows competitive pressure. Upload prepared prompts through Data Onboarding, then use Execution for OpenRouter runs. Prompt Bank Explorer is the filterable prompt audit surface.</p>
     </div>
     """,
     unsafe_allow_html=True,
@@ -40,5 +42,7 @@ st.markdown(
     '- Prompt Bank Explorer: inspect prompt coverage and export filtered prompt sets\n'
     '- Topic and Persona Diagnostics: find segment strengths, gaps and supporting response evidence\n'
     '- Recommendations: connect measured gaps to owned actions, evidence and rerun tracking\n'
-    '- Execution: generate prompts with Azure OpenAI, then run through selected OpenRouter models'
+    '- Data Onboarding: upload a prepared Excel or CSV prompt sheet and create a named run\n'
+    '- Run History: reopen, rename, archive, restore and download saved runs\n'
+    '- Execution: run every uploaded prompt through selected OpenRouter models and retry unfinished requests'
 )

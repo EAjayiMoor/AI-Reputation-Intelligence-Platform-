@@ -3,8 +3,12 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
+from src.runs.demos import demo_for_run
+from src.ui.run_context import selected_run_id
+from src.ui.demo_dashboard import filter_demo_responses
+from src.ui.demo_competitors import render_demo_competitors
 
-from src.analysis import competitive_breakdown, competitive_cooccurrence
+from src.analysis import competitive_breakdown, competitive_cooccurrence, format_rate_with_denominator
 from src.scoring import competitor_mentions, institution_mention_index, institution_mentions_by_model
 from src.ui import (
     MOORHOUSE_PURPLE_SCALE,
@@ -48,8 +52,10 @@ st.set_page_config(page_title='Competitor analysis', page_icon=':material/groups
 apply_moorhouse_theme()
 tenant = require_active_tenant()
 data_source = tenant_data_source_label(tenant)
-render_page_header('Competitor analysis', 'Understand competitor mention patterns', eyebrow='Competitor diagnostics')
-scope = render_prompt_scope_selector(key='competitor_scope')
+demo = demo_for_run(tenant.org_id, selected_run_id(tenant.org_id))
+render_page_header(f"{demo['label']} · Competitor analysis" if demo else 'Competitor analysis',
+                   'Understand competitor mention patterns', eyebrow='Competitor diagnostics')
+scope = 'Combined' if demo else render_prompt_scope_selector(key='competitor_scope')
 st.caption(
     f'Active organization: {tenant.display_name} | Data source: {data_source} | Results source: OpenRouter captured outputs | Prompt bank scope: {scope}'
 )
@@ -63,6 +69,10 @@ except Exception as exc:
 
 if scored_df.empty:
     render_empty_state_guidance(tenant, area='Competitor Analysis')
+    st.stop()
+
+if demo:
+    render_demo_competitors(tenant, demo, filter_demo_responses(demo, scored_df))
     st.stop()
 
 filters = render_sidebar_filters(scored_df, key_prefix='competitor_live_v2')
@@ -101,20 +111,20 @@ st.caption(
 )
 if target_summary is not None:
     target_metrics = st.columns(4)
-    target_metrics[0].metric(f'{tenant.display_name} mention rate', f"{float(target_summary['MentionRate']):.1f}%")
-    target_metrics[1].metric('First-mentioned share', f"{float(target_summary['FirstMentionedRate']):.1f}%")
-    target_metrics[2].metric('Shortlist share', f"{float(target_summary['ShortlistRate']):.1f}%")
-    target_metrics[3].metric('Recommendation share', f"{float(target_summary['RecommendationRate']):.1f}%")
+    mentions = int(target_summary['MentionedResponses'])
+    target_metrics[0].metric(f'{tenant.display_name} mention rate', format_rate_with_denominator(mentions, eligible_response_count))
+    target_metrics[1].metric('First-mentioned share', format_rate_with_denominator(int(target_summary['FirstMentionedResponses']), mentions))
+    target_metrics[2].metric('Shortlist share', format_rate_with_denominator(int(target_summary['ShortlistedResponses']), mentions))
+    target_metrics[3].metric('Recommendation share', format_rate_with_denominator(int(target_summary['RecommendedResponses']), mentions))
 
 if target_summary is not None and not competitor_summary.empty:
     top_competitor = competitor_summary.sort_values('MentionRate', ascending=False).iloc[0]
     mention_gap = float(top_competitor['MentionRate']) - float(target_summary['MentionRate'])
-    sov_denominator = float(target_summary['MentionRate']) + float(top_competitor['MentionRate'])
-    sov_value = float(target_summary['MentionRate']) / sov_denominator * 100 if sov_denominator > 0 else 0.0
     pressure_columns = st.columns(3)
     pressure_columns[0].metric('Top competitor', str(top_competitor['Entity']))
     pressure_columns[1].metric('Mention-rate gap', f'{mention_gap:.1f}pp')
-    pressure_columns[2].metric('Share-of-voice proxy', f'{sov_value:.1f}%')
+    pressure_columns[2].metric('Share-of-voice proxy', format_rate_with_denominator(
+        mentions, mentions + int(top_competitor['MentionedResponses'])))
 
 signal_entities = pd.concat(
     [
