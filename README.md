@@ -67,8 +67,9 @@ OpenRouter models, saves progress and retries unfinished requests. Dashboards
 include Category filters, run status, response coverage and sample counts.
 Run History supports reopening, renaming, archiving/restoring and downloading
 run bundles, original uploads and responses. Both 50-prompt, five-model demo
-batches have completed locally; the smaller live rehearsal and hosted storage
-verification remain in Sprint 5.
+batches have completed locally and are available on the hosted app; the smaller
+live rehearsal remains in Sprint 5. Azure deployment and restart-persistence
+evidence are recorded in [the 30 October deployment record](docs/deployments/2026-10-30-demo-readiness.md).
 
 Uploaded workbooks and model outputs live in `data/runs/` (or `AIRP_RUNS_DIR`)
 and are excluded from Git. The Demo Careers and Demo Research entry points refer

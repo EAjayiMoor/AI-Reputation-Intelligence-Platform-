@@ -1,6 +1,6 @@
 # Live demo delivery tracker
 
-Updated: 29 October 2026.
+Updated: 30 October 2026.
 
 ## Agreed workflow
 
@@ -25,7 +25,7 @@ lists in application code.
 | 2 | Excel onboarding and run selection | Complete locally | Five-column Excel/CSV adapter and upload preview; isolated named runs; page navigation, saved-demo switch and session/cache isolation checked |
 | 3 | OpenRouter execution and recovery | Complete locally | Model selection, individual response checkpoints, progress, failure history, retries, interrupted-run recovery and OS writer locks verified; 59 focused regression checks passed |
 | 4 | Dashboard integration and run history UI | Complete locally | Category filters, run coverage/status, percentage denominators, history actions and coherent downloads; all eight analysis/export pages verified with ready/partial/complete runs and saved-demo fallback |
-| 5 | Both scenario rehearsals and hosting readiness | Local banked rehearsal complete; host validation open | Actual workbook reviewed; 50 prompts × five models completed per tab (500 responses total); costs and timings recorded; source-row mapping, dashboard loader and bundles checked; banked files unchanged. Demo-sized live run and hosted-volume persistence remain open |
+| 5 | Both scenario rehearsals and hosting readiness | Banked demos and hosted run persistence verified; smaller live rehearsal open | 500 banked responses available on Azure; dated demo views and competitor summaries verified; six-row hosted simulation completed and survived restart with matching file hashes. Smaller live workload remains open |
 
 Statuses describe delivered evidence, not estimates. Backend completion does not
 mean the corresponding user interface has been connected.
@@ -211,9 +211,11 @@ workbooks, paid rehearsal, runtime measurement and host persistence remain Sprin
       cost fields; they are not a quote for future runs.
 - [ ] Rehearse the smaller client-demo workload (18 prompts × three models per
       scenario) and measure its actual runtime.
-- [ ] Verify storage survives restart and redeployment in the actual host.
-- [ ] Record and verify the Azure persistent-volume configuration. Local
-      `data/runs/` results are not proof of hosted durability.
+- [x] Verify banked files survive image deployment and a newly created six-response
+      simulated run survives an App Service restart with matching file hashes.
+- [x] Configure and verify Azure persistence: App Service storage enabled and
+      `AIRP_RUNS_DIR=/home/airp/runs`. See the [deployment record](deployments/2026-10-30-demo-readiness.md)
+      for the image identity, runtime versions and hosted verification evidence.
 
 Run IDs:
 
