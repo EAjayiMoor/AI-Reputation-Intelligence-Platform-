@@ -28,3 +28,4 @@ class TenantConfig:
     data_paths: TenantDataPaths
     model_assignment: TenantModelAssignment
     competitors: TenantCompetitorSet
+    default_run_id: str | None = None

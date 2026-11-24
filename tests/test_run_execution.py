@@ -251,3 +251,90 @@ def test_runner_rejects_unusable_provider_responses(monkeypatch, payload):
     result = OpenRouterRunner(OpenRouterConfig(api_key='test', model_name='test/a')).run_prompt('P1', 'Q')
     assert result.success is False
     assert result.error_message
+
+
+def test_truncated_http_answers_stay_pending_and_record_usage(tmp_path, monkeypatch):
+    from io import BytesIO
+    from src.execution import openrouter_runner
+    service = engine()
+    store, run, tenant = setup_run(tmp_path, mode='live')
+    def respond(*args, **kwargs):
+        return BytesIO(json.dumps({'choices': [{'finish_reason': 'length',
+            'message': {'content': 'An incomplete answer'}}],
+            'usage': {'cost': 0.002, 'completion_tokens_details': {'reasoning_tokens': 1100}}}).encode())
+    monkeypatch.setattr(openrouter_runner.request, 'urlopen', respond)
+    state = service.execute_run(store, tenant, run['run_id'], ['test/a'], api_key='test')
+    assert state['status'] == 'Failed'
+    assert state['completed_requests'] == 0
+    assert state['failed_requests'] == 2
+    paths = store.paths(tenant.org_id, run['run_id'])
+    assert pd.read_csv(paths['results']).empty
+    events = [json.loads(line) for line in (paths['manifest'].parent / 'attempts.jsonl').read_text().splitlines()]
+    assert all(event['finish_reason'] == 'length' and event['api_cost'] == 0.002 for event in events)
+
+
+def test_parallel_capture_is_bounded_checkpointed_and_resumable(tmp_path):
+    from threading import Barrier, Lock
+    service = engine()
+    store, run, tenant = setup_run(tmp_path)
+    barrier = Barrier(2)
+    lock = Lock()
+    active = 0
+    peak = 0
+    calls = []
+    class ParallelRunner:
+        def __init__(self, config):
+            self.runner = OpenRouterRunner(config)
+        def run_prompt(self, **kwargs):
+            nonlocal active, peak
+            with lock:
+                active += 1
+                peak = max(peak, active)
+                calls.append((kwargs['prompt_id'], self.runner._config.model_name))
+            try:
+                barrier.wait(timeout=3)
+                return self.runner.run_prompt(**kwargs)
+            finally:
+                with lock:
+                    active -= 1
+    def progress(state):
+        saved = pd.read_csv(store.paths(tenant.org_id, run['run_id'])['results'])
+        assert len(saved) == state['completed_requests']
+    state = service.execute_run(store, tenant, run['run_id'], ['test/a','test/b'],
+                                max_workers=2, runner_factory=ParallelRunner, on_progress=progress)
+    assert state['status'] == 'Complete'
+    assert peak == 2 and len(calls) == 4
+    results = pd.read_csv(store.paths(tenant.org_id, run['run_id'])['results'])
+    assert results['ResultID'].is_unique
+    assert not results.duplicated(['PromptID', 'ModelName']).any()
+    before = store.paths(tenant.org_id, run['run_id'])['results'].read_bytes()
+    resumed = service.execute_run(store, tenant, run['run_id'], ['test/a','test/b'],
+                                  max_workers=2, runner_factory=ParallelRunner)
+    assert resumed['completed_requests'] == 4 and len(calls) == 4
+    assert store.paths(tenant.org_id, run['run_id'])['results'].read_bytes() == before
+
+
+@pytest.mark.parametrize('workers', [0, -1, 17, 1.5, True])
+def test_parallel_worker_count_is_validated(tmp_path, workers):
+    store, run, tenant = setup_run(tmp_path)
+    with pytest.raises(ValueError, match='max_workers'):
+        engine().execute_run(store, tenant, run['run_id'], ['test/a'], max_workers=workers)
+
+
+def test_result_checkpoint_retries_temporary_windows_file_lock(tmp_path, monkeypatch):
+    service = engine()
+    path = tmp_path / 'results.csv'
+    path.write_text('original', encoding='utf-8')
+    original = Path.replace
+    attempts = []
+    def replace(source, target):
+        attempts.append(source)
+        if len(attempts) < 3:
+            assert path.read_text() == 'original'
+            raise PermissionError('Temporary Windows sharing violation')
+        return original(source, target)
+    monkeypatch.setattr(Path, 'replace', replace)
+    service._atomic_results(path, pd.DataFrame([{'PromptID': 'P1'}]))
+    assert len(attempts) == 3
+    assert pd.read_csv(path).PromptID.tolist() == ['P1']
+    assert not list(tmp_path.glob('*.tmp'))

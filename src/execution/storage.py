@@ -26,6 +26,9 @@ OPENROUTER_RESULTS_COLUMNS = [
     'TotalTokens',
     'CachedPromptTokens',
     'APICost',
+    'FinishReason',
+    'ReasoningTokens',
+    'OutputTokenLimit',
 ]
 
 

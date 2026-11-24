@@ -61,6 +61,9 @@ class OpenRouterRunResult:
     total_tokens: int | None = None
     cached_prompt_tokens: int | None = None
     api_cost: float | None = None
+    finish_reason: str | None = None
+    reasoning_tokens: int | None = None
+    output_token_limit: int | None = None
 
 
 class OpenRouterRunner:
@@ -120,6 +123,9 @@ class OpenRouterRunner:
                 api_cost=None,
             )
 
+        gemini = (self._config.provider_name == 'OpenRouter'
+                  and self._config.model_name.startswith('google/gemini-'))
+        output_token_limit = 8192 if gemini else 1200
         payload = {
             'model': self._config.model_name,
             'messages': [
@@ -133,8 +139,12 @@ class OpenRouterRunner:
                 {'role': 'user', 'content': prompt_text},
             ],
             'temperature': 0.2,
-            'max_tokens': 1200,
+            'max_tokens': output_token_limit,
         }
+
+        if gemini:
+            # Reasoning shares the output budget with the visible answer.
+            payload['reasoning'] = {'effort': 'low'}
 
         req = request.Request(
             self._request_url(),
@@ -151,9 +161,13 @@ class OpenRouterRunner:
             prompt_details = usage.get('prompt_tokens_details') or {}
             cost_value = usage.get('cost')
             response_id = str(parsed.get('id', f'resp_{uuid.uuid4().hex[:12]}'))
-            message = parsed.get('choices', [{}])[0].get('message', {}).get('content', '')
-            if parsed.get('error') or not isinstance(message, str) or not message.strip():
+            choice = (parsed.get('choices') or [{}])[0]
+            message = choice.get('message', {}).get('content', '')
+            finish_reason = choice.get('finish_reason')
+            if (parsed.get('error') or not isinstance(message, str)
+                    or (not message.strip() and finish_reason in (None, 'stop'))):
                 raise ValueError('Provider returned no usable response text.')
+            complete = finish_reason in (None, 'stop')
             return OpenRouterRunResult(
                 prompt_id=prompt_id,
                 prompt_text=prompt_text,
@@ -163,9 +177,14 @@ class OpenRouterRunner:
                 response_id=response_id,
                 run_batch_id=batch_id,
                 response_text=message,
-                success=True,
-                error_message=None,
+                success=complete,
+                error_message=None if complete else (
+                    f'Provider stopped with finish_reason={finish_reason}; '
+                    'response is incomplete and must be retried.'),
                 run_date=run_date,
+                finish_reason=finish_reason,
+                reasoning_tokens=_optional_int((usage.get('completion_tokens_details') or {}).get('reasoning_tokens')),
+                output_token_limit=output_token_limit,
                 prompt_tokens=_optional_int(usage.get('prompt_tokens')),
                 completion_tokens=_optional_int(usage.get('completion_tokens')),
                 total_tokens=_optional_int(usage.get('total_tokens')),

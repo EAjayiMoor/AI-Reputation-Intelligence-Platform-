@@ -79,6 +79,9 @@ def _to_result_row(
         'TotalTokens': run.total_tokens,
         'CachedPromptTokens': run.cached_prompt_tokens,
         'APICost': run.api_cost,
+        'FinishReason': run.finish_reason,
+        'ReasoningTokens': run.reasoning_tokens,
+        'OutputTokenLimit': run.output_token_limit,
     }
 
 

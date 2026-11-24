@@ -1,8 +1,10 @@
 """Execution for isolated uploads; committed responses are the resume checkpoint."""
 from copy import deepcopy
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from datetime import datetime, timezone
 import hashlib
 import json
+import time
 from pathlib import Path
 import uuid
 
@@ -28,7 +30,14 @@ def _atomic_results(path: Path, results: pd.DataFrame):
     temporary = path.with_name(f'results-{uuid.uuid4().hex}.tmp')
     try:
         results.to_csv(temporary, index=False)
-        temporary.replace(path)
+        for attempt in range(5):
+            try:
+                temporary.replace(path)
+                break
+            except PermissionError:
+                if attempt == 4:
+                    raise
+                time.sleep(0.05 * (2 ** attempt))
     finally:
         temporary.unlink(missing_ok=True)
 
@@ -53,7 +62,10 @@ def execute_run(
     api_key: str = '', base_url: str = 'https://openrouter.ai/api/v1/chat/completions',
     timeout_seconds: int = 45, app_name: str = 'AI Reputation Intelligence Platform',
     app_url: str = 'http://localhost:8501', on_progress=None, runner_factory=None,
+    max_workers: int = 1,
 ) -> dict:
+    if type(max_workers) is not int or not 1 <= max_workers <= 16:
+        raise ValueError('max_workers must be an integer between 1 and 16.')
     models = list(dict.fromkeys(model.strip() for model in models if model.strip()))
     if not models:
         raise ValueError('Select one or more models before starting.')
@@ -90,7 +102,10 @@ def execute_run(
         failures = {(item['prompt_id'], item['model']): item for item in manifest.get('failures', [])
                     if (item['prompt_id'], item['model']) not in done}
         prompt_lookup = prompts.set_index('PromptID').to_dict('index')
-        runners = {}
+        runners = {model: (runner_factory or OpenRouterRunner)(OpenRouterConfig(
+            api_key=api_key, model_name=model, base_url=base_url,
+            timeout_seconds=timeout_seconds, app_name=app_name, app_url=app_url))
+            for model in models}
 
         def save_state():
             manifest.update(updated_at=_now(), completed_requests=len(done),
@@ -101,28 +116,62 @@ def execute_run(
             if on_progress is not None:
                 on_progress(deepcopy(manifest))
 
+        def call_provider(pair):
+            prompt_id, model = pair
+            try:
+                result = runners[model].run_prompt(prompt_id=prompt_id,
+                    prompt_text=str(prompt_lookup[prompt_id]['Prompt']), run_batch_id=run_id, dry_run=dry_run)
+                return result, result.error_message or 'Provider returned no usable response for this request.'
+            except Exception as exc:
+                return None, str(exc)
+
+        def mark_started(pair):
+            manifest['attempted_requests'] += 1
+            manifest['current_request'] = {'prompt_id': pair[0], 'model': pair[1]}
+            save_state()
+
+        def request_results():
+            # Only provider calls run on workers; this coordinator owns every file write.
+            if max_workers == 1:
+                for pair in pending:
+                    mark_started(pair)
+                    result, error = call_provider(pair)
+                    yield pair, result, error
+                return
+            queue = iter(pending)
+            with ThreadPoolExecutor(max_workers=max_workers) as pool:
+                futures = {}
+                def submit_next():
+                    pair = next(queue, None)
+                    if pair is None:
+                        return False
+                    mark_started(pair)
+                    futures[pool.submit(call_provider, pair)] = pair
+                    return True
+                for _ in range(max_workers):
+                    if not submit_next():
+                        break
+                try:
+                    while futures:
+                        ready, _ = wait(futures, return_when=FIRST_COMPLETED)
+                        for future in ready:
+                            pair = futures.pop(future)
+                            result, error = future.result()
+                            yield pair, result, error
+                            submit_next()
+                finally:
+                    for future in futures:
+                        future.cancel()
+
+        manifest['max_workers'] = max_workers
         save_state()
         try:
             notify()
-            for prompt_id, model in pending:
-                manifest['attempted_requests'] += 1
-                manifest['current_request'] = {'prompt_id': prompt_id, 'model': model}
-                save_state()
-                if model not in runners:
-                    runners[model] = (runner_factory or OpenRouterRunner)(OpenRouterConfig(
-                        api_key=api_key, model_name=model, base_url=base_url,
-                        timeout_seconds=timeout_seconds, app_name=app_name, app_url=app_url))
-                result = None
-                try:
-                    result = runners[model].run_prompt(prompt_id=prompt_id,
-                        prompt_text=str(prompt_lookup[prompt_id]['Prompt']), run_batch_id=run_id, dry_run=dry_run)
-                    valid = (result.success and isinstance(result.response_text, str)
-                             and bool(result.response_text.strip()) and result.prompt_id == prompt_id
-                             and result.model_name == model and result.provider == 'OpenRouter'
-                             and (dry_run or not result.response_text.startswith('DRY_RUN:')))
-                    error = result.error_message or 'Provider returned no usable response for this request.'
-                except Exception as exc:
-                    valid, error = False, str(exc)
+            for (prompt_id, model), result, error in request_results():
+                valid = (result is not None and result.success and isinstance(result.response_text, str)
+                         and bool(result.response_text.strip()) and result.prompt_id == prompt_id
+                         and result.model_name == model and result.provider == 'OpenRouter'
+                         and (dry_run or not result.response_text.startswith('DRY_RUN:')))
                 if valid:
                     row = _to_result_row(result, pairs.index((prompt_id, model)) + 1,
                         intent=str(prompt_lookup[prompt_id].get('Intent', '')),
@@ -138,6 +187,10 @@ def execute_run(
                         'error': error.replace(api_key, '[redacted]') if api_key else error, 'at': _now()}
                 event = {'prompt_id': prompt_id, 'model': model, 'success': bool(valid), 'at': _now(),
                          'request_id': getattr(result, 'request_id', None),
+                         'finish_reason': getattr(result, 'finish_reason', None),
+                         'reasoning_tokens': getattr(result, 'reasoning_tokens', None),
+                         'output_token_limit': getattr(result, 'output_token_limit', None),
+                         'api_cost': getattr(result, 'api_cost', None),
                          'error': failures.get((prompt_id, model), {}).get('error')}
                 with (paths['manifest'].parent / 'attempts.jsonl').open('a', encoding='utf-8') as audit:
                     audit.write(json.dumps(event) + '\n')

@@ -12,7 +12,20 @@ SELECTION_KEY = 'selected_run_ids'
 
 
 def selected_run_id(org_id: str) -> str | None:
-    return st.session_state.get(SELECTION_KEY, {}).get(org_id)
+    selections = st.session_state.get(SELECTION_KEY, {})
+    if selections.get(org_id):
+        return selections[org_id]
+    from src.tenants import load_tenant
+    tenant = load_tenant(org_id)
+    if org_id in selections and tenant.default_run_id:
+        # A stale empty-demo choice must not hide this workspace's real results.
+        try:
+            has_demo = not pd.read_csv(tenant.data_paths.results_path, nrows=1).empty
+        except (OSError, ValueError):
+            has_demo = False
+        if has_demo:
+            return None
+    return tenant.default_run_id
 
 
 def select_run(org_id: str, run_id: str | None) -> None:

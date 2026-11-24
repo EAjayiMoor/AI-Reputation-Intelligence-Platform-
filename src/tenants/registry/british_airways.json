@@ -1,0 +1,34 @@
+{
+  "org_id": "british_airways",
+  "display_name": "British Airways",
+  "aliases": [
+    "British Airways",
+    "BA"
+  ],
+  "domains": [
+    "britishairways.com"
+  ],
+  "data_paths": {
+    "prompts_path": "data/british_airways_prompts.csv",
+    "results_path": "data/british_airways_results.csv"
+  },
+  "model_assignment": {
+    "OpenAI": "openai/gpt-4.1-mini",
+    "Anthropic": "anthropic/claude-haiku-4.5",
+    "Gemini": "google/gemini-3.6-flash"
+  },
+  "competitors": {
+    "Virgin Atlantic": [],
+    "Emirates": [],
+    "Qatar Airways": [],
+    "Singapore Airlines": [],
+    "Lufthansa": [],
+    "Air France": [],
+    "KLM": [],
+    "easyJet": [],
+    "Ryanair": [],
+    "Turkish Airlines": [],
+    "Etihad Airways": []
+  },
+  "default_run_id": "20261124T150137_1dc5b31146e546d0b0a7899632bc7ea5"
+}

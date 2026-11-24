@@ -38,6 +38,7 @@ def load_tenant(org_id: str | None = None) -> TenantConfig:
     payload = json.loads(tenant_path.read_text(encoding='utf-8'))
     return TenantConfig(
         org_id=str(payload.get('org_id', target_id)).strip().lower(),
+        default_run_id=payload.get('default_run_id') or None,
         display_name=str(payload['display_name']).strip(),
         aliases=tuple(str(value).strip() for value in payload.get('aliases', []) if str(value).strip()),
         domains=tuple(str(value).strip() for value in payload.get('domains', []) if str(value).strip()),
