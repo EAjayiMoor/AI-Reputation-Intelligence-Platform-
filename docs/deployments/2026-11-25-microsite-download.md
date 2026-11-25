@@ -1,0 +1,11 @@
+# Microsite download repair — 25 November 2026
+
+Status: fixing; hosted verification pending.
+
+User reported Chrome “Site wasn't available” downloading microsite ZIPs. Reproduced on Azure twice: /media/<hash>.zip returned HTTP 500, browser download failed with canceled and hash filename, while page had no Streamlit exception. Azure logs: streamlit's starlette_gzip_middleware emitted http.response.body without http.response.start. Build log confirms starlette 1.10.0 was installed as an unconstrained transitive dependency; local tested environment has 1.3.1.
+
+Root-cause regression: exercised the actual Streamlit MediaAwareGZipMiddleware using an isolated temporary starlette 1.10.0 install; tests failed for gzip and identity because the first message was body instead of response headers. This isolates HTTP delivery from report generation. Plan: pin compatible 1.3.1 in constraints.txt and make Docker pip installation enforce it; test download headers/body and ZIP integrity plus existing export tests; push reviewed code, build/deploy immutable image, verify two complete hosted downloads and a Range request and all British Airways stored-data hashes. Preserve unrelated requirements.txt and deployment wrapper edits. No model calls or dataset changes.
+
+Acceptance: normal and resumed ZIP responses begin with correct HTTP headers; downloaded bytes form a valid ZIP with readable report; repeat downloads work; hosted dashboard retains 2250/2250 coverage. Single-agent implementation and self-review. Skills: existing debugging, test-driven-development, verification-before-completion, karpathy-guidelines and installed developing-with-streamlit skill. Small-fix AI SDLC path, no runtime-AI evaluation required for HTTP delivery. See docs/deployments/2026-11-24-british-airways.md for environment and rollback conventions.
+
+Local verification: isolated Starlette 1.10.0 ZIP transport tests failed as expected (http.response.body sent before headers). Compatible 1.3.1 passes compressed/uncompressed response tests. Full suite: .venv/Scripts/python.exe -m pytest -q -p no:cacheprovider — 201 passed in 105.85 seconds. Existing archive-generation tests passed. Pending hosted download and range verification after deployment; no success claimed yet.

@@ -1,0 +1,2 @@
+# Pin the ZIP-download transport verified with Streamlit 1.60.0.
+starlette==1.3.1

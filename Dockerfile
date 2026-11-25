@@ -9,8 +9,8 @@ WORKDIR /app
 RUN groupadd --system app \
     && useradd --system --gid app --home-dir /app app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt constraints.txt ./
+RUN pip install --no-cache-dir -c constraints.txt -r requirements.txt
 
 COPY app.py ./
 COPY pages ./pages
