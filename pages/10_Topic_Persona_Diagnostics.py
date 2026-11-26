@@ -52,6 +52,9 @@ if filtered.empty:
     render_empty_state_guidance(tenant, area='Topic and Persona Diagnostics')
     st.stop()
 
+if st.button('Open sentiment by topic', icon=':material/sentiment_satisfied:'):
+    st.switch_page('pages/13_Sentiment_by_Topic.py')
+
 st.markdown(
     f"""
     <div class='mh-callout'>

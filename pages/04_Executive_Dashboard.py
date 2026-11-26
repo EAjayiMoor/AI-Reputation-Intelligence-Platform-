@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import altair as alt
 import streamlit as st
@@ -33,6 +33,10 @@ render_page_header(
     demo['description'] if demo else 'Headline metrics and visibility patterns',
     eyebrow='Executive view',
 )
+
+
+if st.button('Explore sentiment by topic', icon=':material/sentiment_satisfied:'):
+    st.switch_page('pages/13_Sentiment_by_Topic.py')
 
 
 def _metric_defs_for_org(organisation_name: str) -> dict[str, str]:

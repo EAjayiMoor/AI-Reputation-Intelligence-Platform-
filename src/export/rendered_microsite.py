@@ -18,6 +18,7 @@ from src.analysis import (
 )
 from src.recommendations import build_leader_evidence_matrix, generate_recommendations
 from src.scoring import aggregate_scores
+from src.analysis.sentiment import enrich_sentiment, sentiment_summary, LABELS
 
 
 MODEL_LABELS = {
@@ -77,6 +78,11 @@ def build_rendered_microsite_html(
     if scored_df.empty:
         raise ValueError('Rendered microsite export requires at least one filtered response row.')
 
+    sentiment_rows = enrich_sentiment(scored_df, organisation_name, organisation_aliases, competitor_aliases)
+    sentiment_topics = sentiment_summary(sentiment_rows, 'Subject')
+    sentiment_table = _render_table(sentiment_topics, ['Subject','Responses','Discussed',*LABELS,'Review suggested'])
+    sentiment_evidence = _render_table(sentiment_rows[sentiment_rows.Sentiment.ne('Not discussed')].head(20),
+        ['PromptID','ModelName','Sentiment','SentimentReview','SentimentEvidence','SentimentSignals'])
     comparison_frame = scope_df if scope_df is not None else scored_df
     overall = aggregate_scores(scored_df).iloc[0]
     market_scores = aggregate_scores(scored_df, ['Market']).sort_values('visibility_score', ascending=False).head(10)
@@ -376,6 +382,14 @@ def build_rendered_microsite_html(
       </div>
       <h3>Presence signals by model</h3>
       {model_presence_table}
+    </section>
+
+    <section class="section">
+      <h2>Sentiment by topic</h2>
+      <p class="section-intro">Indicative sentiment towards {escape(organisation_name)} in the selected model responses, grouped by prompt Subject. Target text rules v1; not customer sentiment or a factual judgement. Neutral means no recognised polarity, Mixed retains both polarities, and Not discussed is separate from neutral. Counts include all selected responses; Discussed excludes absence. Comparisons, implicit references and sarcasm need review. Existing reputation scores are unchanged.</p>
+      {sentiment_table}
+      <h3>Sentiment evidence (first 20 discussed responses)</h3>
+      {sentiment_evidence}
     </section>
 
     <section class="section">

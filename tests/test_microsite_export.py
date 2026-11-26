@@ -126,6 +126,9 @@ def test_rendered_microsite_archive_contains_report_sections(tmp_path: Path) -> 
     assert 'Prompt mention view:</strong> Organic' in html
     assert 'The selected Organic view contains 2 responses across 2 prompts.' in html
     assert re.search(r'<td>Prompted/direct</td><td>1\.0</td>', html)
+    assert 'Sentiment by topic' in html
+    assert 'Target text rules v1' in html
+    assert 'Not discussed' in html
     assert 'Topic and persona diagnostics' in html
     assert 'Competitive presence' in html
     assert 'Run-over-run tracking' in html

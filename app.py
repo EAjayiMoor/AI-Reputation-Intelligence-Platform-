@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import streamlit as st
 
@@ -39,6 +39,7 @@ st.markdown(
 st.markdown('### Recommended entry points')
 st.markdown(
     '- Executive Dashboard: headline summary and benchmark charts\n'
+    '- Sentiment by Topic: inspect indicative positive, neutral, negative and mixed portrayals with response evidence\n'
     '- Prompt Bank Explorer: inspect prompt coverage and export filtered prompt sets\n'
     '- Topic and Persona Diagnostics: find segment strengths, gaps and supporting response evidence\n'
     '- Recommendations: connect measured gaps to owned actions, evidence and rerun tracking\n'
